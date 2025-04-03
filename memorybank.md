@@ -63,6 +63,7 @@ flowchart TD
    - Service architecture and data flows
    - Theming, responsive design, and other system patterns
    - Particularly useful for software developers, architects, and engineers
+   - Diagrams created should have accessibility in mind, knowing that these diagrams will be used by people, most likely using dark mode.
 
 ### Additional Context
 Create additional files/folders within memory-bank/ when they help organize:
@@ -161,4 +162,4 @@ flowchart TD
 
 The format is flexible - focus on capturing valuable insights that help me work more effectively with you and the project. Think of .cursorrules as a living document that grows smarter as we work together.
 
-REMEMBER: After every memory reset, I begin completely fresh. The Memory Bank is my only link to previous work. It must be maintained with precision and clarity, as my effectiveness depends entirely on its accuracy.
+REMEMBER: After every memory reset, I begin completely fresh. The Memory Bank is my only link to previous work. It must be maintained with precision and clarity, as my effectiveness depends entirely on its accuracy. For any task involving UI components, services, data flow, or system design, I MUST review the relevant diagrams in architectureDiagrams.md to understand the visual structure of the system before making changes.
