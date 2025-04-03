@@ -17,6 +17,7 @@ flowchart TD
     TC --> AC
     
     AC --> P[progress.md]
+    SP --> AD[architectureDiagrams.md]
 ```
 
 ### Core Files (Required)
@@ -56,6 +57,13 @@ flowchart TD
    - Current status
    - Known issues
 
+7. `architectureDiagrams.md`
+   - Visual representation of system architecture using Mermaid diagrams
+   - Component relationships and hierarchies
+   - Service architecture and data flows
+   - Theming, responsive design, and other system patterns
+   - Particularly useful for software developers, architects, and engineers
+
 ### Additional Context
 Create additional files/folders within memory-bank/ when they help organize:
 - Complex feature documentation
@@ -70,7 +78,8 @@ Create additional files/folders within memory-bank/ when they help organize:
 ```mermaid
 flowchart TD
     Start[Start] --> ReadFiles[Read Memory Bank]
-    ReadFiles --> CheckFiles{Files Complete?}
+    ReadFiles --> ArchDiagrams[Review Architecture Diagrams]
+    ArchDiagrams --> CheckFiles{Files Complete?}
     
     CheckFiles -->|No| Plan[Create Plan]
     Plan --> Document[Document in Chat]
@@ -84,7 +93,8 @@ flowchart TD
 ```mermaid
 flowchart TD
     Start[Start] --> Context[Check Memory Bank]
-    Context --> Update[Update Documentation]
+    Context --> ArchDiagrams[Review Relevant Architecture Diagrams]
+    ArchDiagrams --> Update[Update Documentation]
     Update --> Rules[Update .cursorrules if needed]
     Rules --> Execute[Execute Task]
     Execute --> Document[Document Changes]
@@ -107,8 +117,9 @@ flowchart TD
         P2[Document Current State]
         P3[Clarify Next Steps]
         P4[Update .cursorrules]
+        P5[Update Architecture Diagrams if needed]
         
-        P1 --> P2 --> P3 --> P4
+        P1 --> P2 --> P3 --> P4 --> P5
     end
     
     Start --> Process
