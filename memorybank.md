@@ -64,6 +64,20 @@ flowchart TD
    - Theming, responsive design, and other system patterns
    - Particularly useful for software developers, architects, and engineers
    - Diagrams created should have accessibility in mind, knowing that these diagrams will be used by people, most likely using dark mode.
+   
+   ### Key Diagram Types
+   1. **System Architecture Diagrams** - High-level overview of system components and their connections
+   2. **Component Relationship Diagrams** - Dependencies and interactions between modules/components
+   3. **Data Flow Diagrams** - How data moves through the system, including transformations
+   4. **Entity Relationship Diagrams** - Data models with relationships (one-to-many, many-to-many)
+   5. **State Diagrams** - Process workflows, user journeys, and state transitions
+   6. **Infrastructure Diagrams** - Deployment environments, network topology, and security boundaries
+   7. **File/Folder Structure Diagrams** - Project organization and code module boundaries
+   8. **UI Component Hierarchy** - Parent-child relationships between UI components
+   9. **API Contract Diagrams** - Endpoint organization and request/response structures
+   10. **Process/Workflow Diagrams** - Business processes and integration sequences
+
+   All diagrams should use dark-mode friendly colors and focus on one system aspect at a time for clarity.
 
 ### Additional Context
 Create additional files/folders within memory-bank/ when they help organize:
