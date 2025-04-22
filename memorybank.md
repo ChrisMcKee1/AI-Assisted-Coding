@@ -74,7 +74,7 @@ flowchart TD
     Adjust --> Present[Present Final Plan]
 ```
 
-*Rule:* **Every plan item must be confirmed against latest docs or code examples returned by Context7 before the plan is accepted.** This prevents surprises like Next.js 15’s React 19 requirement.citeturn0search3
+*Rule:* **Every plan item must be confirmed against latest docs or code examples returned by Context7 before the plan is accepted.** This prevents surprises like Next.js 15’s React 19 requirement.
 
 ### Act Mode — *code only after fresh samples*
 
@@ -127,6 +127,56 @@ flowchart TD
 ```
 
 ---
+
+### **Setup Context7 in Cursor (if missing)**
+
+> Follow these quick steps the first time you add Context7 to Cursor or Windsurf.
+
+#### 1  Install the MCP server    
+Choose one of the two zero‑friction methods:
+
+| Method | Command |
+|--------|---------|
+| **Global (npm)** | `npm install -g c7-mcp-server`  |
+| **On‑demand (npx)** | Use `npx -y @upstash/context7-mcp@latest` as the command in `mcp.json`; no global install needed. |
+
+> **Requirement:** Node 18 +. Context7’s README lists this as the minimum runtime.
+Create (or edit) `~/.cursor/mcp.json` for a global install:
+
+```jsonc
+{
+  "mcpServers": {
+    "context7": {
+      "command": "c7-mcp-server"
+      // For npx:  "command": "npx", "args": ["-y", "@upstash/context7-mcp@latest"]
+    }
+  }
+}
+```
+
+*Cursor reads this file on launch and auto‑spawns the server for every project.*
+
+For a **project‑scoped** setup, put the same snippet in `.cursor/mcp.json` inside your repo root. 
+
+#### 3  Verify it works    
+1. **Restart Cursor** so it reloads `mcp.json`.  
+2. Open the command palette and run **“MCP: List Servers”**—you should see `context7`.  
+3. In chat, try a quick probe:  
+   ```text
+   c7_query: { "library": "next", "version": "latest", "question": "What's new?" }
+   ```  
+   A JSON snippet of docs indicates everything is wired.
+
+#### 4  Troubleshooting    
+| Symptom | Fix |
+|---------|-----|
+| **“command not found: c7-mcp-server”** | Use the npx version in `mcp.json` or ensure global npm install succeeded. |
+| **Project config ignored** | Move entry to the global `~/.cursor/mcp.json` (known issue on some OSes). |
+| **Server exits immediately** | Upgrade Node to ≥ 18.0.0. |
+
+> Once set up, **Plan** and **Act** modes will automatically call `c7_query` / `c7_search`, and summaries belong in `activeContext.md → Recent Research`.
+
+---
 Note: When triggered by **update memory bank**, I MUST review every memory bank file, even if some don't require updates. Focus particularly on activeContext.md and progress.md as they track current state.
 
 ## Project Intelligence (.cursorrules)
@@ -159,32 +209,32 @@ flowchart TD
 ```.cursorrules
 # Development Guidelines
 
-- **After making changes, ALWAYS make sure to start up a new server so it can be tested.** Continuous‑run servers often cache old state; a restart prevents “phantom” errors :contentReference[oaicite:0]{index=0}  
+- **After making changes, ALWAYS make sure to start up a new server so it can be tested.** Continuous‑run servers often cache old state; a restart prevents “phantom” errors   
 - **Always look for existing code to iterate on instead of creating new code**—refactor before you rewrite to keep history and context   
 - **Do not drastically change patterns before trying to iterate on existing ones.**
-- **Always kill stray or out‑of‑date servers before starting fresh ones** to avoid port conflicts and race conditions :contentReference[oaicite:1]{index=1}  
+- **Always kill stray or out‑of‑date servers before starting fresh ones** to avoid port conflicts and race conditions   
 - **Always prefer simple solutions.**
-- **Avoid duplication (DRY); search the codebase for identical logic first** :contentReference[oaicite:2]{index=2}  
-- **Write code that respects the dev / test / prod split**—config‑per‑environment is a must :contentReference[oaicite:3]{index=3}  
+- **Avoid duplication (DRY); search the codebase for identical logic first** 
+- **Write code that respects the dev / test / prod split**—config‑per‑environment is a must
 - **Only make changes that are requested or clearly related to the task at hand.**
 - **Exhaust existing patterns before adding a new technology; if added, delete the obsolete implementation to prevent drift.**
 - **Keep the codebase clean and organized.**
 - **Avoid one‑off scripts in repo roots; isolate them or automate in CI.**
-- **Avoid files larger than ~300‑400 LOC—refactor when they grow** :contentReference[oaicite:4]{index=4}  
-- **Mocking data is only for tests—never mock in dev or prod.** :contentReference[oaicite:5]{index=5}  
+- **Avoid files larger than ~300‑400 LOC—refactor when they grow**  
+- **Mocking data is only for tests—never mock in dev or prod.**  
 - **Never add stub/fake data paths that leak into production.**
-- **Never overwrite `.env` without explicit confirmation**—mis‑rotating secrets is catastrophic :contentReference[oaicite:6]{index=6}  
+- **Never overwrite `.env` without explicit confirmation**—mis‑rotating secrets is catastrophic  
 - **Focus on code relevant to the task; untouched areas stay untouched.**
 - **Do not touch unrelated code.**
-- **Write thorough tests for all major functionality**—functional coverage protects against regressions :contentReference[oaicite:7]{index=7}  
+- **Write thorough tests for all major functionality**—functional coverage protects against regressions   
 - **Avoid wholesale architectural changes to a proven feature unless asked.**
 - **Always consider other methods and callers that might break with your change.**
 - **Consider all API consumers when changing interfaces.**
 
 ## Live‑Research Enforcement
 
-- **For every plan step, run `c7_query` (fallback `c7_search`) via Context7 MCP to confirm versions, flags, and requirements.** MCP tooling is the canonical bridge for live doc retrieval :contentReference[oaicite:8]{index=8}  
-- **Before coding, fetch at least one vetted code sample that matches the exact library / framework version and mirror its best‑practice pattern**—fresh examples reduce bug influx :contentReference[oaicite:9]{index=9}  
+- **For every plan step, run `c7_query` (fallback `c7_search`) via Context7 MCP to confirm versions, flags, and requirements.** MCP tooling is the canonical bridge for live doc retrieval   
+- **Before coding, fetch at least one vetted code sample that matches the exact library / framework version and mirror its best‑practice pattern**—fresh examples reduce bug influx   
 - **Log each research call in *activeContext.md → Recent Research* (one‑line takeaway + snippet IDs; no full docs).**
 
 ```
