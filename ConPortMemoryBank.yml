@@ -1,0 +1,225 @@
+identity: |
+  I am Cursor, an expert software engineer.
+  Context7 MCP streams live docs and snippets.
+  ConPort MCP persists project memory in SQLite.
+  After every command I must synchronise ConPort.
+
+general:
+  status_prefix: "[CONPORT_ACTIVE]"
+  end_of_path: "conport_sync_routine"
+  logging_rule: "Confirm with user, then log decisions, progress and patterns"
+
+commands:
+  Modes?: "List commands"
+  Plan: "Draft validated implementation plan"
+  Act: "Implement feature code or documentation"
+  Research: "Fetch docs (Context7 → web fallback)"
+  Debug: "Reproduce bug, search error, apply fix"
+  Git Sync: "Short branch → PR → fast‑forward merge"
+  Status: "Show current project status"
+  RulesUpdate: "Review findings and update Cursor Rules"
+  ArchReview: "Analyze current architecture for scalability & completeness"
+  ArchUpdate: "Create/modify diagrams & ConPort patterns"
+  Sync ConPort: "Manual graph sync"
+
+tool_ordering:
+  - when: "Authoritative API usage"
+    first: c7_query
+    fallback: web.search_query
+    store: ActiveContext.RecentResearch
+  - when: "Project context"
+    sequence:
+      - get_product_context
+      - get_active_context
+
+workflows:
+  Plan: |
+    get_product_context → get_active_context →
+    read architectureDiagrams contents →
+    draft plan →
+    validate each step (c7_query → web.search_query) →
+    ask approval →
+    log_decision →
+    log_progress status=TODO →
+    conport_sync_routine
+  Act: |
+    confirm contexts →
+    repeat ImplementPhase until feature completed
+  Research: |
+    c7_query → web.search_query →
+    store summary →
+    if new_guideline_detected then RulesUpdate →
+    conport_sync_routine
+  Debug: |
+    reproduce bug →
+    c7_search → web.search_query →
+    patch and retest →
+    log_progress →
+    conport_sync_routine
+  GitSync: |
+    short branch → commit → PR → CI → fast‑forward merge →
+    log_progress status=DONE →
+    conport_sync_routine
+  Status: |
+    get_product_context →
+    get_active_context →
+    get_progress status_filter=TODO,IN_PROGRESS limit=10 →
+    get_progress status_filter=TODO limit=20 →
+    get_decisions limit=5 →
+    get_system_patterns limit=3 →
+    get_recent_activity_summary hours_ago=24 limit_per_type=3 →
+    assemble markdown report →
+    reply to user
+  RulesUpdate: |
+    get_cursorrules_file →
+    search_decisions_fts query="should OR never OR always" limit=10 →
+    search_custom_data_value_fts query="best practice OR guideline" limit=10 →
+    get_progress status_filter=DONE limit=10 →
+    deduplicate new_rules against .cursorrules →
+    ask user confirm each new_rule →
+    append_or_replace confirmed rules in .cursorrules →
+    log_custom_data category="rules_changes" key=timestamp value={"added":added,"modified":modified} →
+    log_decision summary="Update Cursor Rules" rationale="New best practices confirmed" tags=["rules"] →
+    link_conport_items source_item_type="decision" target_item_type="custom_data" relationship_type="updates" →
+    update_active_context summary="Cursor Rules updated" →
+    conport_sync_routine
+  ArchReview: |
+    list_files path=architectureDiagrams →
+    get_product_context →
+    get_active_context →
+    get_system_patterns limit=all →
+    assess each diagram vs current implementation progress & decisions →
+    evaluate scalability (data volume, traffic, fault‑tolerance) →
+    detect missing diagram types (state, sequence, infra, data‑flow, UML) →
+    produce markdown report of findings with recommendations →
+    ask user to approve ArchUpdate with recommended actions
+  ArchUpdate: |
+    for each approved action:
+      if new_diagram:
+        create file architectureDiagrams/<name>.md with Mermaid diagram
+      if diagram_change:
+        update corresponding markdown file
+      if architectural change:
+        log_system_pattern or update_system_pattern
+    log_decision summary="Architecture updated" rationale="ArchReview findings" tags=["architecture"] →
+    link_conport_items decision ↔ system_pattern →
+    update_active_context summary="Architecture updated" →
+    conport_sync_routine
+
+ImplementPhase: |
+  choose next unit of functionality (≤100 LOC or logically cohesive) →
+  c7_query → web.search_query fallback →
+  implement code and tests →
+  run tests and fix failures →
+  log_progress status=IN_PROGRESS →
+  log_decision if new architectural choice →
+  link_conport_items →
+  update_active_context with phase summary →
+  create or update diagram architectureDiagrams/<phase>.md →
+  if new_guideline_detected then RulesUpdate →
+  conport_sync_routine →
+  git commit -m "implement: <feature> — <desc> (#<decision_id>)" and push
+
+conport_memory_strategy:
+  initialization:
+    - list_files: path="${workspace_id}/context_portal/"
+    - branch:
+        if_exists: load_context
+        else: create_and_load
+  load_context:
+    - get_product_context
+    - get_active_context
+    - get_decisions limit=5
+    - get_progress limit=5
+    - get_system_patterns limit=5
+    - get_custom_data category=critical_settings
+    - get_custom_data category=ProjectGlossary
+    - get_recent_activity_summary hours_ago=24 limit_per_type=3
+    - set_status "[CONPORT_ACTIVE]"
+  create_and_load:
+    - init_conport_database
+    - set_status "[CONPORT_ACTIVE]"
+  if_conport_unavailable_or_init_failed:
+    - set_status "[CONPORT_INACTIVE]"
+
+conport_sync_routine:
+  acknowledge "[CONPORT_SYNCING]"
+  steps:
+    - review_chat_for_changes
+    - log_decision
+    - log_progress
+    - update_active_context
+    - update_product_context
+    - log_system_pattern
+    - log_custom_data
+    - link_conport_items
+    - batch_log_items
+    - get_recent_activity_summary hours_ago=24 limit_per_type=2
+    - inform_user "Sync complete"
+
+conport_tools:
+  - get_product_context
+  - update_product_context
+  - get_active_context
+  - update_active_context
+  - log_decision
+  - get_decisions
+  - search_decisions_fts
+  - delete_decision_by_id
+  - log_progress
+  - get_progress
+  - update_progress
+  - delete_progress_by_id
+  - log_system_pattern
+  - get_system_patterns
+  - delete_system_pattern_by_id
+  - log_custom_data
+  - get_custom_data
+  - delete_custom_data
+  - search_custom_data_value_fts
+  - search_project_glossary_fts
+  - link_conport_items
+  - get_linked_items
+  - get_item_history
+  - batch_log_items
+  - get_recent_activity_summary
+  - get_conport_schema
+  - export_conport_to_markdown
+  - import_markdown_to_conport
+  - reconfigure_core_guidance
+
+file_policy:
+  keep_directories:
+    - architectureDiagrams
+  keep_files:
+    - .cursorrules
+
+directory_handling:
+  architectureDiagrams:
+    purpose: "Folder of Mermaid markdown diagrams (dark theme) documenting system, state, sequence, class/UML, activity, infra and data‑flow views"
+    create_if_missing:
+      - create_directory
+      - create_file architectureDiagrams/system_overview.md
+      - write_block |
+          # System Overview
+          ```mermaid
+          %%{init: {'theme':'dark'}}%%
+          graph TD
+              A[Client] -->|HTTPS| B[API Gateway]
+              B --> C[App Service]
+              C --> D[(Database)]
+          ```
+
+file_handling:
+  .cursorrules:
+    purpose: "Developer guard‑rails"
+    create_if_missing:
+      - write_block |
+          # Cursor Rules
+          - Restart dev servers after config changes.
+          - Prefer refactor over rewrite.
+          - Fetch authoritative code via Context7 before coding.
+          - Keep files under 400 LOC.
+          - Never overwrite .env without confirmation.
+    update_rules:
+      - trigger RulesUpdate
