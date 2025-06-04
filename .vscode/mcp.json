@@ -1,0 +1,26 @@
+{
+    "servers": {
+        "context7": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@upstash/context7-mcp"
+            ]
+        },
+        "conport": {
+            "command": "C:\\github\\seiggy\\arke\\.venv\\Scripts\\python.exe",
+            "args": [
+                "-m",
+                "context_portal_mcp.main",
+                "--mode",
+                "stdio",
+                "--workspace_id",
+                "C:\\github\\seiggy\\arke",
+                "--log-file",
+                "./logs/conport.log",
+                "--log-level",
+                "INFO"
+            ]
+        }
+    }
+}
