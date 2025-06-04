@@ -240,12 +240,26 @@ ImplementPhase: |
   git commit -m "implement: <feature> — <desc> (#<decision_id>)" and push
 
 conport_memory_strategy:
+  # CRITICAL: At the beginning of every session, the agent MUST execute the 'initialization' sequence
+  # to determine the ConPort status and load relevant context.
+  workspace_id_source: "The agent must obtain the absolute path to the current workspace to use as `workspace_id` for all ConPort tool calls. This might be available as `${workspaceFolder}` or require asking the user. This should be passed in windows file path format, ie: `D:\\src\\github\\seiggy\\zembrosoft`"
+
   initialization:
-    - action: list_files
-      params: 'path="${workspace_id}/context_portal/"'
-    - branch:
-        if_exists: load_context
-        else: create_and_load
+    thinking_preamble: |
+
+    agent_action_plan:
+      - step: 1
+        action: "Determine `ACTUAL_WORKSPACE_ID`."
+      - step: 2
+        action: "Invoke a \"list files\" tool for `ACTUAL_WORKSPACE_ID + \"/context_portal/\"`."
+        parameters: 'path: ACTUAL_WORKSPACE_ID + "/context_portal/"'
+      - step: 3
+        action: "Analyze result and branch based on 'context.db' existence."
+        conditions:
+          - if: "'context.db' is found"
+            then_sequence: "load_existing_conport_context"
+          - else: "'context.db' NOT found"
+            then_sequence: "handle_new_conport_setup"
   
   load_context:
     - get_product_context
@@ -267,6 +281,69 @@ conport_memory_strategy:
   create_and_load:
     - init_conport_database
     - set_status "[CONPORT_ACTIVE]"
+
+  handle_new_conport_setup:
+    thinking_preamble: |
+
+    agent_action_plan:
+      - step: 1
+        action: "Inform user: \"No existing ConPort database found at `ACTUAL_WORKSPACE_ID + \"/context_portal/context.db\"`.\""
+      - step: 2
+        action: "Ask follow up questions"
+        parameters:
+          question: "Would you like to initialize a new ConPort database for this workspace? The database will be created automatically when ConPort tools are first used."
+          suggestions:
+            - "Yes, initialize a new ConPort database."
+            - "No, do not use ConPort for this session."
+      - step: 3
+        description: "Process user response."
+        conditions:
+          - if_user_response_is: "Yes, initialize a new ConPort database."
+            actions:
+              - "Inform user: \"Okay, a new ConPort database will be created.\""
+              - description: "Attempt to bootstrap Product Context from projectBrief.md (this happens only on new setup)."
+                thinking_preamble: |
+
+                sub_steps:
+                  - "Invoke `list_files` with `path: ACTUAL_WORKSPACE_ID` (non-recursive, just to check root)."
+                  - description: "Analyze `list_files` result for 'projectBrief.md'."
+                    conditions:
+                      - if: "'projectBrief.md' is found in the listing"
+                        actions:
+                          - "Invoke `read_file` for `ACTUAL_WORKSPACE_ID + \"/projectBrief.md\"`."
+                          - action: "Ask follow up questions"
+                            parameters:
+                              question: "Found projectBrief.md in your workspace. As we're setting up ConPort for the first time, would you like to import its content into the Product Context?"
+                              suggestions:
+                                - "Yes, import its content now."
+                                - "No, skip importing it for now."
+                          - description: "Process user response to import projectBrief.md."
+                            conditions:
+                              - if_user_response_is: "Yes, import its content now."
+                                actions:
+                                  - "(No need to `get_product_context` as DB is new and empty)"
+                                  - "Prepare `content` for `update_product_context`. For example: `{\"initial_product_brief\": \"[content from projectBrief.md]\"}`."
+                                  - "Invoke `update_product_context` with the prepared content."
+                                  - "Inform user of the import result (success or failure)."
+                      - else: "'projectBrief.md' NOT found"
+                        actions:
+                          - action: "Ask follow up questions."
+                            parameters:
+                              question: "`projectBrief.md` was not found in the workspace root. Would you like to define the initial Product Context manually now?"
+                              suggestions:
+                                - "Define Product Context manually."
+                                - "Skip for now."
+                          - "(If \"Define manually\", guide user through `update_product_context`)."
+              - "Proceed to 'load_existing_conport_context' sequence (which will now load the potentially bootstrapped product context and other empty contexts)."
+          - if_user_response_is: "No, do not use ConPort for this session."
+            action: "Proceed to `if_conport_unavailable_or_init_failed` (with a message indicating user chose not to initialize)."
+
+  
+  if_conport_unavailable_or_init_failed:
+    thinking_preamble: |
+
+    agent_action: "Inform user: \"ConPort memory will not be used for this session. Status: [CONPORT_INACTIVE].\""
+  
   
   if_conport_unavailable_or_init_failed:
     - set_status "[CONPORT_INACTIVE]"
