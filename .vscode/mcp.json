@@ -1,25 +1,29 @@
 {
     "servers": {
         "context7": {
-            "command": "npx",
+            "command": "docker",
             "args": [
-                "-y",
-                "@upstash/context7-mcp"
+                "run",
+                "-i",
+                "--rm",
+                "mcp/context7:latest"
             ]
         },
         "conport": {
-            "command": "C:\\github\\seiggy\\arke\\.venv\\Scripts\\python.exe",
+            "type": "stdio",
+            "command": "docker",
             "args": [
-                "-m",
-                "context_portal_mcp.main",
-                "--mode",
-                "stdio",
-                "--workspace_id",
-                "C:\\github\\seiggy\\arke",
-                "--log-file",
-                "./logs/conport.log",
-                "--log-level",
-                "INFO"
+                "run",
+                "-i",
+                "--rm",
+                "--name", "conport-server-instance",
+                "-p", "8000:8000",
+                "-v", "${workspaceFolder}:/app/workspace",
+                "greatscottymac/context-portal-mcp:latest",
+                "--mode", "stdio",
+                "--workspace_id", "/app/workspace",
+                "--log-file", "/app/workspace/conport.log",
+                "--log-level", "INFO"
             ]
         }
     }
