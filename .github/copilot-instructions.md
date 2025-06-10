@@ -242,7 +242,7 @@ ImplementPhase: |
 conport_memory_strategy:
   # CRITICAL: At the beginning of every session, the agent MUST execute the 'initialization' sequence
   # to determine the ConPort status and load relevant context.
-  workspace_id_source: "The agent must obtain the absolute path to the current workspace to use as `workspace_id` for all ConPort tool calls. This might be available as `${workspaceFolder}` or require asking the user. This should be passed in windows file path format, ie: `D:\\src\\github\\seiggy\\zembrosoft`"
+  workspace_id_source: "The agent must obtain the absolute path to the current workspace to use as `workspace_id` for all ConPort tool calls. This should always be set to `/app/workspace` if using the Docker version of the MCP server."
 
   initialization:
     thinking_preamble: |
