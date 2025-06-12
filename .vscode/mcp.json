@@ -1,12 +1,21 @@
 {
     "servers": {
+        // Uncomment for using the Docker version of context7
+        // "context7": {
+        //     "type": "http",
+        //     "url": "http://localhost:3001",
+        // },
+        // uncomment for using the remote version of context7
+        // "context7": {
+        //     "type": "http",
+        //     "url": "https://mcp.context7.com/mcp"
+        // },
         "context7": {
-            "command": "docker",
+            "type": "stdio",
+            "command": "npx",
             "args": [
-                "run",
-                "-i",
-                "--rm",
-                "mcp/context7:latest"
+                "-y",
+                "@upstash/context7-mcp"
             ]
         },
         "conport": {
