@@ -379,7 +379,7 @@ This directory contains a collection of instruction files that provide generic "
 **Available Instruction Files:**
 - `aspire.instructions.md`: Guidelines for working with .NET Aspire.
 - `blazor.instructions.md`: Best practices for Blazor development with .NET 9.
-- `chsarp.instructions.md`: C# specific coding conventions and rules.
+- `csharp.instructions.md`: C# specific coding conventions and rules.
 - `docker.instructions.md`: Instructions for creating and managing Dockerfiles and Docker images.
 - `python.instructions.md`: Python specific coding conventions and best practices.
 - `react.instructions.md`: Best practices for React development.
