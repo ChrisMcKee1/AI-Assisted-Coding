@@ -363,6 +363,46 @@ ArchUpdate: Implement database optimization patterns
 
 The AI uses these visual representations as a "source of truth" for architectural understanding, ensuring that all code generation and modifications remain consistent with your intended system design. Regular review and updates of these diagrams help maintain architectural integrity throughout the development lifecycle.
 
+### 📏 Custom AI Guidance: Instructions and Prompts
+
+To further tailor the AI's behavior and provide reusable patterns for common tasks, the framework includes specialized folders within the `.github` directory: `.github/instructions` and `.github/prompts`. These files are written in Markdown and are designed to be easily customized by developers.
+
+#### Instructions (`.github/instructions/`)
+
+This directory contains a collection of instruction files that provide generic "rules" and best practices for the AI to follow when working with specific frameworks, languages, or scenarios. They help ensure consistency and adherence to established guidelines.
+
+**Purpose:**
+- Define coding standards for different technologies.
+- Outline best practices for specific development tasks (e.g., performance optimization, security).
+- Guide the AI on how to approach problems within a particular framework.
+
+**Available Instruction Files:**
+- `aspire.instructions.md`: Guidelines for working with .NET Aspire.
+- `blazor.instructions.md`: Best practices for Blazor development with .NET 9.
+- `csharp.instructions.md`: C# specific coding conventions and rules.
+- `docker.instructions.md`: Instructions for creating and managing Dockerfiles and Docker images.
+- `python.instructions.md`: Python specific coding conventions and best practices.
+- `react.instructions.md`: Best practices for React development.
+- `typescript.instructions.md`: TypeScript specific coding conventions and best practices.
+
+These files serve as excellent starting points and can be expanded or modified to fit your project's specific needs and conventions.
+
+#### Prompts (`.github/prompts/`)
+
+This directory houses prompt files that contain detailed, step-by-step instructions for the AI on how to perform a specific task in a structured manner. They act as templates for complex operations, ensuring the AI asks the right questions and follows a consistent workflow.
+
+**Purpose:**
+- Expand simple user requests into a series of actionable steps for the AI.
+- Guide the AI through complex code generation tasks (e.g., creating a new component).
+- Ensure all necessary information is gathered before the AI proceeds with a task.
+
+**Available Prompt Files:**
+- `blazor-component.prompt.md`: A detailed prompt for generating new Blazor components, including requirements gathering, best practice adherence, and testing suggestions.
+
+Developers can customize these prompts or create new ones to automate repetitive tasks or to ensure a standardized approach to common development activities.
+
+These instruction and prompt files are powerful tools for shaping the AI's behavior, improving the quality of its output, and streamlining your development process.
+
 ## 📁 Framework Files
 
 ### Core Configuration

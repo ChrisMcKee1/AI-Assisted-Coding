@@ -1,6 +1,17 @@
 {
     "servers": {
+        // Uncomment for using the Docker version of context7
+        // "context7": {
+        //     "type": "http",
+        //     "url": "http://localhost:3001",
+        // },
+        // uncomment for using the remote version of context7
+        // "context7": {
+        //     "type": "http",
+        //     "url": "https://mcp.context7.com/mcp"
+        // },
         "context7": {
+            "type": "stdio",
             "command": "npx",
             "args": [
                 "-y",
@@ -8,18 +19,20 @@
             ]
         },
         "conport": {
-            "command": "C:\\github\\seiggy\\arke\\.venv\\Scripts\\python.exe",
+            "type": "stdio",
+            "command": "docker",
             "args": [
-                "-m",
-                "context_portal_mcp.main",
-                "--mode",
-                "stdio",
-                "--workspace_id",
-                "C:\\github\\seiggy\\arke",
-                "--log-file",
-                "./logs/conport.log",
-                "--log-level",
-                "INFO"
+                "run",
+                "-i",
+                "--rm",
+                "--name", "conport-server-instance",
+                "-p", "8000:8000",
+                "-v", "${workspaceFolder}:/app/workspace",
+                "greatscottymac/context-portal-mcp:latest",
+                "--mode", "stdio",
+                "--workspace_id", "/app/workspace",
+                "--log-file", "/app/workspace/conport.log",
+                "--log-level", "INFO"
             ]
         }
     }
