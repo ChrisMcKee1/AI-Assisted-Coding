@@ -279,22 +279,22 @@ conport_memory_strategy:
         - "Invoke `get_custom_data` (category: \"ProjectGlossary\")... Store result."
         - "Invoke `get_recent_activity_summary` (default params, e.g., last 24h, limit 3 per type) for a quick catch-up. Store result."
     - step: 2
-        description: "Analyze loaded context."
-        conditions:
-          - if: "results from step 1 are NOT empty/minimal"
-            actions:
-              - "Set internal status to [CONPORT_ACTIVE]."
-              - "Inform user: \"ConPort memory initialized. Existing contexts and recent activity loaded.\""
-              - "Ask follow up questions with suggestions like \"Review recent activity?\", \"Continue previous task?\", \"What would you like to work on?\"."
-          - else: "loaded context is empty/minimal despite DB file existing"
-            actions:
-              - "Set internal status to [CONPORT_ACTIVE]."
-              - "Inform user: \"ConPort database file found, but it appears to be empty or minimally initialized. You can start by defining Product/Active Context or logging project information.\""
-              - "Ask follow up questions with suggestions like \"Define Product Context?\", \"Log a new decision?\"."
-      - step: 3
-        description: "Handle Load Failure (if step 1's `get_*` calls failed)."
-        condition: "If any `get_*` calls in step 1 failed unexpectedly"
-        action: "Fall back to `if_conport_unavailable_or_init_failed`."
+      description: "Analyze loaded context."
+      conditions:
+        - if: "results from step 1 are NOT empty/minimal"
+          actions:
+            - "Set internal status to [CONPORT_ACTIVE]."
+            - "Inform user: \"ConPort memory initialized. Existing contexts and recent activity loaded.\""
+            - "Ask follow up questions with suggestions like \"Review recent activity?\", \"Continue previous task?\", \"What would you like to work on?\"."
+        - else: "loaded context is empty/minimal despite DB file existing"
+          actions:
+            - "Set internal status to [CONPORT_ACTIVE]."
+            - "Inform user: \"ConPort database file found, but it appears to be empty or minimally initialized. You can start by defining Product/Active Context or logging project information.\""
+            - "Ask follow up questions with suggestions like \"Define Product Context?\", \"Log a new decision?\"."
+    - step: 3
+      description: "Handle Load Failure (if step 1's `get_*` calls failed)."
+      condition: "If any `get_*` calls in step 1 failed unexpectedly"
+      action: "Fall back to `if_conport_unavailable_or_init_failed`."
   
   handle_new_conport_setup:
     thinking_preamble: |
@@ -357,10 +357,6 @@ conport_memory_strategy:
     thinking_preamble: |
 
     agent_action: "Inform user: \"ConPort memory will not be used for this session. Status: [CONPORT_INACTIVE].\""
-  
-  
-  if_conport_unavailable_or_init_failed:
-    - set_status "[CONPORT_INACTIVE]"
   
   general:
     status_prefix: "Begin EVERY response with '[CONPORT_ACTIVE]' or '[CONPORT_INACTIVE]' based on current context."
