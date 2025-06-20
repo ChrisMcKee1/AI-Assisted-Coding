@@ -28,7 +28,7 @@
                 "--name", "conport-server-instance",
                 "-p", "8000:8000",
                 "-v", "${workspaceFolder}:/app/workspace",
-                "greatscottymac/context-portal-mcp:latest",
+                "seiggy/context-portal-mcp:0.2.18",
                 "--mode", "stdio",
                 "--workspace_id", "/app/workspace",
                 "--log-file", "/app/workspace/conport.log",

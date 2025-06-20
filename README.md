@@ -24,7 +24,7 @@ Together, they transform GitHub Copilot into an intelligent development assistan
 
 ```powershell
 # Clone this repository
-git clone https://github.com/seiggy/AI-Assisted-Coding.git
+git clone https://github.com/ChrisMcKee1/AI-Assisted-Coding.git
 cd AI-Assisted-Coding
 
 # Copy all framework files to your project's root directory
