@@ -1,0 +1,25 @@
+# Set default behavior to automatically normalize line endings
+* text=auto eol=lf
+
+
+# Explicitly set line endings for specific file types
+*.md text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.sh text eol=lf
+
+# Windows-specific files that should retain CRLF line endings
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files that should not be modified
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.zip binary
+*.ico binary
+*.pdf binary
+*.pptx binary

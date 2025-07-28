@@ -1,15 +1,5 @@
 {
     "servers": {
-        // Uncomment for using the Docker version of context7
-        // "context7": {
-        //     "type": "http",
-        //     "url": "http://localhost:3001",
-        // },
-        // uncomment for using the remote version of context7
-        // "context7": {
-        //     "type": "http",
-        //     "url": "https://mcp.context7.com/mcp"
-        // },
         "context7": {
             "type": "stdio",
             "command": "npx",
@@ -18,22 +8,29 @@
                 "@upstash/context7-mcp"
             ]
         },
-        "conport": {
-            "type": "stdio",
-            "command": "docker",
+        "memory": {
+            "command": "npx",
             "args": [
-                "run",
-                "-i",
-                "--rm",
-                "--name", "conport-server-instance",
-                "-p", "8000:8000",
-                "-v", "${workspaceFolder}:/app/workspace",
-                "seiggy/context-portal-mcp:0.2.18",
-                "--mode", "stdio",
-                "--workspace_id", "/app/workspace",
-                "--log-file", "/app/workspace/conport.log",
-                "--log-level", "INFO"
+                "-y",
+                "@modelcontextprotocol/server-memory"
+            ],
+			"env": {
+				"MEMORY_FILE_PATH": "${input:memory_file_path}"
+			}
+        },
+        "sequential-thinking": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-sequential-thinking"
             ]
-        }
+        },
+        "playwright": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"@playwright/mcp@latest"
+			]
+		}
     }
 }
