@@ -139,7 +139,7 @@ encoding: UTF-8
   </general_workflow>
 
   <tool_guidelines>
-    - **Text Input**: ALWAYS use `browser_type` for filling in form fields. DO NOT use `browser_press_key` for this, as it is for single, non-character key presses (e.g., 'Enter', 'ArrowDown').
+    - **Text Input**: ALWAYS use `browser_type` for filling in form fields. DO NOT use `browser_press_key` for this, as it is for single, event-listener testing of key presses (e.g., 'onkeydown', 'onkeyup', 'onkeypress').
     - **Clicking**: Use `browser_click` for buttons, links, and other clickable elements.
     - **Dropdowns**: Use `browser_select_option` to choose one or more options from a `<select>` element.
     - **Pauses**: Use `browser_wait_for` to handle delays, waiting for text to appear/disappear, or for async operations to complete. Avoid fixed time delays where possible.

@@ -261,7 +261,7 @@ encoding: UTF-8
   <includes>
     - all subtasks from tasks.md
     - implementation approach
-    - dependencies to install
+    - dependencies to install7
     - test strategy
     - Context7 documentation references
   </includes>
@@ -568,7 +568,8 @@ encoding: UTF-8
   UTILIZE: sequential-thinking mcp to plan test execution and failure handling
   UTILIZE: playwright mcp to execute and validate end-to-end browser tests
   UTILIZE: playwright mcp browser_type for entering multi-character inputs (avoid browser_press_key for text entry)
-  UTILIZE: playwright mcp browser_click for UI interactions; reserve browser_press_key only for single keystroke events
+  UTILIZE: playwright mcp browser_click for UI interactions; reserve browser_press_key only for specific keystroke event testing
+  UTILIZE: playwright mcp browser_press_key for testing specific keypress events (onkeydown, onkeyup, onkeypressed).
   UTILIZE: playwright mcp browser_wait_for to wait for elements or text changes before assertions
   UTILIZE: playwright mcp browser_snapshot to capture page state before and after critical interactions
 </instructions>
