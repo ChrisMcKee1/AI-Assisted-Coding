@@ -21,6 +21,9 @@ encoding: UTF-8
     - indent: 2 spaces
     - markdown_headers: no indentation
   </file_conventions>
+  <tooling>
+    - sequential-thinking mcp
+  </tooling>
 </ai_meta>
 
 ## Overview
@@ -59,6 +62,9 @@ encoding: UTF-8
     - output_format: enum["mermaid", "mdx", "markdown"]
   </required_inputs>
   <validation>blocking</validation>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <data_sources>
@@ -84,6 +90,7 @@ encoding: UTF-8
   VALIDATION: Ensure all 5 inputs provided before proceeding
   FALLBACK: Check project documentation for system context
   ERROR: Use error_template if inputs missing
+  UTILIZE: sequential-thinking mcp at the start to plan input collection and question ordering.
 </instructions>
 
 </step>
@@ -97,6 +104,9 @@ encoding: UTF-8
     - strategy: object
     - mermaid_type: string
   </creates>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <diagram_type_mapping>
@@ -136,6 +146,7 @@ encoding: UTF-8
   ACTION: Map user diagram_type to appropriate Mermaid diagram type
   VALIDATE: Ensure chosen type matches user requirements
   DOCUMENT: Record strategy for consistent application
+  UTILIZE: sequential-thinking mcp before mapping to outline strategy steps.
 </instructions>
 
 </step>
@@ -149,6 +160,9 @@ encoding: UTF-8
     - directory: .docs/architecture/
     - files: 1-3
   </creates>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <file_structure>
@@ -169,6 +183,7 @@ encoding: UTF-8
   ACTION: Create directory structure as specified
   VALIDATION: Verify write permissions before creating
   PROTECTION: Confirm before overwriting existing files
+  UTILIZE: sequential-thinking mcp to sequence directory and file creation steps.
 </instructions>
 
 </step>
@@ -182,6 +197,9 @@ encoding: UTF-8
     - diagram_code: string
   </creates>
   <validation>syntax_check</validation>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <mermaid_templates>
@@ -247,6 +265,7 @@ encoding: UTF-8
   APPLY: Use components and relationships from Step 1
   VALIDATE: Check syntax before proceeding
   OPTIMIZE: Ensure clear visual hierarchy and flow
+  UTILIZE: sequential-thinking mcp to break down diagram elements generation.
 </instructions>
 
 </step>
@@ -260,6 +279,9 @@ encoding: UTF-8
     - mermaid_code: string
   </validates>
   <error_handling>retry_on_failure</error_handling>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <validation_rules>
@@ -291,6 +313,7 @@ encoding: UTF-8
   RETRY: Fix any validation errors and re-validate
   DOCUMENT: Log any corrections made
   CONTINUE: Only proceed when validation passes
+  UTILIZE: sequential-thinking mcp to plan validation and error-correction iterations.
 </instructions>
 
 </step>
@@ -303,6 +326,9 @@ encoding: UTF-8
   <creates>
     - file: .docs/architecture/[DIAGRAM_NAME].md
   </creates>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <file_template>
@@ -403,6 +429,7 @@ encoding: UTF-8
   POPULATE: Use data from previous steps to fill templates
   FORMAT: Maintain consistent markdown structure
   EMBED: Include validated Mermaid diagram code
+  UTILIZE: sequential-thinking mcp to structure document assembly flow.
 </instructions>
 
 </step>
@@ -417,6 +444,9 @@ encoding: UTF-8
     - file: .docs/architecture/[DIAGRAM_NAME].mdx (if requested)
   </creates>
   <conditional>based_on_output_format_request</conditional>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <mermaid_file_template>
@@ -455,6 +485,7 @@ encoding: UTF-8
   VALIDATE: Ensure proper syntax for each format
   CONSISTENCY: Maintain same diagram content across formats
   OPTIMIZE: Add format-specific enhancements
+  UTILIZE: sequential-thinking mcp to plan multi-format output steps.
 </instructions>
 
 </step>
@@ -471,6 +502,9 @@ encoding: UTF-8
   <creates>
     - preview_link: string
   </creates>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <preview_checklist>
@@ -501,6 +535,7 @@ encoding: UTF-8
   VALIDATE: Check all created files for completeness
   REVIEW: Ensure diagram meets user requirements
   FINALIZE: Prepare files for version control
+  UTILIZE: sequential-thinking mcp to outline preview and finalization checklist.
 </instructions>
 
 </step>

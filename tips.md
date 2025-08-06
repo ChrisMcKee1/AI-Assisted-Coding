@@ -19,8 +19,6 @@
   Before using the `Plan` or `Act` commands, write detailed requirements and architectural notes in markdown files (e.g., `projectBrief.md`, `docs/`). This gives Copilot and the AI agent the context needed for accurate planning and implementation.
 - **Follow the Core Workflow Commands**  
   Use the provided commands (`Plan`, `Act`, `Research`, etc.) as described in the README to trigger structured workflows. This ensures Copilot leverages both live documentation and persistent project memory.
-- **Sync ConPort Regularly**  
-  After major changes or at the end of a session, run the `conport_sync_routine` to persist new knowledge, decisions, and context. This keeps the AI's memory up to date and prevents context loss.
 - **Document Decisions and Patterns**  
   When you make architectural or implementation decisions, log them using the appropriate workflow or markdown files. This helps Copilot and the agent avoid repeating past mistakes and improves future suggestions.
 - **Use Semantic Search for Context**  
@@ -45,7 +43,7 @@
 - **Outdated Context**  
   After refactoring, invalid or stale comments can mislead Copilot; update related comments and stubs.
 - **Context overflow**  
-  Reset the chat context often. Tell the AI to update the ConPort status, and then start a new chat. This can help if things go off the rails.
+  Reset the chat context often. Tell the AI to update the `memory` status, and then start a new chat. This can help if things go off the rails.
 
 ## Troubleshooting Scenarios
 

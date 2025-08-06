@@ -21,6 +21,10 @@ encoding: UTF-8
     - indent: 2 spaces
     - markdown_headers: no indentation
   </file_conventions>
+  <tooling>
+    - sequential-thinking mcp
+    - context7 mcp
+  </tooling>
 </ai_meta>
 
 ## Overview
@@ -63,6 +67,10 @@ encoding: UTF-8
     - ui_description: string
   </required_inputs>
   <validation>blocking</validation>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <data_sources>
@@ -91,6 +99,8 @@ encoding: UTF-8
   VALIDATION: Ensure all inputs provided before proceeding
   FALLBACK: Check spec documentation for component context
   ERROR: Use error_template if inputs missing
+  UTILIZE: sequential-thinking mcp to plan requirement gathering sequence.
+  UTILIZE: context7 mcp to enrich questions with spec and project context.
 </instructions>
 
 </step>
@@ -106,6 +116,10 @@ encoding: UTF-8
     - component_location: string
     - bunit_availability: boolean
   </analyzes>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <project_analysis>
@@ -137,6 +151,8 @@ encoding: UTF-8
   DETECT: .NET version, Blazor project type, and component location
   CHECK: For existing bUnit test project
   PREPARE: Component creation strategy based on findings
+  UTILIZE: sequential-thinking mcp to sequence analysis tasks.
+  UTILIZE: context7 mcp to lookup documentation for frameworks, blazor, bUnit, and other 3rd party components and libraries.
 </instructions>
 
 </step>
@@ -151,6 +167,10 @@ encoding: UTF-8
     - performance_implications: array[string]
     - prerendering_strategy: string
   </determines>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <render_mode_decision_matrix>
@@ -202,6 +222,8 @@ encoding: UTF-8
   EVALUATE: Performance implications and trade-offs
   DOCUMENT: Reasoning for render mode selection
   CONSIDER: Streaming rendering for async operations
+  UTILIZE: sequential-thinking mcp to compare render modes step-by-step.
+  UTILIZE: context7 mcp to to validate code against documentation
 </instructions>
 
 </step>
@@ -216,6 +238,10 @@ encoding: UTF-8
     - component.razor.cs: code-behind logic
     - component.razor.css: isolated styles
   </creates>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <file_templates>
@@ -294,6 +320,8 @@ encoding: UTF-8
   IMPLEMENT: Blazor best practices throughout
   ENSURE: Proper separation of concerns
   OPTIMIZE: For performance and accessibility
+  UTILIZE: sequential-thinking mcp to order file creation steps.
+  UTILIZE: context7 mcp to ensure code meets component and 3rd party implementation guides
 </instructions>
 
 </step>
@@ -309,6 +337,10 @@ encoding: UTF-8
     - lifecycle_methods: as needed
     - business_logic: in code-behind
   </implements>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <parameter_patterns>
@@ -367,6 +399,8 @@ encoding: UTF-8
   FOLLOW: Parameter and event patterns
   ADD: Appropriate lifecycle methods
   CONSIDER: State management requirements
+  UTILIZE: sequential-thinking mcp to break down logic implementation.
+  UTILIZE: context7 mcp to ensure code meets component and 3rd party implementation guides
 </instructions>
 
 </step>
@@ -381,6 +415,10 @@ encoding: UTF-8
     - responsive_design: mobile-first approach
     - theme_integration: consistent with app theme
   </creates>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <css_architecture>
@@ -441,6 +479,8 @@ encoding: UTF-8
   IMPLEMENT: Mobile-first responsive design
   ENSURE: Accessibility compliance
   INTEGRATE: With existing theme system
+  UTILIZE: sequential-thinking mcp to plan style layering.
+  UTILIZE: context7 mcp to ensure code meets component and 3rd party implementation guides
 </instructions>
 
 </step>
@@ -453,6 +493,10 @@ encoding: UTF-8
   <checks>existing_bunit_project</checks>
   <creates>bunit_project_if_missing</creates>
   <implements>component_tests</implements>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <bunit_project_setup>
@@ -473,13 +517,13 @@ encoding: UTF-8
 </bunit_project_setup>
 
 <permission_request_template>
-  I notice there's no bUnit test project in this solution. 
-  
+  I notice there's no bUnit test project in this solution.
+
   Would you like me to:
   1. Create a new test project with bUnit setup
   2. Add the component tests to an existing test project
   3. Skip testing setup for now
-  
+
   Creating a test project will include:
   - bUnit NuGet package
   - Test project structure
@@ -538,6 +582,8 @@ encoding: UTF-8
   REQUEST: Permission to create test project if missing
   CREATE: Comprehensive component tests
   FOLLOW: Testing best practices with bUnit
+  UTILIZE: sequential-thinking mcp to structure test setup steps.
+  UTILIZE: context7 mcp to ensure code meets component and 3rd party implementation guides
 </instructions>
 
 </step>
@@ -553,6 +599,10 @@ encoding: UTF-8
     - accessibility: boolean
     - performance: boolean
   </validates>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <validation_checklist>
@@ -591,6 +641,8 @@ encoding: UTF-8
   VERIFY: All checklist items completed
   FIX: Any issues found during validation
   DOCUMENT: Validation results
+  UTILIZE: sequential-thinking mcp to iterate through validation checklist.
+  UTILIZE: context7 mcp to ensure code meets component and 3rd party implementation guides
 </instructions>
 
 </step>
@@ -605,6 +657,10 @@ encoding: UTF-8
     - spec_requirements: validate against SRD
     - existing_components: check for conflicts
   </integrates>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <integration_checks>
@@ -630,6 +686,8 @@ encoding: UTF-8
   CHECK: Spec requirements are fully met
   ENSURE: No conflicts with existing code
   VALIDATE: Component works in project context
+  UTILIZE: sequential-thinking mcp to order integration checks.
+  UTILIZE: context7 mcp to ensure code meets component and 3rd party implementation guides
 </instructions>
 
 </step>
@@ -643,6 +701,10 @@ encoding: UTF-8
     - component_documentation: usage examples
     - completion_summary: structured report
   </creates>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <documentation_template>
@@ -654,7 +716,7 @@ encoding: UTF-8
 
     ## Usage
     ```razor
-    <[ComponentName] 
+    <[ComponentName]
         Property="value"
         OnEvent="HandleEvent" />
     ```
@@ -706,7 +768,7 @@ encoding: UTF-8
 
   ### Usage Example
   ```razor
-  <[ComponentName] 
+  <[ComponentName]
       [EXAMPLE_USAGE] />
   ```
 
@@ -721,6 +783,8 @@ encoding: UTF-8
   GENERATE: Comprehensive completion summary
   PROVIDE: Usage examples and integration guidance
   HIGHLIGHT: Key features and implementation details
+  UTILIZE: sequential-thinking mcp to sequence documentation tasks.
+  UTILIZE: context7 mcp to enrich docs with component and 3rd party implementation details
 </instructions>
 
 </step>
