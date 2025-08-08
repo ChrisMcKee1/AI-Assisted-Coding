@@ -50,7 +50,6 @@ Backup tip: Create a copy of your existing prompts before merging, e.g., `prompt
 Included MCP server configurations:
 
 - `microsoft-docs`
-- `azure` (Included in `mcp.json` but not in the toolset file; it adds many tools—add it to your toolset only if needed.)
 - `memory`
 - `desktop-commander` (Opinionated personal pick; remove it if you don't need it.)
 - `sequential-thinking`
