@@ -21,23 +21,11 @@ encoding: UTF-8
     - indent: 2 spaces
     - markdown_headers: no indentation
   </file_conventions>
-  <sequential_thinking>
-    <when_to_use>
-      - Complex analysis of requirements and specifications
-      - Strategic decision making about library documentation gathering
-      - Breaking down complex implementations into executable plans
-      - Git branch management decision logic
-      - TDD workflow planning with Context7 integration
-      - Strategic analysis of roadmap completion criteria
-    </when_to_use>
-    <usage_guidelines>
-      - Use for internal cognitive processing during task execution
-      - Apply when instructions specify "USE_SEQUENTIAL_THINKING"
-      - Maintain focus on development best practices and TDD workflow
-      - Consider Context7 integration requirements in all thinking
-      - Generate actionable plans using established templates
-    </usage_guidelines>
-  </sequential_thinking>
+  <tooling>
+    - sequential-thinking mcp
+    - context7 mcp
+    - playwright mcp
+  </tooling>
 </ai_meta>
 
 ## Overview
@@ -74,6 +62,11 @@ encoding: UTF-8
     - specific_tasks: array[string] (optional)
   </inputs>
   <default>next uncompleted parent task</default>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+    - playwright
+  </mcp_tooling>
 </step_metadata>
 
 <task_selection>
@@ -85,6 +78,9 @@ encoding: UTF-8
   ACTION: Identify task(s) to execute
   DEFAULT: Select next uncompleted parent task if not specified
   CONFIRM: Task selection with user
+  UTILIZE: sequential-thinking mcp to plan task assignment flow
+  UTILIZE: context7 mcp to scan tasks.md for any library mentions
+  UTILIZE: playwright mcp to simulate UI clicks for task confirmation prompts
 </instructions>
 
 </step>
@@ -102,6 +98,11 @@ encoding: UTF-8
   </reads>
   <purpose>complete understanding of requirements</purpose>
   <identifies>third-party libraries for Context7 integration</identifies>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+    - playwright
+  </mcp_tooling>
 </step_metadata>
 
 <context_gathering>
@@ -134,6 +135,9 @@ encoding: UTF-8
   IDENTIFY: ALL third-party libraries that will need Context7 documentation support
   SCAN: For both library names and Context7 IDs in slash format
   CATALOG: Each library with its intended purpose in the implementation
+  UTILIZE: sequential-thinking mcp to orchestrate context analysis steps
+  UTILIZE: context7 mcp to fetch initial library documentation details
+  UTILIZE: playwright mcp to capture page snapshots of existing UI components
 </instructions>
 
 </step>
@@ -146,6 +150,10 @@ encoding: UTF-8
   <purpose>gather comprehensive documentation for third-party libraries</purpose>
   <tools>Context7 MCP toolset</tools>
   <timing>after context analysis, before implementation planning</timing>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <context7_workflow>
@@ -172,7 +180,7 @@ encoding: UTF-8
     1. **Check for Direct Context7 ID**
        - If spec contains Context7 ID in slash format (e.g., `/supabase/supabase`)
        - Skip resolution and proceed directly to documentation gathering
-    
+
     2. **Resolve Library ID** (if needed)
        - Use `mcp_context7_resolve-library-id` with library name from specs
        - Review all returned matches carefully
@@ -182,7 +190,7 @@ encoding: UTF-8
          * Documentation coverage (prioritize higher code snippet counts)
          * Trust score (prefer libraries with scores 7-10)
        - Document the chosen library ID for later reference
-    
+
     3. **Gather Comprehensive Documentation**
        - Use `mcp_context7_get-library-docs` with resolved or direct ID
        - For specific functionality, use `topic` parameter:
@@ -193,7 +201,7 @@ encoding: UTF-8
          * "api" for API integration patterns
        - Use higher token limits (15000+) for complex integrations
        - Validate documentation quality and completeness
-    
+
     4. **Document and Validate Context**
        - Store library documentation context for development phase
        - Note specific features and APIs required by spec
@@ -230,6 +238,7 @@ encoding: UTF-8
   VALIDATE: Documentation completeness and quality
   STORE: Documentation context for development phase
   DOCUMENT: Any Context7 documentation gaps for fallback strategies
+  UTILIZE: context7 mcp to resolve library IDs and retrieve documentation
 </instructions>
 
 </step>
@@ -241,6 +250,10 @@ encoding: UTF-8
 <step_metadata>
   <creates>execution plan</creates>
   <requires>user approval</requires>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <plan_structure>
@@ -248,7 +261,7 @@ encoding: UTF-8
   <includes>
     - all subtasks from tasks.md
     - implementation approach
-    - dependencies to install
+    - dependencies to install7
     - test strategy
     - Context7 documentation references
   </includes>
@@ -286,6 +299,8 @@ encoding: UTF-8
   DISPLAY: Plan to user for review
   WAIT: For explicit approval before proceeding
   BLOCK: Do not proceed without affirmative permission
+  UTILIZE: sequential-thinking mcp to structure the implementation plan
+  UTILIZE: context7 mcp to include library doc references in the plan
 </instructions>
 
 </step>
@@ -318,6 +333,8 @@ encoding: UTF-8
   ACTION: Check for running local development server
   CONDITIONAL: Ask permission only if server is running
   PROCEED: Immediately if no server detected
+  UTILIZE: sequential-thinking mcp to decide between immediate proceed or user prompt
+  UTILIZE: playwright mcp to detect active ports by attempting a page navigation
 </instructions>
 
 </step>
@@ -363,11 +380,12 @@ encoding: UTF-8
 </case_c_prompt>
 
 <instructions>
-  USE_SEQUENTIAL_THINKING: Analyze current git state, determine appropriate branch strategy based on the three cases, and plan the optimal branch management approach
+  USE_SEQUENTIAL_THINKING: Analyze current git state to determine branch management strategy (cases A, B, or C)
   ACTION: Check current git branch
   EVALUATE: Which case applies
   EXECUTE: Appropriate branch action
   WAIT: Only for case C approval
+  UTILIZE: sequential-thinking mcp to plan branch creation or switching steps
 </instructions>
 
 </step>
@@ -423,7 +441,7 @@ encoding: UTF-8
       - Confirm authentication flows match Context7 patterns
     </validation>
   </library_implementation>
-  
+
   <documentation_refresh>
     <when_needed>
       - When implementation differs from initial plan
@@ -478,6 +496,8 @@ encoding: UTF-8
   MAINTAIN: Code quality at every step
   VERIFY: Library usage matches Context7 patterns exactly
   DOCUMENT: Any deviations from Context7 documentation with clear reasoning
+  UTILIZE: context7 mcp at start of development to fetch up-to-date library docs
+  UTILIZE: playwright mcp to run automated end-to-end UI tests & validation as part of development
 </instructions>
 
 </step>
@@ -511,6 +531,8 @@ encoding: UTF-8
   MARK: [x] for completed items immediately
   DOCUMENT: Blocking issues with ⚠️ emoji
   LIMIT: 3 attempts before marking as blocked
+  UTILIZE: sequential-thinking mcp to decide update and block criteria
+  UTILIZE: playwright mcp to verify UI status changes in browser if applicable
 </instructions>
 
 </step>
@@ -543,6 +565,13 @@ encoding: UTF-8
   VERIFY: All tests pass including new ones
   FIX: Any test failures before continuing
   BLOCK: Do not proceed with failing tests
+  UTILIZE: sequential-thinking mcp to plan test execution and failure handling
+  UTILIZE: playwright mcp to execute and validate end-to-end browser tests
+  UTILIZE: playwright mcp browser_type for entering multi-character inputs (avoid browser_press_key for text entry)
+  UTILIZE: playwright mcp browser_click for UI interactions; reserve browser_press_key only for specific keystroke event testing
+  UTILIZE: playwright mcp browser_press_key for testing specific keypress events (onkeydown, onkeyup, onkeypressed).
+  UTILIZE: playwright mcp browser_wait_for to wait for elements or text changes before assertions
+  UTILIZE: playwright mcp browser_snapshot to capture page state before and after critical interactions
 </instructions>
 
 </step>
@@ -594,6 +623,7 @@ encoding: UTF-8
   ACTION: Commit all changes with descriptive message
   PUSH: To GitHub on spec branch
   CREATE: Pull request with detailed description
+  UTILIZE: sequential-thinking mcp to sequence commit, push, and PR steps
 </instructions>
 
 </step>
@@ -622,6 +652,7 @@ encoding: UTF-8
   EVALUATE: If current spec completes roadmap goals
   UPDATE: Mark roadmap items complete if applicable
   VERIFY: Certainty before marking complete
+  UTILIZE: sequential-thinking mcp to orchestrate roadmap evaluation
 </instructions>
 
 </step>
@@ -642,6 +673,7 @@ encoding: UTF-8
 <instructions>
   ACTION: Play completion sound
   PURPOSE: Alert user that task is complete
+  UTILIZE: sequential-thinking mcp to confirm optimal notification timing
 </instructions>
 
 </step>
@@ -693,6 +725,8 @@ encoding: UTF-8
   INCLUDE: All required sections
   ADD: Conditional sections if applicable
   FORMAT: Use emoji headers for scannability
+  UTILIZE: sequential-thinking mcp to structure summary message
+  UTILIZE: playwright mcp to generate screenshots for pull request documentation
 </instructions>
 
 </step>
@@ -838,14 +872,14 @@ encoding: UTF-8
        Tool: resolve-library-id
        Output: "/remix-run/react-router"
        ```
-    
+
     2. **Documentation Gathering** (Step 2.5)
        ```
        Tool: get-library-docs
        Input: context7CompatibleLibraryID = "/remix-run/react-router"
        Optional: topic = "routing", tokens = 10000
        ```
-    
+
     3. **Implementation Validation** (Step 6)
        - Cross-reference code against Context7 documentation
        - Use exact API patterns from documentation
@@ -879,7 +913,7 @@ encoding: UTF-8
     - Use focused topics to avoid information overload
     - Request documentation early in TDD cycle for test development
   </documentation_timing>
-  
+
   <library_selection>
     - Choose the most relevant library match from resolve-library-id results
     - Consider documentation coverage and trust scores (prefer 7-10)
@@ -887,7 +921,7 @@ encoding: UTF-8
     - Review description relevance to project requirements
     - Select libraries with higher code snippet counts for better examples
   </library_selection>
-  
+
   <implementation_validation>
     - Validate API signatures against Context7 documentation before writing code
     - Follow documented error handling patterns exactly
@@ -896,7 +930,7 @@ encoding: UTF-8
     - Ensure authentication flows match Context7 best practices
     - Apply Context7 code snippets as implementation templates
   </implementation_validation>
-  
+
   <direct_library_id_usage>
     - When specs mention Context7 IDs in slash format (e.g., `/supabase/supabase`), use directly
     - Skip the resolve-library-id step for known Context7 IDs
@@ -904,11 +938,11 @@ encoding: UTF-8
       * `/vercel/next.js` for Next.js development
       * `/remix-run/react-router` for React routing
   </direct_library_id_usage>
-  
+
   <focused_documentation_requests>
     - Use `topic` parameter to get specific functionality documentation:
       * "authentication" for auth implementations
-      * "routing" for navigation features  
+      * "routing" for navigation features
       * "hooks" for React hook usage patterns
       * "configuration" for setup and initialization
       * "api" for API integration patterns
@@ -916,7 +950,7 @@ encoding: UTF-8
     - Request higher token limits (15000-20000) for complex integrations
     - Make multiple focused requests rather than one broad request
   </focused_documentation_requests>
-  
+
   <error_handling>
     - If Context7 documentation is insufficient, document the gap clearly
     - Fall back to official library documentation when necessary
@@ -938,14 +972,14 @@ encoding: UTF-8
     ```
     Spec requirement: "Implement user authentication with Supabase"
     Spec mentions: "use library /supabase/supabase for authentication"
-    
+
     Step 2.5: Context7 Documentation Gathering
     1. Skip resolve-library-id (direct Context7 ID provided)
-    2. mcp_context7_get-library-docs: 
+    2. mcp_context7_get-library-docs:
        - context7CompatibleLibraryID="/supabase/supabase"
        - topic="authentication"
        - tokens="15000"
-    
+
     Step 6: Development Execution
     - Reference Context7 Supabase auth documentation exclusively
     - Implement sign-up/sign-in using exact Context7 documented patterns
@@ -954,19 +988,19 @@ encoding: UTF-8
     - Validate implementation against Context7 documentation before testing
     ```
   </authentication_example>
-  
+
   <routing_example>
     ```
     Spec requirement: "Set up React routing with protected routes"
     Spec mentions: "use react-router-dom for navigation"
-    
+
     Step 2.5: Context7 Documentation Gathering
     1. mcp_context7_resolve-library-id: "react-router-dom" → "/remix-run/react-router"
-    2. mcp_context7_get-library-docs: 
+    2. mcp_context7_get-library-docs:
        - context7CompatibleLibraryID="/remix-run/react-router"
        - topic="routing"
        - tokens="12000"
-    
+
     Step 6: Development Execution
     - Use Context7 React Router documentation patterns exclusively
     - Implement protected routes following Context7 documented approaches
@@ -978,7 +1012,7 @@ encoding: UTF-8
   <database_example>
     ```
     Spec requirement: "Implement MongoDB data layer with aggregation pipelines"
-    
+
     Step 2.5: Context7 Documentation Gathering
     1. mcp_context7_resolve-library-id: "mongodb" → "/mongodb/docs"
     2. mcp_context7_get-library-docs:
@@ -989,7 +1023,7 @@ encoding: UTF-8
        - context7CompatibleLibraryID="/mongodb/docs"
        - topic="configuration"
        - tokens="15000"
-    
+
     Step 6: Development Execution
     - Follow Context7 MongoDB connection patterns exactly
     - Use Context7 aggregation pipeline examples as templates
@@ -1002,7 +1036,7 @@ encoding: UTF-8
     ```
     Spec requirement: "Build Next.js app with Supabase auth and MongoDB data"
     Spec mentions: "use /vercel/next.js and /supabase/supabase"
-    
+
     Step 2.5: Context7 Documentation Gathering
     1. Skip resolution for known Context7 IDs
     2. Gather Next.js documentation:
@@ -1014,7 +1048,7 @@ encoding: UTF-8
     4. Resolve and gather MongoDB:
        - resolve "mongodb" → "/mongodb/docs"
        - topic="api"
-    
+
     Step 6: Development Execution
     - Integrate all libraries following Context7 patterns
     - Ensure compatibility using Context7 integration examples
@@ -1025,7 +1059,7 @@ encoding: UTF-8
   <error_handling_example>
     ```
     Scenario: Context7 documentation insufficient for specific use case
-    
+
     Step 2.5: Context7 Documentation Gathering
     1. Initial documentation request yields incomplete information
     2. Refresh with specific topic:
@@ -1033,7 +1067,7 @@ encoding: UTF-8
        - topic="advanced-configuration"
        - tokens="20000"
     3. Still insufficient - document the gap
-    
+
     Step 6: Development Execution
     - Use available Context7 documentation for basic implementation
     - Document gaps: "Context7 lacks advanced caching configuration"

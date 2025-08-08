@@ -21,23 +21,10 @@ encoding: UTF-8
     - indent: 2 spaces
     - markdown_headers: no indentation
   </file_conventions>
-  <sequential_thinking>
-    <when_to_use>
-      - Complex decision making between multiple options
-      - Analysis requiring synthesis of multiple information sources
-      - Breaking down complex problems into components
-      - Strategic impact evaluation
-      - Technical approach selection
-      - Task breakdown and dependency analysis
-    </when_to_use>
-    <usage_guidelines>
-      - Use for internal cognitive processing, not user-facing content
-      - Apply when instructions specify "USE_SEQUENTIAL_THINKING"
-      - Continue with normal process flow after thinking is complete
-      - Generate final outputs using established templates
-      - Think through problems thoroughly before proceeding
-    </usage_guidelines>
-  </sequential_thinking>
+  <tooling>
+    - sequential-thinking mcp
+    - context7 mcp
+  </tooling>
 </ai_meta>
 
 ## Overview
@@ -74,6 +61,10 @@ encoding: UTF-8
     - option_a: user_asks_whats_next
     - option_b: user_provides_specific_spec
   </trigger_options>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <option_a_flow>
@@ -100,6 +91,8 @@ encoding: UTF-8
   ACTION: Identify spec initiation method
   ROUTE: Follow appropriate flow based on trigger
   WAIT: Ensure user agreement before proceeding
+  UTILIZE: sequential-thinking mcp to plan initiation flow
+  UTILIZE: context7 mcp to lookup relevant SDK or external lib docs
 </instructions>
 
 </step>
@@ -115,6 +108,9 @@ encoding: UTF-8
     - [tech-stack](../../.docs/product/tech-stack.md)
   </reads>
   <purpose>understand spec alignment</purpose>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <context_analysis>
@@ -128,6 +124,7 @@ encoding: UTF-8
   USE_SEQUENTIAL_THINKING: Analyze spec alignment with each document, identify potential conflicts or synergies, and determine implications for implementation
   ANALYZE: Spec alignment with each document
   NOTE: Consider implications for implementation
+  UTILIZE: sequential-thinking mcp to synthesize context from multiple docs
 </instructions>
 
 </step>
@@ -141,6 +138,9 @@ encoding: UTF-8
     - scope_boundaries: string
     - technical_considerations: array[string]
   </required_clarifications>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <clarification_areas>
@@ -176,6 +176,7 @@ encoding: UTF-8
   ACTION: Evaluate need for clarification
   ASK: Numbered questions if needed
   PROCEED: Only with clear requirements
+  UTILIZE: sequential-thinking mcp to generate precise clarification questions
 </instructions>
 
 </step>
@@ -188,6 +189,9 @@ encoding: UTF-8
   <purpose>Ensure accurate date for folder naming</purpose>
   <priority>high</priority>
   <creates>temporary file for timestamp</creates>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <date_determination_process>
@@ -237,6 +241,7 @@ encoding: UTF-8
   FALLBACK: Ask user if file system method fails
   VALIDATE: Ensure YYYY-MM-DD format
   STORE: Date for immediate use in next step
+  UTILIZE: sequential-thinking mcp to choose primary vs fallback method
 </instructions>
 
 </step>
@@ -250,6 +255,9 @@ encoding: UTF-8
     - directory: .docs/specs/YYYY-MM-DD-spec-name/
   </creates>
   <uses>date from step 4</uses>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <folder_naming>
@@ -273,6 +281,7 @@ encoding: UTF-8
   FORMAT: Use kebab-case for spec name
   LIMIT: Maximum 5 words in name
   VERIFY: Folder created successfully
+  UTILIZE: sequential-thinking mcp to sequence folder naming rules
 </instructions>
 
 </step>
@@ -285,6 +294,10 @@ encoding: UTF-8
   <creates>
     - file: .docs/specs/YYYY-MM-DD-spec-name/spec.md
   </creates>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <file_template>
@@ -377,6 +390,8 @@ encoding: UTF-8
   ACTION: Create spec.md with all sections
   FILL: Use spec details from steps 1-3
   MAINTAIN: Clear, concise descriptions
+  UTILIZE: sequential-thinking mcp to organize sections
+  UTILIZE: context7 mcp to fetch examples or syntax for any used libraries
 </instructions>
 
 </step>
@@ -390,6 +405,10 @@ encoding: UTF-8
     - directory: sub-specs/
     - file: sub-specs/technical-spec.md
   </creates>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <file_template>
@@ -451,6 +470,8 @@ encoding: UTF-8
   ACTION: Create sub-specs folder and technical-spec.md
   DOCUMENT: All technical decisions and requirements
   JUSTIFY: Any new dependencies
+  UTILIZE: sequential-thinking mcp to compare approaches methodically
+  UTILIZE: context7 mcp to lookup version and usage details for external libraries
 </instructions>
 
 </step>
@@ -464,6 +485,10 @@ encoding: UTF-8
     - file: sub-specs/database-schema.md
   </creates>
   <condition>only if database changes needed</condition>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <decision_tree>
@@ -507,6 +532,8 @@ encoding: UTF-8
   ACTION: Check if database changes needed
   CREATE: database-schema.md only if required
   INCLUDE: Complete SQL/migration specifications
+  UTILIZE: sequential-thinking mcp to structure schema steps
+  UTILIZE: context7 mcp to lookup SQL syntax or migration best practices
 </instructions>
 
 </step>
@@ -520,6 +547,10 @@ encoding: UTF-8
     - file: sub-specs/api-spec.md
   </creates>
   <condition>only if API changes needed</condition>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <decision_tree>
@@ -573,6 +604,8 @@ encoding: UTF-8
   ACTION: Check if API changes needed
   CREATE: api-spec.md only if required
   DOCUMENT: All endpoints and controllers
+  UTILIZE: sequential-thinking mcp to order endpoint definitions
+  UTILIZE: context7 mcp to reference HTTP/REST conventions for status codes
 </instructions>
 
 </step>
@@ -585,6 +618,9 @@ encoding: UTF-8
   <creates>
     - file: sub-specs/tests.md
   </creates>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <file_template>
@@ -644,6 +680,7 @@ encoding: UTF-8
   ACTION: Create comprehensive test specification
   ENSURE: All new functionality has test coverage
   SPECIFY: Mock requirements for external services
+  UTILIZE: sequential-thinking mcp to outline test categories
 </instructions>
 
 </step>
@@ -658,6 +695,9 @@ encoding: UTF-8
     - spec.md
     - all sub-specs files
   </reviews>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <review_request>
@@ -674,6 +714,7 @@ encoding: UTF-8
   ACTION: Request user review of all documents
   WAIT: For approval or revision requests
   REVISE: Make requested changes if any
+  UTILIZE: sequential-thinking mcp to summarize changes concisely
 </instructions>
 
 </step>
@@ -687,6 +728,9 @@ encoding: UTF-8
     - file: tasks.md
   </creates>
   <depends_on>user approval from step 11</depends_on>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <file_template>
@@ -740,6 +784,7 @@ encoding: UTF-8
   ACTION: Create task breakdown following TDD
   STRUCTURE: Major tasks with subtasks
   ORDER: Consider dependencies
+  UTILIZE: sequential-thinking mcp to sequence tasks logically
 </instructions>
 
 </step>
@@ -753,6 +798,9 @@ encoding: UTF-8
     - file: spec.md
   </updates>
   <adds>references to all spec files</adds>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <reference_template>
@@ -775,6 +823,7 @@ encoding: UTF-8
   ACTION: Update spec.md with references
   FORMAT: Use @ prefix for all paths
   INCLUDE: Only files actually created
+  UTILIZE: sequential-thinking mcp to compile reference list
 </instructions>
 
 </step>
@@ -786,6 +835,9 @@ encoding: UTF-8
 <step_metadata>
   <evaluates>strategic impact</evaluates>
   <updates>decisions.md if needed</updates>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <decision_analysis>
@@ -843,6 +895,7 @@ encoding: UTF-8
   IDENTIFY: Up to 3 key decisions if any
   REQUEST: User approval before updating
   UPDATE: Add to decisions.md if approved
+  UTILIZE: sequential-thinking mcp to evaluate decision criteria
 </instructions>
 
 </step>
@@ -854,6 +907,9 @@ encoding: UTF-8
 <step_metadata>
   <evaluates>readiness to begin implementation</evaluates>
   <depends_on>completion of all previous steps</depends_on>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <readiness_summary>
@@ -889,6 +945,7 @@ encoding: UTF-8
   ACTION: Summarize first task and request user confirmation
   REFERENCE: Use execute-tasks.md for implementation
   SCOPE: Limit to Task 1 only unless user specifies otherwise
+  UTILIZE: sequential-thinking mcp to craft execution prompt
 </instructions>
 
 </step>

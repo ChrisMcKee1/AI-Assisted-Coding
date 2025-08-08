@@ -21,6 +21,10 @@ encoding: UTF-8
     - indent: 2 spaces
     - markdown_headers: no indentation
   </file_conventions>
+  <tooling>
+    - sequential-thinking mcp
+    - context7 mcp
+  </tooling>
 </ai_meta>
 
 ## Overview
@@ -53,6 +57,9 @@ encoding: UTF-8
 <step_metadata>
   <action>deep codebase analysis</action>
   <purpose>understand current state before documentation</purpose>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <analysis_areas>
@@ -99,6 +106,9 @@ encoding: UTF-8
 <step_metadata>
   <supplements>codebase analysis</supplements>
   <gathers>business context and future plans</gathers>
+  <mcp_tooling>
+    - sequential-thinking
+  </mcp_tooling>
 </step_metadata>
 
 <context_questions>
@@ -132,6 +142,10 @@ encoding: UTF-8
 <step_metadata>
   <uses>[plan-product](./plan-product.instructions.md)</uses>
   <modifies>standard flow for existing products</modifies>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
 </step_metadata>
 
 <execution_parameters>
@@ -158,7 +172,7 @@ encoding: UTF-8
 </execution_prompt>
 
 <instructions>
-  ACTION: Execute plan-product.md with gathered information
+  ACTION: Execute plan-product.md with gathered information. Use `context7` for documentation lookup and tech stack validation
   PROVIDE: All context as structured input
   ALLOW: plan-product.md to create .docs/product/ structure
 </instructions>
@@ -217,9 +231,99 @@ encoding: UTF-8
 
 </step>
 
-<step number="5" name="final_verification">
+<step number="5" name="create_or_update_copilot_instructions_md">
+### Step 5: Create or Update copilot-instructions.md
 
-### Step 5: Final Verification and Summary
+<step_metadata>
+  <creates>
+    - file: `.github/copilot-instructions.md`
+  </creates>
+  <updates>
+    - file: `.github/copilot-instructions.md` (if exists)
+  </updates>
+  <merge_strategy>append_or_replace_section</merge_strategy>
+  <mcp_tooling>
+    - sequential-thinking
+    - context7
+  </mcp_tooling>
+</step_metadata>
+
+<file_location>
+  <path>.github/copilot-instructions.md</path>
+  <description>.github workspace directory</description>
+</file_location>
+
+<content_template>
+## Nous Documentation
+
+### Product Context
+- **Mission & Vision:** [mission](../.docs/product/mission.md)
+- **Technical Architecture:** [tech-stack](../.docs/product/tech-stack.md)
+- **Development Roadmap:** [roadmap](../.docs/product/roadmap.md)
+- **Decision History:** [decisions](../.docs/product/decisions.md)
+
+### Development Standards
+- **Code Style:** [code-style](.docs/standards/code-style.md)
+- **Best Practices:** [best-practices](.docs/standards/best-practices.md)
+
+### Project Management
+- **Active Specs:** [specs](../.docs/specs/)
+- **Spec Planning:** Use [create-spec.md](./instructions/create-spec.instructions.md)
+- **Tasks Execution:** Use [execute-tasks.md](./instructions/execute-tasks.instructions.md)
+
+## Workflow Instructions
+
+When asked to work on this codebase:
+
+1. **First**, check [roadmap](../.docs/product/roadmap.md) for current priorities
+2. **Then**, follow the appropriate instruction file:
+   - Use `sequential-thinking` mcp tool to follow instructions
+   - For new features: [create-spec.md](./instructions/create-spec.instructions.md)
+   - For tasks execution: [execute-tasks.md](./instructions/execute-tasks.instructions.md)
+3. **Always**, adhere to the standards in the files listed above
+4. **Always** use `context7` to validate usage of SDKs, libraries, and implementation
+
+## Important Notes
+
+- Product-specific files in `.docs/product/` override any global standards
+- User's specific instructions override (or amend) instructions found in `.docs/specs/...`
+- Always adhere to established patterns, code style, and best practices documented above.
+- Always lookup documentation for 3rd party libraries in `context7` mcp
+- If coding standards do not exist in the `.docs/standards` directory, create the folder and copy the templates from the [templates](../templates/) folder.
+</content_template>
+
+<merge_behavior>
+  <if_file_exists>
+    <check_for_section>"## Nous Documentation"</check_for_section>
+    <if_section_exists>
+      <action>replace_section</action>
+      <start_marker>"## Nous Documentation"</start_marker>
+      <end_marker>next_h2_heading_or_end_of_file</end_marker>
+    </if_section_exists>
+    <if_section_not_exists>
+      <action>append_to_file</action>
+      <separator>"\n\n"</separator>
+    </if_section_not_exists>
+  </if_file_exists>
+  <if_file_not_exists>
+    <action>create_new_file</action>
+    <content>content_template</content>
+  </if_file_not_exists>
+</merge_behavior>
+
+<instructions>
+  ACTION: Check if copilot-instructions.md exists in .github folder
+  MERGE: Replace "Nous Documentation" section if it exists
+  APPEND: Add section to end if file exists but section doesn't
+  CREATE: Create new file with template content if file doesn't exist
+  PRESERVE: Keep all other existing content in the file
+</instructions>
+
+</step>
+
+<step number="6" name="final_verification">
+
+### Step 6: Final Verification and Summary
 
 <step_metadata>
   <verifies>installation completeness</verifies>
