@@ -15,7 +15,7 @@
                 "@modelcontextprotocol/server-memory"
             ],
 			"env": {
-				"MEMORY_FILE_PATH": "${input:memory_file_path}"
+				"MEMORY_FILE_PATH": "${workspaceFolder}/.github/memory.json"
 			}
         },
         "sequential-thinking": {
@@ -31,6 +31,21 @@
 			"args": [
 				"@playwright/mcp@latest"
 			]
-		}
+		},
+        "todo-md": {
+            "type": "stdio",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@danjdewhurst/todo-md-mcp"
+            ],
+            "env": {
+                "TODO_FILE_PATH": "${workspaceFolder}/.github/.todo.md"
+            }
+        },
+        "microsoft.docs": {
+            "type": "http",
+            "url": "https://learn.microsoft.com/api/mcp"
+        }
     }
 }

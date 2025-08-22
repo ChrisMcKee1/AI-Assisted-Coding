@@ -1,409 +1,509 @@
 ---
-description: Analyze Current Product & Install Nous
+description: Analyze Current Product & Create Product Documentation
 globs:
 alwaysApply: false
 version: 1.0
 encoding: UTF-8
+format: poml
 ---
-
-# Analyze Current Product & Install Nous
-
-<ai_meta>
-  <parsing_rules>
-    - Process XML blocks first for structured data
-    - Execute instructions in sequential order
-    - Use templates as exact patterns
-    - Analyze existing code before generating documentation
-  </parsing_rules>
-  <file_conventions>
-    - encoding: UTF-8
-    - line_endings: LF
-    - indent: 2 spaces
-    - markdown_headers: no indentation
-  </file_conventions>
-  <tooling>
-    - sequential-thinking mcp
-    - context7 mcp
-  </tooling>
-</ai_meta>
-
-## Overview
-
-<purpose>
-  - Install Nous into an existing codebase
-  - Analyze current product state and progress
-  - Generate documentation that reflects actual implementation
-  - Preserve existing architectural decisions
-</purpose>
-
-<context>
-  - Part of Nous framework
-  - Used when retrofitting Nous to established products
-  - Builds on plan-product.md with codebase analysis
-</context>
-
-<prerequisites>
-  - Existing product codebase
-  - Write access to project root
-  - Access to [/plan-product](./plan-product.instructions.md)
-</prerequisites>
-
-<process_flow>
-
-<step number="1" name="analyze_existing_codebase">
-
-### Step 1: Analyze Existing Codebase
-
-<step_metadata>
-  <action>deep codebase analysis</action>
-  <purpose>understand current state before documentation</purpose>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<analysis_areas>
-  <project_structure>
-    - Directory organization
-    - File naming patterns
-    - Module structure
-    - Build configuration
-  </project_structure>
-  <technology_stack>
-    - Frameworks in use
-    - Dependencies (package.json, Gemfile, requirements.txt, etc.)
-    - Database systems
-    - Infrastructure configuration
-  </technology_stack>
-  <implementation_progress>
-    - Completed features
-    - Work in progress
-    - Authentication/authorization state
-    - API endpoints
-    - Database schema
-  </implementation_progress>
-  <code_patterns>
-    - Coding style in use
-    - Naming conventions
-    - File organization patterns
-    - Testing approach
-  </code_patterns>
-</analysis_areas>
-
-<instructions>
-  ACTION: Thoroughly analyze the existing codebase
-  DOCUMENT: Current technologies, features, and patterns
-  IDENTIFY: Architectural decisions already made
-  NOTE: Development progress and completed work
-</instructions>
-
-</step>
-
-<step number="2" name="gather_product_context">
-
-### Step 2: Gather Product Context
-
-<step_metadata>
-  <supplements>codebase analysis</supplements>
-  <gathers>business context and future plans</gathers>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<context_questions>
-  Based on my analysis of your codebase, I can see you're building [OBSERVED_PRODUCT_TYPE].
-
-  To properly set up Nous, I need to understand:
-
-  1. **Product Vision**: What problem does this solve? Who are the target users?
-
-  2. **Current State**: Are there features I should know about that aren't obvious from the code?
-
-  3. **Roadmap**: What features are planned next? Any major refactoring planned?
-
-  4. **Decisions**: Are there important technical or product decisions I should document?
-
-  5. **Team Preferences**: Any coding standards or practices the team follows that I should capture?
-</context_questions>
-
-<instructions>
-  ACTION: Ask user for product context
-  COMBINE: Merge user input with codebase analysis
-  PREPARE: Information for plan-product.md execution
-</instructions>
-
-</step>
-
-<step number="3" name="execute_plan_product">
-
-### Step 3: Execute Plan-Product with Context
-
-<step_metadata>
-  <uses>[plan-product](./plan-product.instructions.md)</uses>
-  <modifies>standard flow for existing products</modifies>
-  <mcp_tooling>
-    - sequential-thinking
-    - context7
-  </mcp_tooling>
-</step_metadata>
-
-<execution_parameters>
-  <main_idea>[DERIVED_FROM_ANALYSIS_AND_USER_INPUT]</main_idea>
-  <key_features>[IDENTIFIED_IMPLEMENTED_AND_PLANNED_FEATURES]</key_features>
-  <target_users>[FROM_USER_CONTEXT]</target_users>
-  <tech_stack>[DETECTED_FROM_CODEBASE]</tech_stack>
-</execution_parameters>
-
-<execution_prompt>
-  [plan-product](./plan-product.instructions.md)
-
-  I'm installing Nous into an existing product. Here's what I've gathered:
-
-  **Main Idea**: [SUMMARY_FROM_ANALYSIS_AND_CONTEXT]
-
-  **Key Features**:
-  - Already Implemented: [LIST_FROM_ANALYSIS]
-  - Planned: [LIST_FROM_USER]
-
-  **Target Users**: [FROM_USER_RESPONSE]
-
-  **Tech Stack**: [DETECTED_STACK_WITH_VERSIONS]
-</execution_prompt>
-
-<instructions>
-  ACTION: Execute plan-product.md with gathered information. Use `context7` for documentation lookup and tech stack validation
-  PROVIDE: All context as structured input
-  ALLOW: plan-product.md to create .docs/product/ structure
-</instructions>
-
-</step>
-
-<step number="4" name="customize_generated_files">
-
-### Step 4: Customize Generated Documentation
-
-<step_metadata>
-  <refines>generated documentation</refines>
-  <ensures>accuracy for existing product</ensures>
-</step_metadata>
-
-<customization_tasks>
-  <roadmap_adjustment>
-    - Mark completed features as done
-    - Move implemented items to "Phase 0: Already Completed"
-    - Adjust future phases based on actual progress
-  </roadmap_adjustment>
-  <tech_stack_verification>
-    - Verify detected versions are correct
-    - Add any missing infrastructure details
-    - Document actual deployment setup
-  </tech_stack_verification>
-  <decisions_documentation>
-    - Add historical decisions that shaped current architecture
-    - Document why certain technologies were chosen
-    - Capture any pivots or major changes
-  </decisions_documentation>
-</customization_tasks>
-
-<roadmap_template>
-  ## Phase 0: Already Completed
-
-  The following features have been implemented:
-
-  - [x] [FEATURE_1] - [DESCRIPTION_FROM_CODE]
-  - [x] [FEATURE_2] - [DESCRIPTION_FROM_CODE]
-  - [x] [FEATURE_3] - [DESCRIPTION_FROM_CODE]
-
-  ## Phase 1: Current Development
-
-  - [ ] [IN_PROGRESS_FEATURE] - [DESCRIPTION]
-
-  [CONTINUE_WITH_STANDARD_PHASES]
-</roadmap_template>
-
-<instructions>
-  ACTION: Update generated files to reflect reality
-  MODIFY: Roadmap to show completed work
-  VERIFY: Tech stack matches actual implementation
-  ADD: Historical context to decisions.md
-</instructions>
-
-</step>
-
-<step number="5" name="create_or_update_copilot_instructions_md">
-### Step 5: Create or Update copilot-instructions.md
-
-<step_metadata>
-  <creates>
-    - file: `.github/copilot-instructions.md`
-  </creates>
-  <updates>
-    - file: `.github/copilot-instructions.md` (if exists)
-  </updates>
-  <merge_strategy>append_or_replace_section</merge_strategy>
-  <mcp_tooling>
-    - sequential-thinking
-    - context7
-  </mcp_tooling>
-</step_metadata>
-
-<file_location>
-  <path>.github/copilot-instructions.md</path>
-  <description>.github workspace directory</description>
-</file_location>
-
-<content_template>
-## Nous Documentation
-
-### Product Context
-- **Mission & Vision:** [mission](../.docs/product/mission.md)
-- **Technical Architecture:** [tech-stack](../.docs/product/tech-stack.md)
-- **Development Roadmap:** [roadmap](../.docs/product/roadmap.md)
-- **Decision History:** [decisions](../.docs/product/decisions.md)
-
-### Development Standards
-- **Code Style:** [code-style](.docs/standards/code-style.md)
-- **Best Practices:** [best-practices](.docs/standards/best-practices.md)
-
-### Project Management
-- **Active Specs:** [specs](../.docs/specs/)
-- **Spec Planning:** Use [create-spec.md](./instructions/create-spec.instructions.md)
-- **Tasks Execution:** Use [execute-tasks.md](./instructions/execute-tasks.instructions.md)
-
-## Workflow Instructions
-
-When asked to work on this codebase:
-
-1. **First**, check [roadmap](../.docs/product/roadmap.md) for current priorities
-2. **Then**, follow the appropriate instruction file:
-   - Use `sequential-thinking` mcp tool to follow instructions
-   - For new features: [create-spec.md](./instructions/create-spec.instructions.md)
-   - For tasks execution: [execute-tasks.md](./instructions/execute-tasks.instructions.md)
-3. **Always**, adhere to the standards in the files listed above
-4. **Always** use `context7` to validate usage of SDKs, libraries, and implementation
-
-## Important Notes
-
-- Product-specific files in `.docs/product/` override any global standards
-- User's specific instructions override (or amend) instructions found in `.docs/specs/...`
-- Always adhere to established patterns, code style, and best practices documented above.
-- Always lookup documentation for 3rd party libraries in `context7` mcp
-- If coding standards do not exist in the `.docs/standards` directory, create the folder and copy the templates from the [templates](../templates/) folder.
-</content_template>
-
-<merge_behavior>
-  <if_file_exists>
-    <check_for_section>"## Nous Documentation"</check_for_section>
-    <if_section_exists>
-      <action>replace_section</action>
-      <start_marker>"## Nous Documentation"</start_marker>
-      <end_marker>next_h2_heading_or_end_of_file</end_marker>
-    </if_section_exists>
-    <if_section_not_exists>
-      <action>append_to_file</action>
-      <separator>"\n\n"</separator>
-    </if_section_not_exists>
-  </if_file_exists>
-  <if_file_not_exists>
-    <action>create_new_file</action>
-    <content>content_template</content>
-  </if_file_not_exists>
-</merge_behavior>
-
-<instructions>
-  ACTION: Check if copilot-instructions.md exists in .github folder
-  MERGE: Replace "Nous Documentation" section if it exists
-  APPEND: Add section to end if file exists but section doesn't
-  CREATE: Create new file with template content if file doesn't exist
-  PRESERVE: Keep all other existing content in the file
-</instructions>
-
-</step>
-
-<step number="6" name="final_verification">
-
-### Step 6: Final Verification and Summary
-
-<step_metadata>
-  <verifies>installation completeness</verifies>
-  <provides>next steps for user</provides>
-</step_metadata>
-
-<verification_checklist>
-  - [ ] .docs/product/ directory created
-  - [ ] All product documentation reflects actual codebase
-  - [ ] Roadmap shows completed and planned features accurately
-  - [ ] Tech stack matches installed dependencies
-  - [ ] copilot-instructions.md configured
-</verification_checklist>
-
-<summary_template>
-  ## ✅ Nous Successfully Installed
-
-  I've analyzed your [PRODUCT_TYPE] codebase and set up Nous with documentation that reflects your actual implementation.
-
-  ### What I Found
-
-  - **Tech Stack**: [SUMMARY_OF_DETECTED_STACK]
-  - **Completed Features**: [COUNT] features already implemented
-  - **Code Style**: [DETECTED_PATTERNS]
-  - **Current Phase**: [IDENTIFIED_DEVELOPMENT_STAGE]
-
-  ### What Was Created
-
-  - ✓ Product documentation in `.docs/product/`
-  - ✓ Roadmap with completed work in Phase 0
-  - ✓ Tech stack reflecting actual dependencies
-
-  ### Next Steps
-
-  1. Review the generated documentation in `.docs/product/`
-  2. Make any necessary adjustments to reflect your vision
-  3. See the Nous README for usage instructions: https://github.com/seiggy/nous
-  4. Start using Nous for your next feature:
-     ```
-     [/create-spec](../prompts/create-spec.prompt.md)
-     ```
-
-  Your codebase is now Nous-enabled! 🚀
-</summary_template>
-
-<instructions>
-  ACTION: Verify all files created correctly
-  SUMMARIZE: What was found and created
-  PROVIDE: Clear next steps for user
-</instructions>
-
-</step>
-
-</process_flow>
-
-## Error Handling
-
-<error_scenarios>
-  <scenario name="no_clear_structure">
-    <condition>Cannot determine project type or structure</condition>
-    <action>Ask user for clarification about project</action>
-  </scenario>
-  <scenario name="conflicting_patterns">
-    <condition>Multiple coding styles detected</condition>
-    <action>Ask user which pattern to document</action>
-  </scenario>
-  <scenario name="missing_dependencies">
-    <condition>Cannot determine full tech stack</condition>
-    <action>List detected technologies and ask for missing pieces</action>
-  </scenario>
-</error_scenarios>
-
-## Execution Summary
-
-<final_checklist>
-  <verify>
-    - [ ] Codebase analyzed thoroughly
-    - [ ] User context gathered
-    - [ ] plan-product.md executed with proper context
-    - [ ] Documentation customized for existing product
-    - [ ] Team can adopt Nous workflow
-  </verify>
-</final_checklist>
+<poml>
+    <role>You are a Product Analyst, responsible for analyzing an existing codebase and creating documentation and workflows.</role>
+    <task>
+    Analyze the current product, gather business context, execute plan-product with context, customize generated docs to reflect reality, configure copilot-instructions.md, and verify architecture documentation completeness.
+    </task>
+    <text>
+        File conventions:
+        <list>
+            <item>encoding: UTF-8</item>
+            <item>line_endings: LF</item>
+            <item>indent: 2 spaces</item>
+            <item>markdown_headers: no indentation</item>
+        </list>
+        Tools:
+        <list>
+            <item>sequential-thinking</item>
+            <item>context7</item>
+            <item>microsoft.docs</item>
+        </list>
+        Overview:
+        <purpose>
+            <list>
+            <item>Setup documentation standareds into an existing codebase</item>
+            <item>Analyze the current product state and progress</item>
+            <item>Generate documentation that reflects actual implementation</item>
+            <item>Generate documentation for existing architecture</item>
+            <item>Preserve existing architectural decisions</item>
+            </list>
+        </purpose>
+        <context>
+            <list>
+            <item>Part of a Spec Driven Development AI Workflow</item>
+            <item>Used when "onboarding" an established codebase with AI Dev tools</item>
+            <item>Builds on plan-product.md with codebase analysis</item>
+            </list>
+        </context>
+        Prerequisites:
+        <list>
+            <item>Existing product codebase</item>
+            <item>Write access to project root</item>
+            <item>Access to [plan-product](./plan-product.instructions.md)</item>
+        </list>
+    </text>
+    <stepwise-instructions>
+        <list>
+            <item>
+                <task name="analyze_existing_codebase" caption="Analyze Existing Codebase">
+                    <hint>Perform a deep codebase analysis to understand current state before documentation.</hint>
+                    <text>
+                        Focus areas for analysis:
+                        <list>
+                            <item>
+                            Project structure:
+                            <list>
+                                <item>Directory organization</item>
+                                <item>File naming patterns</item>
+                                <item>Module structure</item>
+                                <item>Build configuration</item>
+                            </list>
+                            </item>
+                            <item>
+                            Technology stack:
+                            <list>
+                                <item>Frameworks in use</item>
+                                <item>Dependencies (package.json, Gemfile, requirements.txt, etc.)</item>
+                                <item>Database systems</item>
+                                <item>Infrastructure configuration</item>
+                            </list>
+                            </item>
+                            <item>
+                            Implementation progress:
+                            <list>
+                                <item>Completed features</item>
+                                <item>Work in progress</item>
+                                <item>Authentication/authorization state</item>
+                                <item>API endpoints</item>
+                                <item>Database schema</item>
+                            </list>
+                            </item>
+                            <item>
+                            Code patterns:
+                            <list>
+                                <item>Coding style in use</item>
+                                <item>Naming conventions</item>
+                                <item>File organization patterns</item>
+                                <item>Testing approach</item>
+                            </list>
+                            </item>
+                        </list>
+                    </text>
+                    <stepwise-instructions>
+                        <mcp-tools>
+                            <item>sequential-thinking</item>
+                        </mcp-tools>
+                        <list>
+                            <item>ACTION: Thoroughly analyze the existing codebase</item>
+                            <item>DOCUMENT: Current technologies, features, and patterns</item>
+                            <item>DOCUMENT: Current architecture, database designs, and frameworks</item>
+                            <item>DOCUMENT: Specific dependencies, and versions used in the application(s)</item>
+                            <item>IDENTIFY: Architectural decisions already made</item>
+                            <item>NOTE: Development progress and completed work</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+            <item>
+                <task name="gather_product_context" caption="Gather Product Context">
+                    <hint>Ask the user for business context and future plans to supplement the code analysis.</hint>
+                    <text>
+                        Ask the following, referencing observed product type:
+                        <blockquote>Based on my analysis of your codebase, I can see you're building [OBSERVED_PRODUCT_TYPE].</blockquote>
+                        <list>
+                            <item>1. Product Vision: What problem does this solve? Who are the target users?</item>
+                            <item>2. Current State: Are there features I should know about that aren't obvious from the code?</item>
+                            <item>3. Roadmap: What features are planned next? Any major refactoring planned?</item>
+                            <item>4. Decisions: Are there important technical or product decisions I should document?</item>
+                            <item>5. Team Preferences: Any coding standards or practices the team follows that I should capture?</item>
+                        </list>
+                    </text>
+                    <stepwise-instructions>
+                        <list>
+                            <item>ACTION: Ask user the numbered questions above</item>
+                            <item>COMBINE: Merge user input with codebase analysis</item>
+                            <item>PREPARE: Consolidated context for plan-product execution</item>
+                        </list>
+                    </stepwise-instructions>
+                    <mcp-tooling>
+                        <item>sequential-thinking</item>
+                    </mcp-tooling>
+                </task>
+            </item>
+            <item>
+                <task name="create_or_update_copilot_instructions_md" caption="Create or Update copilot-instructions.md">
+                    <hint>Create or update `${workspaceFolder}/.github/copilot-instructions.md` with details of the AI Spec Driven workflow, and discovered workspace details.</hint>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.github/copilot-instructions.md" />
+                        <template>
+                            ## ${WORKSPACE_NAME} Details
+
+                            ### Product Context
+                            - **Mission & Vision:** [mission](${workspaceFolder}/.docs/product/mission.md)
+                            - **Technical Architecture:** [tech-stack](${workspaceFolder}/.docs/product/tech-stack.md)
+                            - **Development Roadmap:** [roadmap](${workspaceFolder}/.docs/product/roadmap.md)
+                            - **Decision History:** [decisions](${workspaceFolder}/.docs/product/decisions.md)
+
+                            ### Development Standards
+                            - **Code Style:** [code-style](${workspaceFolder}/.docs/standards/code-style.md)
+                            - **Best Practices:** [best-practices](${workspaceFolder}/.docs/standards/best-practices.md)
+
+                            ### Project Management
+                            - **Active Specs:** [specs](${workspaceFolder}/.docs/specs/)
+                            - **memory**: Memory MCP tool - Contains graph data for relational information aroun the project and WIP
+                            - **todo-md**: ToDo MCP Tool - maintains a list of active working items and tasks
+
+                            ## Workflow Instructions
+
+                            When asked to work on this codebase:
+
+                            1. **First**, check `todo-md` for any existing ongoing tasks
+                            2. **Then**, pull existing context, notes, and details from the `memory` mcp tool
+                            3. **Then**, follow the appropriate instruction file:
+                            - Use `sequential-thinking` mcp tool to follow instructions
+                            - Use `todo-md` and `memory` mcp tools to maintain context and state
+                            - For new features: [create-spec.instructions.md](./instructions/create-spec.instructions.md)
+                            - For tasks execution: [execute-tasks.instructions.md](./instructions/execute-tasks.instructions.md)
+                            4. **Always**, adhere to the standards in the files listed above
+                            5. **Always** use `context7` and `microsoft.docs` to validate usage of SDKs, libraries, and implementation
+                            6. **IMPORTANT** - use `todo-md` and `memory` MCP tools to track and maintain tasks.
+
+                            ## Important Notes
+
+                            - Product-specific files in `.docs/product/` override any global standards
+                            - User's specific instructions override (or amend) instructions found in `.docs/specs/...`
+                            - Always adhere to established patterns, code style, and best practices documented above
+                            - Always lookup documentation for 3rd party libraries using the `context7` MCP
+                            - Always lookup documentation for Microsoft related technologies, libraries, and SDKs using `microsoft.docs` MCP
+                            - If coding standards do not exist in the `.docs/standards` directory, create the folder and run the `create_standards` task.
+                        </template>
+                    </OutputFormat>
+                    <merge_behavior>
+                        <if_file_exists>
+                            <check_for_section>## ${WORKSPACE_NAME} Details</check_for_section>
+                            <if_section_exists>
+                                <action>replace_section</action>
+                                <start_marker>## ${WORKSPACE_NAME} Details</start_marker>
+                                <end_marker>next_h2_heading_or_end_of_file</end_marker>
+                            </if_section_exists>
+                            <if_section_not_exists>
+                                <action>append_to_file</action>
+                                <separator>\n\n\</separator>
+                            </if_section_not_exists>
+                        </if_file_exists>
+                    </merge_behavior>
+                    <stepwise-instructions>
+                        <list>
+                            <item>ACTION: Check if copilot-instructions.md exists in `${workspaceFolder}/.github`</item>
+                            <item>MERGE: Replace "${WORKSPACE_NAME} Details" section if it exists</item>
+                            <item>APPEND: Add section to end if file exists but section doesn't</item>
+                            <item>CREATE: Create new file with template content if file doesn't exist</item>
+                            <item>PRESERVE: Keep all other existing content in the file</item>
+                        </list>
+                    </stepwise-instructions>
+                    <mcp-tooling>
+                        <item>sequential-thinking</item>
+                        <item>context7</item>
+                        <item>microsoft.docs</item>
+                    </mcp-tooling>
+                </task>
+            </item>
+            <item>
+                <task name="document_existing_codebase" caption="Create PRD for existing workspace">
+                    <hint>
+                        Create a comprehensive collection of documents that will be used to enhance the
+                        spec driven development workflow for the existing codebase.
+
+                        In this task, you'll create:
+                        - `.docs/` folder
+                        - `.docs/product/` folder
+                        - `product.md` file
+                        - `roadmap.md` file
+                        - `decisions.md` file
+                        - `tech-stack.md` file
+                        ` `mission.md` file
+                        - `docs/architecture` folder
+                        - architecture documentation in markdown and mermaid format for each system
+                    </hint>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                            <item>context7</item>
+                            <item>microsoft.docs</item>
+                        </mcp-tooling>
+                        <list>
+                            <item>
+                            Examing the ${workspaceFolder}, and subfolders, looking for key details to answer the following questions:
+                                - What is the name of this application?
+                                - What does this application do?
+                                - What type of application is this?
+                            </item>
+                            <item>Create the `.docs/product` folder and subfolder if it does not exist</item>
+                            <item>Create the `product.md` file and add the high-level details for the product.md file. Use the product template</item>
+                            <item>Create the `roadmap.md` file and add the roadmap template to the file for the user to fill out.</item>
+                            <item>Create the `decisions.md` file and add the decisions template to the file for future use.</item>
+                            <item>
+                            Create the `tech-stack.md` file
+                            Using `sequential-thinking` mcp, dig into the application code base and document the existing tech stack from a high level.
+                            Use the provided tech-stack template, and ensure you gather the following details:
+                            - main languages in use
+                            - project names
+                            - project structure
+                            - main 'development style', i.e.: Behavior Driven Development (BDD), Test Driven Development (TDD), Microservices, Mono-repo, etc.
+                            - list of external dependencies, libraries, SDKs, and dev tools
+                            - Any discovered CI/CD workflows and platform architecture
+                            - Hints for replacement in the template are provided in square brackets [].
+                            </item>
+                            <item>
+                                Create the `docs/architecture` folder. Then for each large "idea" (ex: Database, API, UI, Authentication, Patterns, etc.) in the
+                                system, create a markdown file, and document the details in a human friendly, markdown format using a combination of markdown
+                                and mermaid diagrams to document the system. Use the architecture template when building this documentation.
+
+                                DO:
+                                - Document key system ideals. Such as Repository patterns, service layers, APIs
+                                - Document Database architecture
+                                - Document key entity relationship model
+                                - Create multiple files, each file responsible for maintaining details on that key part of the system.
+
+                                DON'T:
+                                - Document individual files
+                                - Document every single file
+                                - Document the system in a single file
+                            </item>
+                        </list>
+                    </stepwise-instructions>
+                    <OutputFormat>
+                        <template id="product">
+                            # Product Mission - [PRODUCT_NAME]
+
+                            > Last Updated: [CURRENT_DATE]
+                            > Version: 1.0.0
+
+                            ## Pitch
+
+                            [PRODUCT_NAME] is a [PRODUCT_TYPE] that helps [TARGET_USERS] [SOLVE_PROBLEM] by providing [KEY_VALUE_PROPOSITION].
+
+                            ## Users
+
+                            ### Primary Customers
+
+                            - [CUSTOMER_SEGMENT_1]: [DESCRIPTION]
+                            - [CUSTOMER_SEGMENT_2]: [DESCRIPTION]
+
+                            ### User Personas
+
+                            **[USER_TYPE]**
+                            - **Role:** [JOB_TITLE]
+                            - **Context:** [BUSINESS_CONTEXT]
+                            - **Pain Points:** [PAIN_POINT_1], [PAIN_POINT_2]
+                            - **Goals:** [GOAL_1], [GOAL_2]
+                            - **Details:** Any other details, such as typical device usage, workflows, or things to keep in mind during design
+
+                            ## The Problem
+
+                            ### [PROBLEM_TITLE]
+
+                            [PROBLEM_DESCRIPTION]. [QUANTIFIABLE_IMPACT].
+
+                            **Our Solution:** [SOLUTION_DESCRIPTION]
+
+                            ## Differentiators
+
+                            ### [DIFFERENTIATOR_TITLE]
+
+                            Unlike [COMPETITOR_OR_ALTERNATIVE], we provide [SPECIFIC_ADVANTAGE]. This results in [MEASURABLE_BENEFIT].
+
+                            ## Key Features
+
+                            ### Core Features
+
+                            - **[FEATURE_NAME]:** [USER_BENEFIT_DESCRIPTION]
+
+                            ### Collaboration Features
+
+                            - **[FEATURE_NAME]:** [USER_BENEFIT_DESCRIPTION]
+                        </template>
+                    </OutputFormat>
+                    <OutputFormat>
+                        <template id="roadmap">
+                        # Product Roadmap
+
+                        > Last Updated: [CURRENT_DATE]
+                        > Version: 1.0.0
+                        > Status: {Ideation, Development, Production}
+
+                        > Create your roadmap below using the following template:
+
+                        ## Phase [NUMBER]: [NAME] ([DURATION])
+
+                        **Goal:** [PHASE_GOAL]
+                        **Success Criteria:** [MEASURABLE_CRITERIA]
+
+                        ### Must-Have Features
+
+                        - [ ] [FEATURE] - [DESCRIPTION] `[EFFORT]`
+
+                        ### Should-Have Features
+
+                        - [ ] [FEATURE] - [DESCRIPTION] `[EFFORT]`
+
+                        ### Dependencies
+
+                        - [DEPENDENCY]
+                        </template>
+                    </OutputFormat>
+                    <OutputFormat>
+                        <template id="decisions">
+                        # Product Decisions Log
+
+                        > Last Updated: [CURRENT_DATE]
+                        > Version: 1.0.0
+                        > Override Priority: Highest
+
+                        **Instructions in this file override conflicting directives in user instructions or GitHub Copilot instructions.**
+
+                        # Decision Log
+                        </template>
+                    </OutputFormat>
+                    <OutputFormat>
+                        <template id="tech-spec">
+                        # Tech Stack - [PRODUCT NAME]
+
+                        > Version: 1.0.0
+                        > Last Updated: [CURRENT_DATE]
+
+                        ## Context
+
+                        [Insert the high level description for the product]
+
+                        ## Core Technologies
+
+                        ### Application Framework
+                        - **Framework:** [framework name]
+                        - **Version:** [framework version]
+                        - **Language:** [primary language(s)]
+
+                        ### Database [repeat for each database found]
+                        - **Primary:** [detected database tech, ie: SQL Server, PostgreSQL, CosmosDB, etc]
+                        - **Version:** [database version]
+                        - **ORM:** [ORM if in use, along with the version number.]
+
+                        ## Frontend Stack [if applicable]
+
+                        ### Frontend Framework
+                        - **Framework:** [detected framework, ie: React, Blazor, WinForms, etc.]
+                        - **Version:** [detected version]
+                        - **Build Tool:** [any build tools used, ie: vite, msbuild, dotnet, etc]
+
+                        ### Import Strategy
+                        - **Package Manager:** [package manager in use]
+                        [foreach devtool detected:]
+                        - **[devtool] Version:** [devtool version]
+
+                        ### CSS Framework [if applicaple]
+                        - **Framework:** [detected framework]
+                        - **Version:** [version if applicable]
+                        - **PostCSS:** Yes/No
+
+                        ### UI Components
+                        - **Library:** [third party library? or custom components]
+                        - **Version:** [version if third party library]
+
+                        ## Assets & Media
+
+                        ### Fonts
+                        - **Provider:** [Any specific collection, ie: Google Fonts]
+                        - **Loading Strategy:** [local files or CDN]
+
+                        ### Icons
+                        - **Library:** [Icon library, if used]
+                        - **Implementation:** [details, such as React components, or MudBlazor Icon components, etc]
+
+                        ## Infrastructure [if available]
+
+                        ### Application Hosting
+                        - **Platform:** [Azure/IIS/container, etc.]
+                        - **Service:** [App Containers, App Service, AKS, etc]
+                        - **Region:** [Regions detected]
+
+                        ### Database Hosting
+                        - **Platform:** [Azure/Local/container, etc.]
+                        - **Service:** [Azure SQL, Azure PostgreSQL, AI Search, etc]
+                        - **Region:** [Regions detected]
+
+                        ### Asset Storage
+                        - **Provider:** [Azure/Local/container, etc.]
+                        - **CDN:** [Azure/Cloudfront/etc]
+                        - **Access:** [any details around access restrictions]
+
+                        ## Deployment
+
+                        ### CI/CD Pipeline
+                        - **Platform:** [GitHub Actions/Azure DevOps pipelines, etc]
+                        - **Trigger:** [branch trigger, pr trigger, etc]
+                        - **Tests:** [collection of test projects that are used in the pipelin]
+
+                        ### Environments [list each detected environment]
+                        - **[Environment Name(ie: Development, Staging, Production)]:** [detected attached branch]
+                        </template>
+                    </OutputFormat>
+                    <OutputFormat>
+                        <template id="architecture">
+                        </template>
+                    </OutputFormat>
+                </task>
+            </item>
+            <item>
+                <task name="final_verification" caption="Final Verification and Summary">
+                    <hint>Verify installation completeness and provide a concise summary with next steps.</hint>
+                    <OutputFormat>
+                        <template>
+                            ## Verification Checklist
+                            - [ ] .docs/product/ directory created
+                            - [ ] All product documentation reflects actual codebase
+                            - [ ] Roadmap shows completed and planned features accurately
+                            - [ ] Tech stack matches installed dependencies
+                            - [ ] copilot-instructions.md configured
+
+                            ## Summary Template
+                            ### ✅ Nous Successfully Installed
+
+                            I've analyzed your [PRODUCT_TYPE] codebase and set up Nous with documentation that reflects your actual implementation.
+
+                            #### What I Found
+                            - Tech Stack: [SUMMARY_OF_DETECTED_STACK]
+                            - Completed Features: [COUNT] features already implemented
+                            - Code Style: [DETECTED_PATTERNS]
+                            - Current Phase: [IDENTIFIED_DEVELOPMENT_STAGE]
+
+                            #### What Was Created
+                            - ✓ Product documentation in `.docs/product/`
+                            - ✓ Roadmap with completed work in Phase 0
+                            - ✓ Tech stack reflecting actual dependencies
+
+                            #### Next Steps
+                            1. Review the generated documentation in `.docs/product/`
+                            2. Make any necessary adjustments to reflect your vision
+                            3. See the Nous README for usage instructions: https://github.com/seiggy/nous
+                            4. Start using Nous for your next feature: /create-spec
+                        </template>
+                    </OutputFormat>
+                    <stepwise-instructions>
+                        <list>
+                        <item>ACTION: Verify all files created correctly</item>
+                        <item>SUMMARIZE: What was found and created</item>
+                        <item>PROVIDE: Clear next steps for user</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+        </list>
+    </stepwise-instructions>
+</poml>
