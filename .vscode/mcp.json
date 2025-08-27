@@ -46,6 +46,14 @@
         "microsoft.docs": {
             "type": "http",
             "url": "https://learn.microsoft.com/api/mcp"
+        },
+        "mermaid-validator": {
+            "type": "stdio",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@rtuin/mcp-mermaid-validator@latest"
+            ]
         }
     }
 }
