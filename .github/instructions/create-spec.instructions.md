@@ -1,979 +1,868 @@
 ---
-description: Spec Creation Rules for Nous
+description: Spec Creation Rules
 globs:
 alwaysApply: false
-version: 1.2
+version: 1.3
 encoding: UTF-8
+format: poml
 ---
-
-# Spec Creation Rules
-
-<ai_meta>
-  <parsing_rules>
-    - Process XML blocks first for structured data
-    - Execute instructions in sequential order
-    - Use templates as exact patterns
-    - Request missing data rather than assuming
-  </parsing_rules>
-  <file_conventions>
-    - encoding: UTF-8
-    - line_endings: LF
-    - indent: 2 spaces
-    - markdown_headers: no indentation
-  </file_conventions>
-  <tooling>
-    - sequential-thinking mcp
-    - context7 mcp
-  </tooling>
-</ai_meta>
-
-## Overview
-
-<purpose>
-  - Create detailed spec plans for specific features
-  - Generate structured documentation for implementation
-  - Ensure alignment with product roadmap and mission
-</purpose>
-
-<context>
-  - Part of Nous framework
-  - Executed when implementing roadmap items
-  - Creates spec-specific documentation
-</context>
-
-<prerequisites>
-  - Product documentation exists in .docs/product/
-  - Access to:
-    - [mission](../../.docs/product/mission.md),
-    - [roadmap](../../.docs/product/roadmap.md),
-    - [tech-stack](../../.docs/product/tech-stack.md)
-  - User has spec idea or roadmap reference
-</prerequisites>
-
-<process_flow>
-
-<step number="1" name="spec_initiation">
-
-### Step 1: Spec Initiation
-
-<step_metadata>
-  <trigger_options>
-    - option_a: user_asks_whats_next
-    - option_b: user_provides_specific_spec
-  </trigger_options>
-  <mcp_tooling>
-    - sequential-thinking
-    - context7
-  </mcp_tooling>
-</step_metadata>
-
-<option_a_flow>
-  <trigger_phrases>
-    - "what's next?"
-    - "what should we work on next?"
-  </trigger_phrases>
-  <actions>
-    1. CHECK [roadmap](../../.docs/product/roadmap.md)
-    2. FIND next uncompleted item
-    3. SUGGEST item to user
-    4. WAIT for approval
-  </actions>
-</option_a_flow>
-
-<option_b_flow>
-  <trigger>user describes specific spec idea</trigger>
-  <accept>any format, length, or detail level</accept>
-  <proceed>to context gathering</proceed>
-</option_b_flow>
-
-<instructions>
-  USE_SEQUENTIAL_THINKING: Analyze user input to determine which initiation method applies and plan the appropriate response
-  ACTION: Identify spec initiation method
-  ROUTE: Follow appropriate flow based on trigger
-  WAIT: Ensure user agreement before proceeding
-  UTILIZE: sequential-thinking mcp to plan initiation flow
-  UTILIZE: context7 mcp to lookup relevant SDK or external lib docs
-</instructions>
-
-</step>
-
-<step number="2" name="context_gathering">
-
-### Step 2: Context Gathering
-
-<step_metadata>
-  <reads>
-    - [mission](../../.docs/product/mission.md)
-    - [roadmap](../../.docs/product/roadmap.md)
-    - [tech-stack](../../.docs/product/tech-stack.md)
-  </reads>
-  <purpose>understand spec alignment</purpose>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<context_analysis>
-  <mission>overall product vision</mission>
-  <roadmap>current progress and plans</roadmap>
-  <tech_stack>technical requirements</tech_stack>
-</context_analysis>
-
-<instructions>
-  ACTION: Read all three product documents
-  USE_SEQUENTIAL_THINKING: Analyze spec alignment with each document, identify potential conflicts or synergies, and determine implications for implementation
-  ANALYZE: Spec alignment with each document
-  NOTE: Consider implications for implementation
-  UTILIZE: sequential-thinking mcp to synthesize context from multiple docs
-</instructions>
-
-</step>
-
-<step number="3" name="requirements_clarification">
-
-### Step 3: Requirements Clarification
-
-<step_metadata>
-  <required_clarifications>
-    - scope_boundaries: string
-    - technical_considerations: array[string]
-  </required_clarifications>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<clarification_areas>
-  <scope>
-    - in_scope: what is included
-    - out_of_scope: what is excluded (optional)
-  </scope>
-  <technical>
-    - functionality specifics
-    - UI/UX requirements
-    - integration points
-  </technical>
-</clarification_areas>
-
-<decision_tree>
-  IF clarification_needed:
-    ASK numbered_questions
-    WAIT for_user_response
-  ELSE:
-    PROCEED to_date_determination
-</decision_tree>
-
-<question_template>
-  Based on the spec description, I need clarification on:
-
-  1. [SPECIFIC_QUESTION_ABOUT_SCOPE]
-  2. [SPECIFIC_QUESTION_ABOUT_TECHNICAL_APPROACH]
-  3. [SPECIFIC_QUESTION_ABOUT_USER_EXPERIENCE]
-</question_template>
-
-<instructions>
-  USE_SEQUENTIAL_THINKING: Evaluate what aspects of the spec need clarification by analyzing gaps in requirements, potential ambiguities, and technical considerations
-  ACTION: Evaluate need for clarification
-  ASK: Numbered questions if needed
-  PROCEED: Only with clear requirements
-  UTILIZE: sequential-thinking mcp to generate precise clarification questions
-</instructions>
-
-</step>
-
-<step number="4" name="date_determination">
-
-### Step 4: Date Determination
-
-<step_metadata>
-  <purpose>Ensure accurate date for folder naming</purpose>
-  <priority>high</priority>
-  <creates>temporary file for timestamp</creates>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<date_determination_process>
-  <primary_method>
-    <name>File System Timestamp</name>
-    <process>
-      1. CREATE directory if not exists: .docs/specs/
-      2. CREATE temporary file: .docs/specs/.date-check
-      3. READ file creation timestamp from filesystem
-      4. EXTRACT date in YYYY-MM-DD format
-      5. DELETE temporary file
-      6. STORE date in variable for folder naming
-    </process>
-  </primary_method>
-
-  <fallback_method>
-    <trigger>if file system method fails</trigger>
-    <name>User Confirmation</name>
-    <process>
-      1. STATE: "I need to confirm today's date for the spec folder"
-      2. ASK: "What is today's date? (YYYY-MM-DD format)"
-      3. WAIT for user response
-      4. VALIDATE format matches YYYY-MM-DD
-      5. STORE date for folder naming
-    </process>
-  </fallback_method>
-</date_determination_process>
-
-<validation>
-  <format_check>^\d{4}-\d{2}-\d{2}$</format_check>
-  <reasonableness_check>
-    - year: 2024-2030
-    - month: 01-12
-    - day: 01-31
-  </reasonableness_check>
-</validation>
-
-<error_handling>
-  IF date_invalid:
-    USE fallback_method
-  IF both_methods_fail:
-    ERROR "Unable to determine current date"
-</error_handling>
-
-<instructions>
-  ACTION: Determine accurate date using file system
-  FALLBACK: Ask user if file system method fails
-  VALIDATE: Ensure YYYY-MM-DD format
-  STORE: Date for immediate use in next step
-  UTILIZE: sequential-thinking mcp to choose primary vs fallback method
-</instructions>
-
-</step>
-
-<step number="5" name="spec_folder_creation">
-
-### Step 5: Spec Folder Creation
-
-<step_metadata>
-  <creates>
-    - directory: .docs/specs/YYYY-MM-DD-spec-name/
-  </creates>
-  <uses>date from step 4</uses>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<folder_naming>
-  <format>YYYY-MM-DD-spec-name</format>
-  <date>use stored date from step 4</date>
-  <name_constraints>
-    - max_words: 5
-    - style: kebab-case
-    - descriptive: true
-  </name_constraints>
-</folder_naming>
-
-<example_names>
-  - 2025-03-15-password-reset-flow
-  - 2025-03-16-user-profile-dashboard
-  - 2025-03-17-api-rate-limiting
-</example_names>
-
-<instructions>
-  ACTION: Create spec folder using stored date
-  FORMAT: Use kebab-case for spec name
-  LIMIT: Maximum 5 words in name
-  VERIFY: Folder created successfully
-  UTILIZE: sequential-thinking mcp to sequence folder naming rules
-</instructions>
-
-</step>
-
-<step number="6" name="create_spec_md">
-
-### Step 6: Create spec.md
-
-<step_metadata>
-  <creates>
-    - file: .docs/specs/YYYY-MM-DD-spec-name/spec.md
-  </creates>
-  <mcp_tooling>
-    - sequential-thinking
-    - context7
-  </mcp_tooling>
-</step_metadata>
-
-<file_template>
-  <header>
-    # Spec Requirements Document
-
-    > Spec: [SPEC_NAME]
-    > Created: [CURRENT_DATE]
-    > Status: Planning
-  </header>
-  <required_sections>
-    - Overview
-    - User Stories
-    - Spec Scope
-    - Out of Scope
-    - Expected Deliverable
-  </required_sections>
-</file_template>
-
-<section name="overview">
-  <template>
-    ## Overview
-
-    [1-2_SENTENCE_GOAL_AND_OBJECTIVE]
-  </template>
-  <constraints>
-    - length: 1-2 sentences
-    - content: goal and objective
-  </constraints>
-  <example>
-    Implement a secure password reset functionality that allows users to regain account access through email verification. This feature will reduce support ticket volume and improve user experience by providing self-service account recovery.
-  </example>
-</section>
-
-<section name="user_stories">
-  <template>
-    ## User Stories
-
-    ### [STORY_TITLE]
-
-    As a [USER_TYPE], I want to [ACTION], so that [BENEFIT].
-
-    [DETAILED_WORKFLOW_DESCRIPTION]
-  </template>
-  <constraints>
-    - count: 1-3 stories
-    - include: workflow and problem solved
-    - format: title + story + details
-  </constraints>
-</section>
-
-<section name="spec_scope">
-  <template>
-    ## Spec Scope
-
-    1. **[FEATURE_NAME]** - [ONE_SENTENCE_DESCRIPTION]
-    2. **[FEATURE_NAME]** - [ONE_SENTENCE_DESCRIPTION]
-  </template>
-  <constraints>
-    - count: 1-5 features
-    - format: numbered list
-    - description: one sentence each
-  </constraints>
-</section>
-
-<section name="out_of_scope">
-  <template>
-    ## Out of Scope
-
-    - [EXCLUDED_FUNCTIONALITY_1]
-    - [EXCLUDED_FUNCTIONALITY_2]
-  </template>
-  <purpose>explicitly exclude functionalities</purpose>
-</section>
-
-<section name="expected_deliverable">
-  <template>
-    ## Expected Deliverable
-
-    1. [TESTABLE_OUTCOME_1]
-    2. [TESTABLE_OUTCOME_2]
-  </template>
-  <constraints>
-    - count: 1-3 expectations
-    - focus: browser-testable outcomes
-  </constraints>
-</section>
-
-<instructions>
-  ACTION: Create spec.md with all sections
-  FILL: Use spec details from steps 1-3
-  MAINTAIN: Clear, concise descriptions
-  UTILIZE: sequential-thinking mcp to organize sections
-  UTILIZE: context7 mcp to fetch examples or syntax for any used libraries
-</instructions>
-
-</step>
-
-<step number="7" name="create_technical_spec">
-
-### Step 7: Create Technical Specification
-
-<step_metadata>
-  <creates>
-    - directory: sub-specs/
-    - file: sub-specs/technical-spec.md
-  </creates>
-  <mcp_tooling>
-    - sequential-thinking
-    - context7
-  </mcp_tooling>
-</step_metadata>
-
-<file_template>
-  <header>
-    # Technical Specification
-
-    This is the technical specification for the spec detailed in @.docs/specs/YYYY-MM-DD-spec-name/spec.md
-
-    > Created: [CURRENT_DATE]
-    > Version: 1.0.0
-  </header>
-</file_template>
-
-<spec_sections>
-  <technical_requirements>
-    - functionality details
-    - UI/UX specifications
-    - integration requirements
-    - performance criteria
-  </technical_requirements>
-  <approach_options>
-    - multiple approaches (if applicable)
-    - selected approach
-    - rationale for selection
-  </approach_options>
-  <external_dependencies>
-    - new libraries/packages
-    - justification for each
-    - version requirements
-  </external_dependencies>
-</spec_sections>
-
-<example_template>
-  ## Technical Requirements
-
-  - [SPECIFIC_TECHNICAL_REQUIREMENT]
-  - [SPECIFIC_TECHNICAL_REQUIREMENT]
-
-  ## Approach Options
-
-  **Option A:** [DESCRIPTION]
-  - Pros: [LIST]
-  - Cons: [LIST]
-
-  **Option B:** [DESCRIPTION] (Selected)
-  - Pros: [LIST]
-  - Cons: [LIST]
-
-  **Rationale:** [EXPLANATION]
-
-  ## External Dependencies
-
-  - **[LIBRARY_NAME]** - [PURPOSE]
-  - **Justification:** [REASON_FOR_INCLUSION]
-</example_template>
-
-<instructions>
-  USE_SEQUENTIAL_THINKING: Analyze technical requirements, evaluate multiple implementation approaches, weigh pros and cons of each option, and select the best approach with clear rationale
-  ACTION: Create sub-specs folder and technical-spec.md
-  DOCUMENT: All technical decisions and requirements
-  JUSTIFY: Any new dependencies
-  UTILIZE: sequential-thinking mcp to compare approaches methodically
-  UTILIZE: context7 mcp to lookup version and usage details for external libraries
-</instructions>
-
-</step>
-
-<step number="8" name="create_database_schema">
-
-### Step 8: Create Database Schema (Conditional)
-
-<step_metadata>
-  <creates>
-    - file: sub-specs/database-schema.md
-  </creates>
-  <condition>only if database changes needed</condition>
-  <mcp_tooling>
-    - sequential-thinking
-    - context7
-  </mcp_tooling>
-</step_metadata>
-
-<decision_tree>
-  IF spec_requires_database_changes:
-    CREATE sub-specs/database-schema.md
-  ELSE:
-    SKIP this_step
-</decision_tree>
-
-<file_template>
-  <header>
-    # Database Schema
-
-    This is the database schema implementation for the spec detailed in @.docs/specs/YYYY-MM-DD-spec-name/spec.md
-
-    > Created: [CURRENT_DATE]
-    > Version: 1.0.0
-  </header>
-</file_template>
-
-<schema_sections>
-  <changes>
-    - new tables
-    - new columns
-    - modifications
-    - migrations
-  </changes>
-  <specifications>
-    - exact SQL or migration syntax
-    - indexes and constraints
-    - foreign key relationships
-  </specifications>
-  <rationale>
-    - reason for each change
-    - performance considerations
-    - data integrity rules
-  </rationale>
-</schema_sections>
-
-<instructions>
-  ACTION: Check if database changes needed
-  CREATE: database-schema.md only if required
-  INCLUDE: Complete SQL/migration specifications
-  UTILIZE: sequential-thinking mcp to structure schema steps
-  UTILIZE: context7 mcp to lookup SQL syntax or migration best practices
-</instructions>
-
-</step>
-
-<step number="9" name="create_api_spec">
-
-### Step 9: Create API Specification (Conditional)
-
-<step_metadata>
-  <creates>
-    - file: sub-specs/api-spec.md
-  </creates>
-  <condition>only if API changes needed</condition>
-  <mcp_tooling>
-    - sequential-thinking
-    - context7
-  </mcp_tooling>
-</step_metadata>
-
-<decision_tree>
-  IF spec_requires_api_changes:
-    CREATE sub-specs/api-spec.md
-  ELSE:
-    SKIP this_step
-</decision_tree>
-
-<file_template>
-  <header>
-    # API Specification
-
-    This is the API specification for the spec detailed in @.docs/specs/YYYY-MM-DD-spec-name/spec.md
-
-    > Created: [CURRENT_DATE]
-    > Version: 1.0.0
-  </header>
-</file_template>
-
-<api_sections>
-  <routes>
-    - HTTP method
-    - endpoint path
-    - parameters
-    - response format
-  </routes>
-  <controllers>
-    - action names
-    - business logic
-    - error handling
-  </controllers>
-  <purpose>
-    - endpoint rationale
-    - integration with features
-  </purpose>
-</api_sections>
-
-<endpoint_template>
-  ## Endpoints
-
-  ### [HTTP_METHOD] [ENDPOINT_PATH]
-
-  **Purpose:** [DESCRIPTION]
-  **Parameters:** [LIST]
-  **Response:** [FORMAT]
-  **Errors:** [POSSIBLE_ERRORS]
-</endpoint_template>
-
-<instructions>
-  ACTION: Check if API changes needed
-  CREATE: api-spec.md only if required
-  DOCUMENT: All endpoints and controllers
-  UTILIZE: sequential-thinking mcp to order endpoint definitions
-  UTILIZE: context7 mcp to reference HTTP/REST conventions for status codes
-</instructions>
-
-</step>
-
-<step number="10" name="create_tests_spec">
-
-### Step 10: Create Tests Specification
-
-<step_metadata>
-  <creates>
-    - file: sub-specs/tests.md
-  </creates>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<file_template>
-  <header>
-    # Tests Specification
-
-    This is the tests coverage details for the spec detailed in @.docs/specs/YYYY-MM-DD-spec-name/spec.md
-
-    > Created: [CURRENT_DATE]
-    > Version: 1.0.0
-  </header>
-</file_template>
-
-<test_categories>
-  <unit_tests>
-    - model tests
-    - service tests
-    - helper tests
-  </unit_tests>
-  <integration_tests>
-    - controller tests
-    - API tests
-    - workflow tests
-  </integration_tests>
-  <feature_tests>
-    - end-to-end scenarios
-    - user workflows
-  </feature_tests>
-  <mocking_requirements>
-    - external services
-    - API responses
-    - time-based tests
-  </mocking_requirements>
-</test_categories>
-
-<test_template>
-  ## Test Coverage
-
-  ### Unit Tests
-
-  **[CLASS_NAME]**
-  - [TEST_DESCRIPTION]
-  - [TEST_DESCRIPTION]
-
-  ### Integration Tests
-
-  **[FEATURE_NAME]**
-  - [SCENARIO_DESCRIPTION]
-  - [SCENARIO_DESCRIPTION]
-
-  ### Mocking Requirements
-
-  - **[SERVICE_NAME]:** [MOCK_STRATEGY]
-</test_template>
-
-<instructions>
-  ACTION: Create comprehensive test specification
-  ENSURE: All new functionality has test coverage
-  SPECIFY: Mock requirements for external services
-  UTILIZE: sequential-thinking mcp to outline test categories
-</instructions>
-
-</step>
-
-<step number="11" name="user_review">
-
-### Step 11: User Review
-
-<step_metadata>
-  <action>request user review</action>
-  <reviews>
-    - spec.md
-    - all sub-specs files
-  </reviews>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<review_request>
-  I've created the spec documentation:
-
-  - Spec Requirements: @.docs/specs/YYYY-MM-DD-spec-name/spec.md
-  - Technical Spec: @.docs/specs/YYYY-MM-DD-spec-name/sub-specs/technical-spec.md
-  [LIST_OTHER_CREATED_SPECS]
-
-  Please review and let me know if any changes are needed before I create the task breakdown.
-</review_request>
-
-<instructions>
-  ACTION: Request user review of all documents
-  WAIT: For approval or revision requests
-  REVISE: Make requested changes if any
-  UTILIZE: sequential-thinking mcp to summarize changes concisely
-</instructions>
-
-</step>
-
-<step number="12" name="create_tasks">
-
-### Step 12: Create tasks.md
-
-<step_metadata>
-  <creates>
-    - file: tasks.md
-  </creates>
-  <depends_on>user approval from step 11</depends_on>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<file_template>
-  <header>
-    # Spec Tasks
-
-    These are the tasks to be completed for the spec detailed in @.docs/specs/YYYY-MM-DD-spec-name/spec.md
-
-    > Created: [CURRENT_DATE]
-    > Status: Ready for Implementation
-  </header>
-</file_template>
-
-<task_structure>
-  <major_tasks>
-    - count: 1-5
-    - format: numbered checklist
-    - grouping: by feature or component
-  </major_tasks>
-  <subtasks>
-    - count: up to 8 per major task
-    - format: decimal notation (1.1, 1.2)
-    - first_subtask: typically write tests
-    - last_subtask: verify all tests pass
-  </subtasks>
-</task_structure>
-
-<task_template>
-  ## Tasks
-
-  - [ ] 1. [MAJOR_TASK_DESCRIPTION]
-    - [ ] 1.1 Write tests for [COMPONENT]
-    - [ ] 1.2 [IMPLEMENTATION_STEP]
-    - [ ] 1.3 [IMPLEMENTATION_STEP]
-    - [ ] 1.4 Verify all tests pass
-
-  - [ ] 2. [MAJOR_TASK_DESCRIPTION]
-    - [ ] 2.1 Write tests for [COMPONENT]
-    - [ ] 2.2 [IMPLEMENTATION_STEP]
-</task_template>
-
-<ordering_principles>
-  - Consider technical dependencies
-  - Follow TDD approach
-  - Group related functionality
-  - Build incrementally
-</ordering_principles>
-
-<instructions>
-  USE_SEQUENTIAL_THINKING: Break down the complex specification into logical, implementable tasks by analyzing dependencies, grouping related functionality, and determining the optimal order for development
-  ACTION: Create task breakdown following TDD
-  STRUCTURE: Major tasks with subtasks
-  ORDER: Consider dependencies
-  UTILIZE: sequential-thinking mcp to sequence tasks logically
-</instructions>
-
-</step>
-
-<step number="13" name="update_cross_references">
-
-### Step 13: Documentation Cross-References
-
-<step_metadata>
-  <updates>
-    - file: spec.md
-  </updates>
-  <adds>references to all spec files</adds>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<reference_template>
-  ## Spec Documentation
-
-  - Tasks: @.docs/specs/YYYY-MM-DD-spec-name/tasks.md
-  - Technical Specification: @.docs/specs/YYYY-MM-DD-spec-name/sub-specs/technical-spec.md
-  - API Specification: @.docs/specs/YYYY-MM-DD-spec-name/sub-specs/api-spec.md
-  - Database Schema: @.docs/specs/YYYY-MM-DD-spec-name/sub-specs/database-schema.md
-  - Tests Specification: @.docs/specs/YYYY-MM-DD-spec-name/sub-specs/tests.md
-</reference_template>
-
-<reference_format>
-  - Use @ prefix for clickable paths
-  - Include full path from project root
-  - Only list files that were created
-</reference_format>
-
-<instructions>
-  ACTION: Update spec.md with references
-  FORMAT: Use @ prefix for all paths
-  INCLUDE: Only files actually created
-  UTILIZE: sequential-thinking mcp to compile reference list
-</instructions>
-
-</step>
-
-<step number="14" name="decision_documentation">
-
-### Step 14: Decision Documentation
-
-<step_metadata>
-  <evaluates>strategic impact</evaluates>
-  <updates>decisions.md if needed</updates>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<decision_analysis>
-  <review_against>
-    - [mission](../../.docs/product/mission.md)
-    - [decisions](../../.docs/product/decisions.md)
-  </review_against>
-  <criteria>
-    - changes product direction
-    - impacts roadmap priorities
-    - introduces new technical patterns
-    - affects user experience significantly
-  </criteria>
-</decision_analysis>
-
-<decision_tree>
-  IF spec_impacts_mission_or_roadmap:
-    IDENTIFY key_decisions (max 3)
-    DOCUMENT decision_details
-    ASK user_for_approval
-    IF approved:
-      UPDATE decisions.md
-  ELSE:
-    STATE "This spec is inline with the current mission and roadmap, so no need to post anything to our decisions log at this time."
-</decision_tree>
-
-<decision_template>
-  ## [CURRENT_DATE]: [DECISION_TITLE]
-
-  **ID:** DEC-[NEXT_NUMBER]
-  **Status:** Accepted
-  **Category:** [technical/product/business/process]
-  **Related Spec:** @.docs/specs/YYYY-MM-DD-spec-name/
-
-  ### Decision
-
-  [DECISION_SUMMARY]
-
-  ### Context
-
-  [WHY_THIS_DECISION_WAS_NEEDED]
-
-  ### Consequences
-
-  **Positive:**
-  - [EXPECTED_BENEFITS]
-
-  **Negative:**
-  - [KNOWN_TRADEOFFS]
-</decision_template>
-
-<instructions>
-  USE_SEQUENTIAL_THINKING: Analyze the spec's strategic impact by evaluating its alignment with mission and roadmap, identifying key decisions that affect product direction, and assessing long-term consequences
-  ACTION: Analyze spec for strategic decisions
-  IDENTIFY: Up to 3 key decisions if any
-  REQUEST: User approval before updating
-  UPDATE: Add to decisions.md if approved
-  UTILIZE: sequential-thinking mcp to evaluate decision criteria
-</instructions>
-
-</step>
-
-<step number="15" name="execution_readiness">
-
-### Step 15: Execution Readiness Check
-
-<step_metadata>
-  <evaluates>readiness to begin implementation</evaluates>
-  <depends_on>completion of all previous steps</depends_on>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<readiness_summary>
-  <present_to_user>
-    - Spec name and description
-    - First task summary from tasks.md
-    - Estimated complexity/scope
-    - Key deliverables for task 1
-  </present_to_user>
-</readiness_summary>
-
-<execution_prompt>
-  PROMPT: "The spec planning is complete. The first task is:
-
-  **Task 1:** [FIRST_TASK_TITLE]
-  [BRIEF_DESCRIPTION_OF_TASK_1_AND_SUBTASKS]
-
-  Would you like me to proceed with implementing Task 1? I will follow the execution guidelines in [execute-tasks](./execute-tasks.instructions.md) and focus only on this first task and its subtasks unless you specify otherwise.
-
-  Type 'yes' to proceed with Task 1, or let me know if you'd like to review or modify the plan first."
-</execution_prompt>
-
-<execution_flow>
-  IF user_confirms_yes:
-    REFERENCE: [execute-tasks](./execute-tasks.instructions.md)
-    FOCUS: Only Task 1 and its subtasks
-    CONSTRAINT: Do not proceed to additional tasks without explicit user request
-  ELSE:
-    WAIT: For user clarification or modifications
-</execution_flow>
-
-<instructions>
-  ACTION: Summarize first task and request user confirmation
-  REFERENCE: Use execute-tasks.md for implementation
-  SCOPE: Limit to Task 1 only unless user specifies otherwise
-  UTILIZE: sequential-thinking mcp to craft execution prompt
-</instructions>
-
-</step>
-
-</process_flow>
-
-## Execution Standards
-
-<standards>
-  <follow>
+<poml>
+    <role>You are a Software Architect, responsible for creating specifications for a software development project.</role>
+    <task>You are given a feature request and must create a detailed collection of specification documents, and a task list.</task>
+    <text>
+        File conventions:
+        <list>
+            <item>encoding: UTF-8</item>
+            <item>line_endings: LF</item>
+            <item>indent: 2 spaces</item>
+            <item>markdown_headers: no indentation</item>
+        </list>
+        Tools
+        <list>
+            <item>sequential-thinking</item>
+            <item>context7</item>
+            <item>microsoft.docs</item>
+        </list>
+        Prerequisites:
+        <list>
+            <item>Product documentation exists in .docs/product/</item>
+            <item>
+                Access to:
+                <list>
+                    <item>[mission](../../.docs/product/mission.md)</item>
+                    <item>[roadmap](../../.docs/product/roadmap.md)</item>
+                    <item>[tech-stack](../../.docs/product/tech-stack.md)</item>
+                </list>
+            </item>
+            <item>User has spec idea or roadmap reference</item>
+        </list>
+        High level overview:
+        <list listStyle="dash">
+            <item>Create detailed spec plans for specific features</item>
+            <item>Generate structured documentation for implementation</item>
+            <item>Ensure alignment with product roadmap and mission</item>
+        </list>
+    </text>
+    <stepwise-instructions>
+        <list>
+            <item>
+                <task name="spec_initiation" caption="Spec Initiation">
+                    <hint>
+                       Use this task when the user asks "what's next?" or provides a specific spec idea.
+                    </hint>
+                    <text>
+                        Find the next open task from the product roadmap, get user approval,
+                        and then begin the specification creation process.
+                    </text>
+                    <examples chat={{true}}>
+                        <example>
+                            <input speaker="human">What should I work on next?</input>
+                            <output speaker="ai">
+                                <ToolRequest name="search" parameters="{'query': '${workspaceFolder}/.docs/product/roadmap.md'}" />
+                                <ToolResponse name="search">
+                                    ### Should-Have Features
+
+                                    - [X] Syntax Highlighting - Code display with proper highlighting `S`
+                                    - [X] File Content Preview - View file contents within the Teams application `M`
+                                </ToolResponse>
+                                <ai-msg>
+                                    I see that we just finished creating the syntax highlighting feature. The next item on our roadmap is the "File Content Preview" feature, which allows users to view file contents within the Teams application. Would you like me to create a spec for this feature?
+                                </ai-msg>
+                            </output>
+                        </example>
+                        <example>
+                            <input speaker="human">Can you create a spec for the new user profile feature?</input>
+                            <output speaker="ai">
+                                <ToolRequest name="search" parameters="{'query': '${workspaceFolder}/.docs/product/roadmap.md'}" />
+                                <ToolResponse name="search">
+                                    ### Should-Have Features
+
+                                    - [X] Syntax Highlighting - Code display with proper highlighting `S`
+                                    - [X] File Content Preview - View file contents within the Teams application `M`
+                                </ToolResponse>
+                                <ai-msg>
+                                    I don't have details in the roadmap around the "User Profile" feature. If you can give me some details around what you want to see in the user profile, I can create a spec for it.
+                                </ai-msg>
+                            </output>
+                        </example>
+                    </examples>
+                    <stepwise-instructions>
+                        <list>
+                            <item>CHECK [roadmap](../../.docs/product/roadmap.md)</item>
+                            <item>FIND next uncompleted item</item>
+                            <item>SUGGEST item to user</item>
+                            <item>ASK for approval</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+            <item>
+                <task name="context_gathering" caption="Context Gathering">
+                    <hint>
+                        Use this task to gather context from product documents to ensure the spec aligns with overall goals.
+                    </hint>
+                    <text>
+                        Gather context from product documents such as the roadmap, mission, and tech stack to ensure the spec aligns with overall goals.
+                    </text>
+                    <examples>
+                        <example>
+                            <ai-msg>
+                                I see that we just finished creating the syntax highlighting feature. The next item on our roadmap is the "File Content Preview" feature, which allows users to view file contents within the Teams application. Would you like me to create a spec for this feature?
+                            </ai-msg>
+                            <input speaker="human">Sure! Let's move forward with the spec creation.</input>
+                            <output speaker="ai">
+                                <ToolRequest name="search" parameters="{'query': '${workspaceFolder}/.docs/product/roadmap.md'}" />
+                                <ToolRequest name="search" parameters="{'query': '${workspaceFolder}/.docs/product/tech-stack.md'}" />
+                                <ToolRequest name="search" parameters="{'query': '${workspaceFolder}/.docs/product/mission.md'}" />
+                                <ai-msg>
+                                    Based on the mission document, the "File Content Preview" feature aligns with our goal of enhancing user collaboration and
+                                    productivity within the Teams application. It will provide users with a seamless way to view file contents without leaving the chat interface.
+
+                                    I see we're using React 18 for the frontend, with the Microsoft Fluent UI v9 library for the component design.
+                                    We'll leverage these technologies to create a consistent and user-friendly interface for the "File Content Preview" feature.
+
+                                    I'll start out by creating a detailed PRD for this feature.
+                                </ai-msg>
+                            </output>
+                        </example>
+                    </examples>
+                    <stepwise-instructions>
+                        <list>
+                            <item>
+                                ACTION: Read all three product documents
+                                <Document src="${workspaceFolder}/.docs/product/mission.md" />
+                                <Document src="${workspaceFolder}/.docs/product/roadmap.md" />
+                                <Document src="${workspaceFolder}/.docs/product/tech-stack.md" />
+                            </item>
+                            <item>
+                                <mcp_tooling>
+                                    - sequential-thinking
+                                </mcp_tooling>
+                                USE_SEQUENTIAL_THINKING: Analyze spec alignment with each document, identify potential conflicts or synergies, and determine implications for implementation
+                            </item>
+                            <item>THINK: Consider implications for implementation</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+                <task name="requirements_clarification" caption="Requirements Clarification">
+                    <hint>
+                        Clarify any ambiguous requirements or constraints identified during context gathering.
+                    </hint>
+                    <text>
+                        During this step, you should ensure that all requirements are clearly defined and understood by the developer.
+                        This includes functional requirements, non-functional requirements, and any constraints that may impact the implementation of the spec.
+                        If there are questions about using specific components, styles, UI/UX guides, or anything that may be ambigious, you **must** ask
+                        the user how they would like you to proceed. User clarification of requirements is crucial for successful implementation.
+
+                        DO NOT:
+                        - Make assumptions about requirements without confirmation
+                        - Ignore user feedback or requests for clarification
+                        - Proceed with implementation without clear requirements
+                        - Rely solely on documentation without seeking clarification
+                        - Make assumptions about user needs or preferences
+
+                        DO:
+                        - Ask clarifying questions to ensure understanding
+                        - Summarize requirements and seek confirmation
+                        - Document any ambiguities or uncertainties
+                        - Validate assumptions with the user
+                    </text>
+                    <examples>
+                        <example>
+                            <output>
+                                <ai-msg>
+                                    I'm building the PRD for the File Preview feature, and I have a couple of questions about features:
+                                    1 - What specific file types do we want to support for preview?
+                                    2 - Are there any specific UI/UX guidelines we need to follow?
+                                    3 - How should we handle unsupported file types?
+                                    4 - Should a user be able to download the files?
+                                    5 - Are there any specific security considerations we need to keep in mind?
+                                </ai-msg>
+                            </output>
+                        </example>
+                    </examples>
+                    <stepwise-instructions>
+                        <list>
+                            <item>
+                                <mcp-tooling>
+                                - sequential-thinking
+                                </mcp-tooling>
+                                USE_SEQUENTIAL_THINKING: Evaluate what aspects of the spec need clarification by analyzing:
+                                - lack of clarity in the user request
+                                - gaps in requirements
+                                - potential ambiguities
+                                - technical considerations
+                            </item>
+                            <item>FORMULATE clarifying questions</item>
+                            <item>ASK user for clarification. Use numbered questions to easily track responses and follow up as needed.</item>
+                            <item>WAIT for user response</item>
+                            <item>CONFIRM understanding of requirements</item>
+                            <item>REMEMBER any changes to requirements</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+            <item>
+                <task name="date_determination" caption="Determine the current date for folder naming">
+                    <name>Date Determination</name>
+                    <description>Determine the current date for folder naming.</description>
+                    <hint>
+                        Use this task to ensure the correct date is used for folder naming.
+                    </hint>
+                    <stepwise-instructions>
+                        <list>
+                            <item>1. CREATE directory if not exists: .docs/specs/</item>
+                            <item>2. CREATE temporary file: .docs/specs/.date-check</item>
+                            <item>3. READ file creation timestamp from filesystem</item>
+                            <item>4. EXTRACT date in YYYY-MM-DD format</item>
+                            <item>5. DELETE temporary file</item>
+                            <item>6. STORE date in variable for folder naming</item>
+                        </list>
+                    </stepwise-instructions>
+                    <hint>
+                        If the file system method fails, we will need to ask the user for the date. Follow this process if needed:
+                            1. STATE: "I need to confirm today's date for the spec folder"
+                            2. ASK: "What is today's date? (YYYY-MM-DD format)"
+                            3. WAIT for user response
+                            4. VALIDATE format matches YYYY-MM-DD
+                            5. STORE date for folder naming
+                    </hint>
+                </task>
+            </item>
+            <item>
+                <task name="spec_folder_creation" caption="Spec Folder Creation">
+                    <name>Spec Folder Creation</name>
+                    <description>Create the spec folder using the determined date.</description>
+                    <hint>
+                        Use the stored date from `date_determination` and the specified naming format.
+                    </hint>
+                    <stepwise-instructions>
+                        <list>
+                            <item>
+                                1. CREATE directory: .docs/specs/YYYY-MM-DD-spec-name/
+                                <hint>
+                                - max_words: 5
+                                - style: kebab-case
+                                - descriptive: true
+                                </hint>
+                                <examples>
+                                    - 2025-03-15-password-reset-flow
+                                    - 2025-03-16-user-profile-dashboard
+                                    - 2025-03-17-api-rate-limiting
+                                </examples>
+                            </item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+            <item>
+                <task name="create_spec_md" caption="Spec File Creation">
+                    <name>Spec File Creation</name>
+                    <description>Create the spec.md and tech-spec.md file in the new spec folder.</description>
+                    <hint>
+                        Create the `spec.md` in the new spec folder. Create the high level overview,
+                        goals, and objectives of the PRD, including the target audience and key features.
+
+                        Then create the `tech-spec.md` file with technical details, including high level
+                        technical details, such as data models, APIs, and system architecture.
+                    </hint>
+                    <stepwise-instructions>
+                        <list>
+                            <item>ACTION: Create spec.md with all sections</item>
+                            <item>FILL: Use spec details from previous steps</item>
+                            <item>MAINTAIN: Clear, concise descriptions</item>
+                            <item>UTILIZE: sequential-thinking mcp to organize sections</item>
+                            <item>UTILIZE: context7 mcp, and microsoft.docs mcp to fetch examples or syntax for any used libraries</item>
+                        </list>
+                    </stepwise-instructions>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/specs/YYYY-MM-DD-spec-name/spec.md" />
+                        <template>
+                            <header>
+                                # Spec Requirements Document
+
+                                > Spec: [SPEC_NAME]
+                                > Created: [CURRENT_DATE]
+                                > Status: Planning
+                            </header>
+                            <section name="overview">
+                            <template>
+                                ## Overview
+
+                                [1-2_SENTENCE_GOAL_AND_OBJECTIVE]
+                            </template>
+                            <constraints>
+                                - length: 1-2 sentences
+                                - content: goal and objective
+                            </constraints>
+                            <example>
+                                Implement a secure password reset functionality that allows users to regain account access through email verification.
+                                This feature will reduce support ticket volume and improve user experience by providing self-service account recovery.
+                            </example>
+                            </section>
+
+                            <section name="user_stories">
+                            <template>
+                                ## User Stories
+
+                                ### [STORY_TITLE]
+
+                                As a [USER_TYPE], I want to [ACTION], so that [BENEFIT].
+
+                                [DETAILED_WORKFLOW_DESCRIPTION]
+                            </template>
+                            <constraints>
+                                - count: 1-3 stories
+                                - include: workflow and problem solved
+                                - format: title + story + details
+                            </constraints>
+                            </section>
+
+                            <section name="spec_scope">
+                            <template>
+                                ## Spec Scope
+
+                                1. **[FEATURE_NAME]** - [ONE_SENTENCE_DESCRIPTION]
+                                2. **[FEATURE_NAME]** - [ONE_SENTENCE_DESCRIPTION]
+                            </template>
+                            <constraints>
+                                - count: 1-5 features
+                                - format: numbered list
+                                - description: one sentence each
+                            </constraints>
+                            </section>
+
+                            <section name="out_of_scope">
+                            <template>
+                                ## Out of Scope
+
+                                - [EXCLUDED_FUNCTIONALITY_1]
+                                - [EXCLUDED_FUNCTIONALITY_2]
+                            </template>
+                            <purpose>explicitly exclude functionalities</purpose>
+                            </section>
+
+                            <section name="expected_deliverable">
+                            <template>
+                                ## Expected Deliverable
+
+                                1. [TESTABLE_OUTCOME_1]
+                                2. [TESTABLE_OUTCOME_2]
+                            </template>
+                            <constraints>
+                                - count: 1-3 expectations
+                                - focus: browser-testable outcomes
+                            </constraints>
+                            </section>
+                        </template>
+                    </OutputFormat>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/specs/YYYY-MM-DD-spec-name/tech-specs.md" />
+                        <template>
+                            <header>
+                                # Technical Specification
+
+                                This is the technical specification for the spec detailed in @.docs/specs/YYYY-MM-DD-spec-name/spec.md
+
+                                > Created: [CURRENT_DATE]
+                                > Version: 1.0.0
+                            </header>
+                            <spec_sections>
+                                <technical_requirements>
+                                    - functionality details
+                                    - UI/UX specifications
+                                    - integration requirements
+                                    - performance criteria
+                                    - architecture diagrams (using mermaid)
+                                </technical_requirements>
+                                <approach_options>
+                                    - multiple approaches (if applicable)
+                                    - selected approach
+                                    - rationale for selection
+                                </approach_options>
+                                <external_dependencies>
+                                    - new libraries/packages
+                                    - justification for each
+                                    - version requirements
+                                </external_dependencies>
+                            </spec_sections>
+
+                            <example_template>
+                                ## Technical Requirements
+
+                                - [SPECIFIC_TECHNICAL_REQUIREMENT]
+                                - [SPECIFIC_TECHNICAL_REQUIREMENT]
+
+                                ## Approach Options
+
+                                **Option A:** [DESCRIPTION]
+                                - Pros: [LIST]
+                                - Cons: [LIST]
+
+                                **Option B:** [DESCRIPTION] (Selected)
+                                - Pros: [LIST]
+                                - Cons: [LIST]
+
+                                **Architecture Diagrams:**
+                                - [DIAGRAM_DESCRIPTION]
+                                ```mermaid
+                                graph TD;
+                                    A[Start] --> B[Process];
+                                    B --> C[End];
+                                ```
+
+                                **Rationale:** [EXPLANATION]
+
+                                ## External Dependencies
+
+                                - **[LIBRARY_NAME]** - [PURPOSE]
+                                - **Justification:** [REASON_FOR_INCLUSION]
+                            </example_template>
+                        </template>
+                    </OutputFormat>
+                </task>
+            </item>
+            <item>
+                <task name="create_database_schema" caption="Create Database Schema (Conditional)">
+                    <name>Create Database Schema</name>
+                    <description>Create the database schema for the new spec if database changes are needed.</description>
+                    <hint>
+                        Use this task only if the spec requires database changes.
+                        Create a sub-specs folder if it doesn't exist, then create a database-schema.md file in the sub-specs folder.
+                    </hint>
+                    <stepwise-instructions>
+                        <list>
+                            <item>create `sub-specs` folder if it doesn't exist inside the `YYYY-MM-DD-spec-name` directory</item>
+                            <item>
+                                create `database-schema.md` file inside the `sub-specs` folder
+                                Use sequential-thinking mcp tool to plan out the database changes and requirements
+                                Use context7 mcp to validate that your database schema aligns with the database technology in use
+                                <mcp-tooling>
+                                    - sequential-thinking
+                                    - context7
+                                </mcp-tooling>
+                            </item>
+                        </list>
+                    </stepwise-instructions>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/specs/YYYY-MM-DD-spec-name/sub-specs/database-schema.md" />
+                        <template>
+                            <header>
+                                # Database Schema
+
+                                This is the database schema implementation for the spec detailed in @.docs/specs/YYYY-MM-DD-spec-name/spec.md
+
+                                > Created: [CURRENT_DATE]
+                                > Version: 1.0.0
+                            </header>
+                            <schema_sections>
+                                <changes>
+                                    - new tables
+                                    - new columns
+                                    - modifications
+                                    - migrations
+                                </changes>
+                                <specifications>
+                                    - exact SQL or migration syntax
+                                    - indexes and constraints
+                                    - foreign key relationships
+                                </specifications>
+                                <rationale>
+                                    - reason for each change
+                                    - performance considerations
+                                    - data integrity rules
+                                </rationale>
+                            </schema_sections>
+                        </template>
+                    </OutputFormat>
+                </task>
+            </item>
+            <item>
+                <task name="create_api_spec" caption="Create API Specification (Conditional)">
+                    <name>Create API Specification</name>
+                    <hint>
+                        Use this task only if API changes are needed.
+                        Create a sub-specs folder if it doesn't exist, then create an api-spec.md file in the sub-specs folder.
+                    </hint>
+                    <stepwise-instructions>
+                        <list>
+                            <item>create `sub-specs` folder if it doesn't exist inside the `YYYY-MM-DD-spec-name` directory</item>
+                            <item>
+                                create `api-spec.md` file inside the `sub-specs` folder
+                                Use sequential-thinking mcp tool to plan out the API changes and requirements
+                                Use context7 mcp to validate that your API spec aligns with the API technology in use
+                                <mcp-tooling>
+                                    - sequential-thinking
+                                    - context7
+                                </mcp-tooling>
+                            </item>
+                        </list>
+                    </stepwise-instructions>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/specs/YYYY-MM-DD-spec-name/sub-specs/api-spec.md" />
+                        <template>
+                            <header>
+                                # API Specification
+
+                                This is the API specification for the spec detailed in @.docs/specs/YYYY-MM-DD-spec-name/spec.md
+
+                                > Created: [CURRENT_DATE]
+                                > Version: 1.0.0
+                            </header>
+                            <api_sections>
+                                <routes>
+                                    - HTTP method
+                                    - endpoint path
+                                    - parameters
+                                    - response format
+                                </routes>
+                                <data>
+                                    - model specs
+                                    - relationships
+                                    - validation rules
+                                </data>
+                                <controllers>
+                                    - action names
+                                    - business logic
+                                    - error handling
+                                </controllers>
+                                <purpose>
+                                    - endpoint rationale
+                                    - integration with features
+                                </purpose>
+                            </api_sections>
+                        </template>
+                    </OutputFormat>
+                </task>
+            </item>
+            <item>
+                <task name="create_tests_spec" caption="Create Test Specification">
+                    <name>Create Tests Specification</name>
+                    <hint>
+                        Use this task to create a comprehensive test specification.
+                        Ensure all business logic is covered by tests.
+
+                        DO NOT:
+                        - Write tests for DTO or Entity objects
+                        - Write tests for simple getters/setters
+                        - Assume knowledge of all edge cases
+                        - Use mocking for all external dependencies
+
+                        DO:
+                        - Write tests for all business logic
+                        - Include edge cases and error handling
+                        - Ask for clarification on any ambiguous requirements
+                        - Use mocking sparingly
+                        - Prefer to test against real implementations, emulators, and temporary databases
+                    </hint>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            - sequential-thinking
+                        </mcp-tooling>
+                        <list>
+                            <item>ACTION: Create comprehensive test specification</item>
+                            <item>ENSURE: All new functionality has test coverage</item>
+                            <item>SPECIFY: Mock requirements for external services</item>
+                            <item>UTILIZE: sequential-thinking mcp to outline test categories</item>
+                        </list>
+                    </stepwise-instructions>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/specs/YYYY-MM-DD-spec-name/sub-specs/tests.md" />
+                        <template>
+                            <header>
+                                # Tests Specification
+
+                                This is the tests coverage details for the spec detailed in @.docs/specs/YYYY-MM-DD-spec-name/spec.md
+
+                                > Created: [CURRENT_DATE]
+                                > Version: 1.0.0
+                            </header>
+
+                            <test_categories>
+                                <unit_tests>
+                                    - model tests
+                                    - service tests
+                                    - helper tests
+                                </unit_tests>
+                                <integration_tests>
+                                    - controller tests
+                                    - API tests
+                                    - workflow tests
+                                </integration_tests>
+                                <feature_tests>
+                                    - end-to-end scenarios
+                                    - user workflows
+                                </feature_tests>
+                                <mocking_requirements>
+                                    - external services
+                                    - API responses
+                                    - time-based tests
+                                </mocking_requirements>
+                            </test_categories>
+
+                            <test_template>
+                                ## Test Coverage
+
+                                ### Unit Tests
+
+                                **[CLASS_NAME]**
+                                - [TEST_DESCRIPTION]
+                                - [TEST_DESCRIPTION]
+
+                                ### Integration Tests
+
+                                **[FEATURE_NAME]**
+                                - [SCENARIO_DESCRIPTION]
+                                - [SCENARIO_DESCRIPTION]
+
+                                ### Mocking Requirements
+
+                                - **[SERVICE_NAME]:** [MOCK_STRATEGY]
+                            </test_template>
+                        </template>
+                    </OutputFormat>
+                </task>
+            </item>
+            <item>
+                <task name="user_review" caption="User Specification Review">
+                    <hint>
+                        Ask the user to review and provide any feedback on the specifications.
+                    </hint>
+                    <examples>
+                        <example>
+                            <ai-msg>
+                                I've created the spec documentation:
+
+                                - Spec Requirements: @.docs/specs/YYYY-MM-DD-spec-name/spec.md
+                                - Technical Spec: @.docs/specs/YYYY-MM-DD-spec-name/sub-specs/technical-spec.md
+                                [LIST_OTHER_CREATED_SPECS]
+
+                                Please review and let me know if any changes are needed before I create the task breakdown.
+                            </ai-msg>
+                        </example>
+                    </examples>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                        </mcp-tooling>
+                        <list>
+                            <item>ACTION: Request user review of all documents</item>
+                            <item>WAIT: For approval or revision requests</item>
+                            <item>REVISE: Make requested changes if any</item>
+                            <item>UTILIZE: sequential-thinking mcp to summarize changes concisely</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+            <item>
+                <task name="create_tasks" caption="Create Tasks">
+                    <hint>
+                        Use the todo-md mcp tool to create a todo list of tasks for implementing the current specification.
+                        Create a tasks.md file to document the created tasks, including the task breakdown and any relevant details.
+                        Track the returned ${TASK_ID} from the todo-md tool in the tasks.md file.
+                    </hint>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                            <item>todo-md</item>
+                            <item>memory</item>
+                        </mcp-tooling>
+                        <text>
+                            For each task in the breakdown of the story specification, you must complete the following steps:
+                            <hint>
+                                If a task list appears to be too long or complex, consider breaking it down into smaller, more manageable subtasks,
+                                if so, create a new `spec.md` document using the `create_spec` task for each new sub-specification inside
+                                the `sub-specs` directory.
+                            </hint>
+                        </text>
+                        <list>
+                            <item>call the `add_todo` tool with the task name</item>
+                            <item>wait for the tool to return a task ID</item>
+                            <item>document the task ID in the tasks.md file</item>
+                            <item>document all requirements for the task, including, but not limited to:
+                            - business rules
+                            - technical requirements
+                            - user interface specifications
+                            - implementation details
+                            </item>
+                            <item>add relational information and details to the memory mcp tool to maintain context</item>
+                        </list>
+                    </stepwise-instructions>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/specs/YYYY-MM-DD-spec-name/tasks.md" />
+                        <template>
+                            <header>
+                                # Spec Tasks
+
+                                These are the tasks to be completed for the spec detailed in @.docs/specs/YYYY-MM-DD-spec-name/spec.md
+
+                                > Created: [CURRENT_DATE]
+                                > Status: Ready for Implementation
+                            </header>
+                            <task_structure>
+                                <major_tasks>
+                                    - count: 1-5
+                                    - format: numbered checklist
+                                    - grouping: by feature or component
+                                </major_tasks>
+                                <subtasks>
+                                    - count: up to 8 per major task
+                                    - format: decimal notation (1.1, 1.2)
+                                    - first_subtask: typically write tests
+                                    - last_subtask: verify all tests pass
+                                </subtasks>
+                            </task_structure>
+
+                            <task_template>
+                            ## Tasks
+
+                            - [ ] 1. [MAJOR_TASK_DESCRIPTION]
+                                - [ ] 1.1 Write tests for [COMPONENT]
+                                - [ ] 1.2 [IMPLEMENTATION_STEP]
+                                - [ ] 1.3 [IMPLEMENTATION_STEP]
+                                - [ ] 1.4 Verify all tests pass
+
+                            - [ ] 2. [MAJOR_TASK_DESCRIPTION]
+                                - [ ] 2.1 Write tests for [COMPONENT]
+                                - [ ] 2.2 [IMPLEMENTATION_STEP]
+                            </task_template>
+
+                            <ordering_principles>
+                            - Consider technical dependencies
+                            - Follow TDD approach
+                            - Group related functionality
+                            - Build incrementally
+                            </ordering_principles>
+                        </template>
+                    </OutputFormat>
+                </task>
+            </item>
+            <item>
+                <task name="decision_documentation" Caption="Document key decisions (Optional)">
+                    <hint>
+                        Summarize and document key decisions made during the spec process.
+                        Use this step to evaluate strategic impact, and document any changes to the product direction or roadmap.
+
+                        Only use this step if the spec significantly impacts the product strategy or roadmap, otherwise skip this step.
+                    </hint>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            - sequential-thinking
+                        </mcp-tooling>
+                        <list>
+                            <item>REVIEW the following files:
+                                <Document src="${workspaceFolder}/.docs/product/mission.md" />
+                                <Document src="${workspaceFolder}/.docs/product/decisions.md" />
+                            </item>
+                            <item>CRITERIA: determine if the current spec meets any of these criteria:
+                                - changes product direction
+                                - impacts roadmap priorities
+                                - introduces new technical patterns
+                                - affects user experience significantly
+                            </item>
+                            <item>
+                                IF CRITERIA MET:
+                                    IDENTIFY key decisions or changes to the product strategy
+                                    DOCUMENT the decision details and changes
+                                    ASK the user for approval of these changes
+                                    IF approved:
+                                    UPDATE decisions.md
+                                ELSE:
+                                    STATE "This spec is inline with the current mission and roadmap, so no need to post anything to our decisions log at this time."
+                            </item>
+                            <item>UPDATE decisions.md if approved</item>
+                            <item>UTILIZE sequential-thinking mcp to evaluate decision criteria</item>
+                        </list>
+                        <OutputFormat>
+                            <Document src="${workspaceFolder}/.docs/product/decisions.md" />
+                            <template>
+                                ## [CURRENT_DATE]: [DECISION_TITLE]
+
+                                **ID:** DEC-[NEXT_NUMBER]
+                                **Status:** Accepted
+                                **Category:** [technical/product/business/process]
+                                **Related Spec:** @.docs/specs/YYYY-MM-DD-spec-name/
+
+                                ### Decision
+
+                                [DECISION_SUMMARY]
+
+                                ### Context
+
+                                [WHY_THIS_DECISION_WAS_NEEDED]
+
+                                ### Consequences
+
+                                **Positive:**
+                                - [EXPECTED_BENEFITS]
+
+                                **Negative:**
+                                - [KNOWN_TRADEOFFS]
+                            </template>
+                        </OutputFormat>
+                    </stepwise-instructions>
+                </task>
+            </item>
+            <item>
+                <task name="execution_readiness" Caption="Execution Readiness Check">
+                    <hint>
+                        This step verifies that all prerequisites for implementation are met.
+                        Ensure all previous required steps have been completed, and a specification
+                        document, sub-documents, and architecture diagrams are in place.
+                    </hint>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                        </mcp-tooling>
+                        <list>
+                            <item>ACTION: Summarize first task and request user confirmation</item>
+                            <item>SCOPE: Limit to the first Task ${TASK_ID} only unless user specifies otherwise</item>
+                            <item>UTILIZE: sequential-thinking mcp to craft execution prompt</item>
+                            <item>
+                                IF user confirms yes:
+                                    REFERENCE: [execute-tasks](./execute-tasks.instructions.md)
+                                    FOCUS: Only the first Task ${TASK_ID} and its subtasks
+                                    CONSTRAINT: Do not proceed to additional tasks without explicit user request
+                                ELSE:
+                                    WAIT: For user clarification or modifications
+                            </item>
+                        </list>
+                    </stepwise-instructions>
+                    <example>
+                        <ai-msg>
+                            The spec planning is complete. The first task is:
+
+                            **Task ${TASK_ID}:** [FIRST_TASK_TITLE]
+                            [BRIEF_DESCRIPTION_OF_TASK_AND_SUBTASKS]
+
+                            Would you like me to proceed with implementing Task ${TASK_ID}? I will follow the execution guidelines in [execute-tasks](./execute-tasks.instructions.md) and focus only on this first task and its subtasks unless you specify otherwise.
+
+                            Type 'yes' to proceed with Task ${TASK_ID}, or let me know if you'd like to review or modify the plan first.
+                    </example>
+                </task>
+            </item>
+        </list>
+    </stepwise-instructions>
+
+    <text>
+    ## Execution Standards
+
+    IMPORTANT: When executing this workflow, ensure you follow the guidelines outlined in:
     - [code-style](../../.docs/product/code-style.md)
     - [dev-best-practices](../../.docs/product/dev-best-practices.md)
     - [tech-stack](../../.docs/product/tech-stack.md)
-  </follow>
-  <maintain>
+
+    IMPORTANT: Maintain:
     - Consistency with product mission
     - Alignment with roadmap
     - Technical coherence
-  </maintain>
-  <create>
+
+    IMPORTANT: Ensure that all specifications create the following:
     - Comprehensive documentation
     - Clear implementation path
     - Testable outcomes
-  </create>
-</standards>
 
-<final_checklist>
-  <verify>
+    IMPORTANT: Follow the checklist below to ensure all aspects are covered.
     - [ ] Accurate date determined via file system
     - [ ] Spec folder created with correct date prefix
     - [ ] spec.md contains all required sections
@@ -982,5 +871,5 @@ encoding: UTF-8
     - [ ] tasks.md created with TDD approach
     - [ ] Cross-references added to spec.md
     - [ ] Strategic decisions evaluated
-  </verify>
-</final_checklist>
+    </text>
+</poml>

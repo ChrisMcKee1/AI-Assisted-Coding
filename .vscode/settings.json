@@ -8,6 +8,7 @@
     "chat.instructionsFilesLocations": {
         "instructions": true
     },
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
     "[markdown]": {
@@ -31,9 +32,11 @@
     "chat.mcp.serverSampling": {
         "AI-Assisted-Coding/.vscode/mcp.json: playwright": {
             "allowedModels": [
-                "github.copilot-chat/gpt-4.1",
-                "github.copilot-chat/gemini-2.5-pro",
-                "github.copilot-chat/o4-mini"
+                "copilot/gpt-4.1",
+                "copilot/claude-sonnet-4",
+                "copilot/gpt-5",
+                "copilot/gpt-5-mini",
+                "copilot/o4-mini"
             ]
         }
     }

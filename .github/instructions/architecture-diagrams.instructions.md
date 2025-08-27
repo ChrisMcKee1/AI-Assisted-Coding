@@ -1,584 +1,544 @@
 ---
-description: Architecture Diagram Creation Rules for Nous
+description: Architecture Diagram Creation Rules
 globs:
 alwaysApply: false
-version: 1.0
+version: 1.1
 encoding: UTF-8
+format: poml
 ---
-
-# Architecture Diagram Creation Rules
-
-<ai_meta>
-  <parsing_rules>
-    - Process XML blocks first for structured data
-    - Execute instructions in sequential order
-    - Use templates as exact patterns
-    - Request missing data rather than assuming
-  </parsing_rules>
-  <file_conventions>
-    - encoding: UTF-8
-    - line_endings: LF
-    - indent: 2 spaces
-    - markdown_headers: no indentation
-  </file_conventions>
-  <tooling>
-    - sequential-thinking mcp
-  </tooling>
-</ai_meta>
-
-## Overview
-
-<purpose>
-  - Generate comprehensive architecture diagrams for software systems
-  - Create visual documentation using MDX, Markdown, and Mermaid
-  - Establish consistent diagramming standards across projects
-</purpose>
-
-<context>
-  - Part of Nous framework
-  - Triggered when architectural visualization is needed
-  - Output used by developers, architects, and stakeholders
-</context>
-
-<prerequisites>
-  - Write access to project root
-  - Understanding of system architecture
-  - User has architectural requirements or system description
-  - Access to Mermaid diagram tools and validation
-</prerequisites>
-
-<process_flow>
-
-<step number="1" name="gather_diagram_requirements">
-
-### Step 1: Gather Diagram Requirements
-
-<step_metadata>
-  <required_inputs>
-    - diagram_type: enum["system", "component", "deployment", "data_flow", "sequence", "class"]
-    - system_description: string
-    - components: array[object] (minimum: 2)
-    - relationships: array[object] (minimum: 1)
-    - output_format: enum["mermaid", "mdx", "markdown"]
-  </required_inputs>
-  <validation>blocking</validation>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<data_sources>
-  <primary>user_direct_input</primary>
-  <fallback_sequence>
-    1. [tech-stack](.docs/product/tech-stack.md)
-    2. [mission](.docs/product/mission.md)
-    3. [GitHub Copilot Instructions](.github/copilot-instructions.md)
-  </fallback_sequence>
-</data_sources>
-
-<error_template>
-  Please provide the following missing information:
-  1. What type of architecture diagram do you need? (system, component, deployment, data_flow, sequence, class)
-  2. Brief description of the system or architecture
-  3. List of main components/services (minimum 2)
-  4. How these components relate to each other (minimum 1 relationship)
-  5. Preferred output format (mermaid, mdx, markdown)
-</error_template>
-
-<instructions>
-  ACTION: Collect all required inputs from user
-  VALIDATION: Ensure all 5 inputs provided before proceeding
-  FALLBACK: Check project documentation for system context
-  ERROR: Use error_template if inputs missing
-  UTILIZE: sequential-thinking mcp at the start to plan input collection and question ordering.
-</instructions>
-
-</step>
-
-<step number="2" name="determine_diagram_strategy">
-
-### Step 2: Determine Diagram Strategy
-
-<step_metadata>
-  <creates>
-    - strategy: object
-    - mermaid_type: string
-  </creates>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<diagram_type_mapping>
-  <system>
-    <mermaid_type>architecture-beta</mermaid_type>
-    <focus>high-level system overview</focus>
-    <components>services, databases, external systems</components>
-  </system>
-  <component>
-    <mermaid_type>flowchart</mermaid_type>
-    <focus>internal component relationships</focus>
-    <components>modules, classes, interfaces</components>
-  </component>
-  <deployment>
-    <mermaid_type>architecture-beta</mermaid_type>
-    <focus>infrastructure and hosting</focus>
-    <components>servers, containers, networks</components>
-  </deployment>
-  <data_flow>
-    <mermaid_type>flowchart</mermaid_type>
-    <focus>data movement and processing</focus>
-    <components>data stores, processors, flows</components>
-  </data_flow>
-  <sequence>
-    <mermaid_type>sequenceDiagram</mermaid_type>
-    <focus>interaction flow over time</focus>
-    <components>actors, systems, messages</components>
-  </sequence>
-  <class>
-    <mermaid_type>classDiagram</mermaid_type>
-    <focus>object-oriented structure</focus>
-    <components>classes, interfaces, relationships</components>
-  </class>
-</diagram_type_mapping>
-
-<instructions>
-  ACTION: Map user diagram_type to appropriate Mermaid diagram type
-  VALIDATE: Ensure chosen type matches user requirements
-  DOCUMENT: Record strategy for consistent application
-  UTILIZE: sequential-thinking mcp before mapping to outline strategy steps.
-</instructions>
-
-</step>
-
-<step number="3" name="create_directory_structure">
-
-### Step 3: Create Directory Structure
-
-<step_metadata>
-  <creates>
-    - directory: .docs/architecture/
-    - files: 1-3
-  </creates>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<file_structure>
-  .docs/
-  └── architecture/
-      ├── [DIAGRAM_NAME].md         # Markdown with embedded mermaid diagrams file
-      ├── [DIAGRAM_NAME].mermaid    # Pure Mermaid (if requested)
-      └── [DIAGRAM_NAME].mdx        # MDX with components (if requested)
-</file_structure>
-
-<git_config>
-  <commit_message>Add architecture diagram: [DIAGRAM_NAME]</commit_message>
-  <tag>arch-[DIAGRAM_NAME]-v1.0.0</tag>
-  <gitignore_consideration>false</gitignore_consideration>
-</git_config>
-
-<instructions>
-  ACTION: Create directory structure as specified
-  VALIDATION: Verify write permissions before creating
-  PROTECTION: Confirm before overwriting existing files
-  UTILIZE: sequential-thinking mcp to sequence directory and file creation steps.
-</instructions>
-
-</step>
-
-<step number="4" name="generate_mermaid_diagram">
-
-### Step 4: Generate Mermaid Diagram
-
-<step_metadata>
-  <creates>
-    - diagram_code: string
-  </creates>
-  <validation>syntax_check</validation>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<mermaid_templates>
-  <architecture>
-    <template>
-      architecture-beta
-          [GROUP_DEFINITIONS]
-          [SERVICE_DEFINITIONS]
-          [EDGE_DEFINITIONS]
-    </template>
-    <group_syntax>group {id}({icon})[{title}] (in {parent})?</group_syntax>
-    <service_syntax>service {id}({icon})[{title}] (in {parent})?</service_syntax>
-    <edge_syntax>{serviceId}:{T|B|L|R} {<}?--{>}? {T|B|L|R}:{serviceId}</edge_syntax>
-  </architecture>
-  <flowchart>
-    <template>
-      flowchart {direction}
-          [NODE_DEFINITIONS]
-          [LINK_DEFINITIONS]
-    </template>
-    <node_syntax>{id}["{label}"] or {id}({shape})["{label}"]</node_syntax>
-    <link_syntax>{nodeA} --> {nodeB} or {nodeA} -->|label| {nodeB}</link_syntax>
-  </flowchart>
-  <sequence>
-    <template>
-      sequenceDiagram
-          [PARTICIPANT_DEFINITIONS]
-          [MESSAGE_DEFINITIONS]
-    </template>
-    <participant_syntax>participant {alias} as {name}</participant_syntax>
-    <message_syntax>{participant1} ->> {participant2}: {message}</message_syntax>
-  </sequence>
-  <class>
-    <template>
-      classDiagram
-          [CLASS_DEFINITIONS]
-          [RELATIONSHIP_DEFINITIONS]
-    </template>
-    <class_syntax>class {className} { [METHODS_AND_PROPERTIES] }</class_syntax>
-    <relationship_syntax>{classA} --|> {classB} : {relationship}</relationship_syntax>
-  </class>
-</mermaid_templates>
-
-<icon_guidelines>
-  <architecture_icons>
-    - cloud: cloud services, APIs
-    - database: data storage
-    - disk: file storage
-    - internet: external connections
-    - server: compute resources
-  </architecture_icons>
-  <flowchart_shapes>
-    - rectangle: standard process
-    - rounded: start/end points
-    - diamond: decision points
-    - circle: connectors
-    - cylinder: databases
-  </flowchart_shapes>
-</icon_guidelines>
-
-<instructions>
-  ACTION: Generate Mermaid code using appropriate template
-  APPLY: Use components and relationships from Step 1
-  VALIDATE: Check syntax before proceeding
-  OPTIMIZE: Ensure clear visual hierarchy and flow
-  UTILIZE: sequential-thinking mcp to break down diagram elements generation.
-</instructions>
-
-</step>
-
-<step number="5" name="validate_mermaid_syntax">
-
-### Step 5: Validate Mermaid Syntax
-
-<step_metadata>
-  <validates>
-    - mermaid_code: string
-  </validates>
-  <error_handling>retry_on_failure</error_handling>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<validation_rules>
-  <syntax_check>
-    - Proper diagram type declaration
-    - Valid node/service definitions
-    - Correct edge/link syntax
-    - Proper grouping structure
-  </syntax_check>
-  <semantic_check>
-    - All referenced IDs are defined
-    - Edge connections are logical
-    - Icon names are valid
-    - Labels are clear and concise
-  </semantic_check>
-</validation_rules>
-
-<error_correction>
-  <common_fixes>
-    - Fix missing quotes around labels
-    - Correct invalid icon names
-    - Resolve undefined node references
-    - Fix malformed edge syntax
-  </common_fixes>
-</error_correction>
-
-<instructions>
-  ACTION: Use mermaid-diagram-validator tool to check syntax
-  RETRY: Fix any validation errors and re-validate
-  DOCUMENT: Log any corrections made
-  CONTINUE: Only proceed when validation passes
-  UTILIZE: sequential-thinking mcp to plan validation and error-correction iterations.
-</instructions>
-
-</step>
-
-<step number="6" name="create_markdown_file">
-
-### Step 6: Create Main Markdown File
-
-<step_metadata>
-  <creates>
-    - file: .docs/architecture/[DIAGRAM_NAME].md
-  </creates>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<file_template>
-  <header>
-    # [DIAGRAM_TITLE]
-
-    > Last Updated: [CURRENT_DATE]
-    > Version: 1.0.0
-    > Type: Architecture Diagram
-  </header>
-  <required_sections>
-    - Overview
-    - Architecture Diagram
-    - Components
-    - Data Flow
-    - Deployment Notes
-  </required_sections>
-</file_template>
-
-<section name="overview">
-  <template>
-    ## Overview
-
-    [SYSTEM_DESCRIPTION]
-
-    ### Purpose
-    - [PRIMARY_PURPOSE]
-    - [SECONDARY_PURPOSE]
-
-    ### Scope
-    - **Included:** [INCLUDED_COMPONENTS]
-    - **Excluded:** [EXCLUDED_COMPONENTS]
-  </template>
-</section>
-
-<section name="diagram">
-  <template>
-    ## Architecture Diagram
-
-    ```mermaid
-    [VALIDATED_MERMAID_CODE]
-    ```
-
-    ### Diagram Legend
-    - [SYMBOL_1]: [MEANING_1]
-    - [SYMBOL_2]: [MEANING_2]
-  </template>
-</section>
-
-<section name="components">
-  <template>
-    ## Components
-
-    ### [COMPONENT_CATEGORY]
-
-    **[COMPONENT_NAME]**
-    - **Purpose:** [COMPONENT_PURPOSE]
-    - **Technology:** [TECH_STACK]
-    - **Responsibilities:** [KEY_RESPONSIBILITIES]
-    - **Dependencies:** [DEPENDENCIES]
-  </template>
-</section>
-
-<section name="data_flow">
-  <template>
-    ## Data Flow
-
-    ### [FLOW_NAME]
-    1. [STEP_1]: [DESCRIPTION]
-    2. [STEP_2]: [DESCRIPTION]
-    3. [STEP_3]: [DESCRIPTION]
-
-    **Data Formats:** [FORMATS]
-    **Security Considerations:** [SECURITY_NOTES]
-  </template>
-</section>
-
-<section name="deployment">
-  <template>
-    ## Deployment Notes
-
-    ### Environment Requirements
-    - [REQUIREMENT_1]
-    - [REQUIREMENT_2]
-
-    ### Scaling Considerations
-    - [SCALING_POINT_1]
-    - [SCALING_POINT_2]
-
-    ### Monitoring Points
-    - [MONITORING_1]: [METRICS]
-    - [MONITORING_2]: [METRICS]
-  </template>
-</section>
-
-<instructions>
-  ACTION: Create comprehensive markdown file using all sections
-  POPULATE: Use data from previous steps to fill templates
-  FORMAT: Maintain consistent markdown structure
-  EMBED: Include validated Mermaid diagram code
-  UTILIZE: sequential-thinking mcp to structure document assembly flow.
-</instructions>
-
-</step>
-
-<step number="7" name="create_optional_formats">
-
-### Step 7: Create Optional Output Formats
-
-<step_metadata>
-  <creates>
-    - file: .docs/architecture/[DIAGRAM_NAME].mermaid (if requested)
-    - file: .docs/architecture/[DIAGRAM_NAME].mdx (if requested)
-  </creates>
-  <conditional>based_on_output_format_request</conditional>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<mermaid_file_template>
-  <content>
-    [VALIDATED_MERMAID_CODE]
-  </content>
-  <comment_header>
-    %% [DIAGRAM_TITLE]
-    %% Generated: [CURRENT_DATE]
-    %% Version: 1.0.0
-  </comment_header>
-</mermaid_file_template>
-
-<mdx_file_template>
-  <imports>
-    import { Mermaid } from '@components/Mermaid'
-    import { ArchitectureCard } from '@components/ArchitectureCard'
-  </imports>
-  <content>
-    # [DIAGRAM_TITLE]
-
-    <ArchitectureCard title="[TITLE]" description="[DESCRIPTION]">
-      <Mermaid>
-        {`[VALIDATED_MERMAID_CODE]`}
-      </Mermaid>
-    </ArchitectureCard>
-
-    ## Interactive Components
-
-    [INTERACTIVE_ELEMENTS]
-  </content>
-</mdx_file_template>
-
-<instructions>
-  ACTION: Create additional format files if requested
-  VALIDATE: Ensure proper syntax for each format
-  CONSISTENCY: Maintain same diagram content across formats
-  OPTIMIZE: Add format-specific enhancements
-  UTILIZE: sequential-thinking mcp to plan multi-format output steps.
-</instructions>
-
-</step>
-
-<step number="8" name="preview_and_finalize">
-
-### Step 8: Preview and Finalize
-
-<step_metadata>
-  <validates>
-    - diagram_rendering: boolean
-    - file_completeness: boolean
-  </validates>
-  <creates>
-    - preview_link: string
-  </creates>
-  <mcp_tooling>
-    - sequential-thinking
-  </mcp_tooling>
-</step_metadata>
-
-<preview_checklist>
-  <rendering>
-    - [ ] Diagram renders without errors
-    - [ ] All components are visible
-    - [ ] Relationships are clear
-    - [ ] Labels are readable
-  </rendering>
-  <content>
-    - [ ] Documentation is complete
-    - [ ] Technical details are accurate
-    - [ ] Examples are relevant
-    - [ ] Links work correctly
-  </content>
-</preview_checklist>
-
-<finalization_steps>
-  1. Use mermaid-diagram-preview tool to render diagram
-  2. Review visual output for clarity and accuracy
-  3. Validate all file formats are syntactically correct
-  4. Confirm documentation completeness
-  5. Generate git commit with descriptive message
-</finalization_steps>
-
-<instructions>
-  ACTION: Preview diagram using mermaid-diagram-preview tool
-  VALIDATE: Check all created files for completeness
-  REVIEW: Ensure diagram meets user requirements
-  FINALIZE: Prepare files for version control
-  UTILIZE: sequential-thinking mcp to outline preview and finalization checklist.
-</instructions>
-
-</step>
-
-</process_flow>
-
-## Execution Summary
-
-<final_checklist>
-  <verify>
-    - [ ] User requirements gathered and validated
-    - [ ] Appropriate diagram type selected
-    - [ ] Directory structure created
-    - [ ] Mermaid diagram generated and validated
-    - [ ] Main markdown documentation created
-    - [ ] Optional formats created (if requested)
-    - [ ] Diagram previewed and verified
-    - [ ] All files ready for commit
-  </verify>
-</final_checklist>
-
-<execution_order>
-  1. Gather and validate diagram requirements
-  2. Determine optimal diagram strategy
-  3. Create directory structure
-  4. Generate Mermaid diagram code
-  5. Validate Mermaid syntax thoroughly
-  6. Create comprehensive markdown documentation
-  7. Create additional formats if requested
-  8. Preview and finalize all outputs
-</execution_order>
-
-<quality_standards>
-  <diagram_quality>
-    - Clear visual hierarchy
-    - Logical component grouping
-    - Appropriate level of detail
-    - Consistent styling
-  </diagram_quality>
-  <documentation_quality>
-    - Complete component descriptions
-    - Clear data flow explanations
-    - Relevant technical details
-    - Actionable deployment notes
-  </documentation_quality>
-</quality_standards>
+<poml>
+    <role>You are a Solutions Architect responsible for creating architecture diagrams and related documentation.</role>
+    <task>You are given a repository, spec, or system description and must create a structured set of architecture diagrams with an index and integration notes.</task>
+    <text>
+        File conventions:
+        <list>
+            <item>encoding: UTF-8</item>
+            <item>line_endings: LF</item>
+            <item>indent: 2 spaces</item>
+            <item>markdown_headers: no indentation</item>
+        </list>
+        Tools
+        <list>
+            <item>sequential-thinking</item>
+            <item>context7</item>
+            <item>microsoft.docs</item>
+        </list>
+        Prerequisites:
+        <list>
+            <item>Product documentation exists in .docs/product/ (if available)</item>
+            <item>
+                Access to:
+                <list>
+                    <item>[mission](../../.docs/product/mission.md)</item>
+                    <item>[roadmap](../../.docs/product/roadmap.md)</item>
+                    <item>[tech-stack](../../.docs/product/tech-stack.md)</item>
+                </list>
+            </item>
+            <item>Target is identified: repository root, a specific spec, or an external system description</item>
+            <item>Preferred diagram types or notation (optional)</item>
+        </list>
+        High level overview:
+        <list listStyle="dash">
+            <item>Identify the diagram audience, goals, and necessary viewpoints</item>
+            <item>Plan a small, coherent set of diagrams (context, container, component, sequence, deployment, data flow)</item>
+            <item>Create Mermaid-based diagrams and a browsable index</item>
+            <item>Integrate links into existing docs (specs, README, product docs)</item>
+        </list>
+    </text>
+    <stepwise-instructions>
+        <list>
+            <item>
+                <task name="diagram_initiation" caption="Diagram Initiation">
+                    <hint>
+                        Use this step when the user asks to diagram a part of a system, spec, or the code.
+                    </hint>
+                    <text>
+                        Identify the target scope and propose a minimal useful set of diagrams for the audience.
+                        Confirm with the user before proceeding.
+                    </text>
+                    <examples chat={{true}}>
+                        <example>
+                            <input speaker="human">We need architecture diagrams for the current repo.</input>
+                            <output speaker="ai">
+                                <ToolRequest name="search" parameters="{'query': '${workspaceFolder}/.docs/product/roadmap.md'}" />
+                                <ToolResponse name="search">
+                                    (Roadmap file found. No specific diagram section noted.)
+                                </ToolResponse>
+                                <ai-msg>
+                                    For the repo, I suggest a small set to start:
+                                    1) System Context (stakeholders and external systems)
+                                    2) System Diagram (frontend, backend, data stores, external deps)
+                                    3) Sequence Diagram (key user flow)
+                                    4) Deployment Diagram (runtime topology and environments)
+                                    Shall I proceed with this set?
+                                </ai-msg>
+                            </output>
+                        </example>
+                        <example>
+                            <input speaker="human">Create diagrams for the "File Content Preview" spec.</input>
+                            <output speaker="ai">
+                                <ai-msg>
+                                    Great. I'll produce: a Context diagram for actors/data sources, a System diagram for client/service/data, and a Sequence diagram for the preview flow.
+                                    I'll confirm audiences and any notation preferences before I start.
+                                </ai-msg>
+                            </output>
+                        </example>
+                    </examples>
+                    <stepwise-instructions>
+                        <list>
+                            <item>CLARIFY: target (repo/spec/system) and audience (devs, SRE, product)</item>
+                            <item>PROPOSE: 2-4 diagrams to start, aligned to goals</item>
+                            <item>ASK for approval before proceeding</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+            <item>
+                <task name="context_gathering" caption="Context Gathering">
+                    <hint>
+                        Collect inputs to ensure diagrams reflect reality and align with goals.
+                    </hint>
+                    <text>
+                        Gather context from mission, roadmap, and tech stack. If a specific spec is provided, read it.
+                        For repos, identify entry points, services, data stores, and external integrations.
+                    </text>
+                    <examples>
+                        <example>
+                            <ai-msg>
+                                Audience: developers and stakeholders.
+                                Goal: explain boundaries and data flow.
+                                Tech stack shows React front-end and Node/Express backend with Postgres and Azure Storage.
+                                I'll reflect these in the diagrams.
+                            </ai-msg>
+                        </example>
+                    </examples>
+                    <stepwise-instructions>
+                        <list>
+                            <item>
+                                ACTION: Read available documents
+                                <Document src="${workspaceFolder}/.docs/product/mission.md" />
+                                <Document src="${workspaceFolder}/.docs/product/roadmap.md" />
+                                <Document src="${workspaceFolder}/.docs/product/tech-stack.md" />
+                                <Document src="${workspaceFolder}/.docs/specs/**/spec.md" />
+                            </item>
+                            <item>
+                                ACTION (repo): Identify major components (UI, services, data stores), external APIs, and runtime environments
+                            </item>
+                            <item>
+                                <mcp_tooling>
+                                    - sequential-thinking
+                                </mcp_tooling>
+                                USE_SEQUENTIAL_THINKING: Align diagrams with the mission/roadmap/tech constraints and identify gaps or conflicts
+                            </item>
+                            <item>THINK: Which viewpoints are most useful for the audience now?</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+                <task name="requirements_clarification" caption="Requirements Clarification">
+                    <hint>
+                        Confirm audience, depth, and preferred notations to reduce rework.
+                    </hint>
+                    <text>
+                        Ask clarifying questions about scope, diagram types, depth, environments, assumptions, and notation choices.
+                        Confirm expectations and constraints before drawing.
+                    </text>
+                    <examples>
+                        <example>
+                            <output>
+                                <ai-msg>
+                                    Before I diagram, a few questions:
+                                    1 - Primary audience (devs, product, SRE)? Any secondary?
+                                    2 - Which viewpoints do you need first (context, container, component, sequence, deployment, data flow)?
+                                    3 - Environments to include (dev/stage/prod)? Any regional topology?
+                                    4 - Notation preference (Mermaid)? Any C4 naming conventions to follow?
+                                    5 - Key flows to highlight? Any security or compliance boundaries to show?
+                                </ai-msg>
+                            </output>
+                        </example>
+                    </examples>
+                    <stepwise-instructions>
+                        <list>
+                            <item>
+                                <mcp-tooling>
+                                - sequential-thinking
+                                </mcp-tooling>
+                                USE_SEQUENTIAL_THINKING: Identify ambiguities (audience, depth, environments, sensitive data)
+                            </item>
+                            <item>FORMULATE numbered clarifying questions</item>
+                            <item>ASK and WAIT for responses</item>
+                            <item>CONFIRM the planned diagram set and assumptions</item>
+                            <item>REMEMBER constraints and preferences</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+            <item>
+                <task name="date_determination" caption="Determine the current date for folder naming">
+                    <name>Date Determination</name>
+                    <description>Determine the current date for folder naming.</description>
+                    <hint>
+                        Use this step to ensure the correct date is used for diagram folder naming.
+                    </hint>
+                    <stepwise-instructions>
+                        <list>
+                            <item>1. CREATE directory if not exists: .docs/architecture/</item>
+                            <item>2. CREATE temporary file: .docs/architecture/.date-check</item>
+                            <item>3. READ file creation timestamp from filesystem</item>
+                            <item>4. EXTRACT date in YYYY-MM-DD format</item>
+                            <item>5. DELETE temporary file</item>
+                            <item>6. STORE date in variable for folder naming</item>
+                        </list>
+                    </stepwise-instructions>
+                    <hint>
+                        If filesystem method fails, ask the user:
+                        1. STATE: "I need to confirm today's date for the diagram folder"
+                        2. ASK: "What is today's date? (YYYY-MM-DD format)"
+                        3. WAIT for response
+                        4. VALIDATE format
+                        5. STORE date for folder naming
+                    </hint>
+                </task>
+            </item>
+            <item>
+                <task name="diagram_folder_creation" caption="Diagram Folder Creation">
+                    <name>Diagram Folder Creation</name>
+                    <description>Create the diagram folder using the determined date.</description>
+                    <hint>
+                        Use the stored date and naming format.
+                    </hint>
+                    <stepwise-instructions>
+                        <list>
+                            <item>
+                                1. CREATE directory: .docs/architecture/YYYY-MM-DD-diagram-name/
+                                <hint>
+                                - max_words: 5
+                                - style: kebab-case
+                                - descriptive: true
+                                </hint>
+                                <examples>
+                                    - 2025-03-15-repo-context-overview
+                                    - 2025-03-16-file-preview-architecture
+                                    - 2025-03-17-authn-authz-view
+                                </examples>
+                            </item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+            <item>
+                <task name="create_diagrams" caption="Create Diagrams">
+                    <name>Create Diagrams</name>
+                    <description>Create Mermaid diagrams and supporting files.</description>
+                    <hint>
+                        Prefer Mermaid for portability. Keep node IDs stable and names consistent. Show boundaries and external deps explicitly.
+                        Use the mermaid-validator mcp for validating your mermaid syntax.
+                        Ensure you use a color-blind friendly color pallette, maintain good contrast between labels and object colors, and use a
+                        dark background.
+                    </hint>
+                    <stepwise-instructions>
+                        <list>
+                            <item>CREATE a `diagrams/` subfolder</item>
+                            <item>FOR EACH planned diagram: create a `.mmd` file with a minimal, legible first version</item>
+                            <item>INCLUDE: titles, legends, and notes (as comments) when helpful</item>
+                            <item>USE: clear groupings for boundaries (e.g., subgraphs)</item>
+                            <item>VERIFY: the diagram compiles in Mermaid using `mermaid-validator` (syntax validity)</item>
+                        </list>
+                    </stepwise-instructions>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/architecture/YYYY-MM-DD-diagram-name/diagrams/context.mmd" />
+                        <template>
+                            ---
+                            config:
+                            theme: dark
+                            ---
+                            %% System Context Diagram
+                            %% Audience: [audience] | Purpose: [purpose]
+                            C4Context
+                                title System Context Diagram
+                                %% External Actors
+                                %% System Context Diagram
+                                %% Audience: [audience] | Purpose: [purpose]
+                                Person(user, "User", "End user")
+                                System_Boundary(system, "System") {
+                                    System(app, "App", "Primary application")
+                                }
+                                System_Ext(ext, "External Service", "Third-party API/service")
+                            </template>
+                    </OutputFormat>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/architecture/YYYY-MM-DD-diagram-name/diagrams/container.mmd" />
+                        <template>
+                            architecture-beta
+                              title Container Diagram - System Context
+                              %% Groups
+                              group client(web)[Frontend]
+                              group backend(server)[Backend]
+                              group data(database)[Data Stores]
+                              group external(cloud)[External Dependencies]
+
+                              %% Services
+                              service ui(app)[Web UI] in client
+                              service api(container)[API Service] in backend
+                              service db(devicon:postgresql)[PostgreSQL DB] in data
+                              service cache(devicon:redis)[Redis Cache] in data
+                              service auth(logos:keycloak)[Auth Provider] in external
+                              service payment(logos:stripe)[Payment Gateway] in external
+
+                              %% Connections
+                              ui:R -- L:api
+                              api:R -- L:db
+                              api:R -- L:cache
+                              api:R -- L:auth
+                              api:R -- L:payment
+                        </template>
+                    </OutputFormat>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/architecture/YYYY-MM-DD-diagram-name/diagrams/sequence-main-flow.mmd" />
+                        <template>
+                            %% Sequence Diagram - Main Flow
+                            sequenceDiagram
+                              actor User
+                              participant UI as Web UI
+                              participant API as API Service
+                              participant DB as Database
+
+                              User->>UI: Initiate action
+                              UI->>API: Request [endpoint]
+                              API->>DB: Query/Update
+                              DB-->>API: Result
+                              API-->>UI: Response
+                              UI-->>User: Display outcome
+                        </template>
+                    </OutputFormat>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/architecture/YYYY-MM-DD-diagram-name/diagrams/deployment.mmd" />
+                        <template>
+                            %% Deployment Diagram (logical)
+                            architecture-beta
+                                title Azure Cloud Application Architecture
+                                group api(cloud)[API]
+
+                                service api1(server)[Server] in api
+                                service api2(server)[Server] in api
+
+                                service web(logos:microsoft-azure)[AppServiceWebFrontEnd]
+                                service db(devicon:azuresqldatabase)[AzureSQLDatabase]
+
+                                web:R -- L:api1
+                                web:R -- L:api2
+                                api1:R -- L:db
+                                api2:R -- L:db
+                        </template>
+                    </OutputFormat>
+                </task>
+            </item>
+            <item>
+                <task name="create_diagram_index" caption="Create Diagram Index">
+                    <name>Create Diagram Index</name>
+                    <description>Create an index that lists diagrams and how to view them.</description>
+                    <hint>
+                        Provide links to source `.mmd` files and embed previews using fenced Mermaid blocks.
+                    </hint>
+                    <stepwise-instructions>
+                        <list>
+                            <item>ACTION: Create diagram-index.md summarizing all diagrams</item>
+                            <item>INCLUDE: purpose, audience, and links to sources</item>
+                            <item>EMBED: Mermaid blocks for quick viewing</item>
+                        </list>
+                    </stepwise-instructions>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/architecture/YYYY-MM-DD-diagram-name/diagram-index.md" />
+                        <template>
+                            # Architecture Diagram Index
+
+                            > Created: [CURRENT_DATE]
+                            > Source folder: ./diagrams/
+
+                            ## Diagrams
+
+                            ### 1) System Context
+                            - Purpose: [purpose]
+                            - Source: ./diagrams/context.mmd
+                            ```mermaid
+                            %% paste or include the same content as context.mmd for preview
+                            flowchart LR
+                              user([User]) --> app[App]
+                              app --> ext[(External Service)]
+                            ```
+
+                            ### 2) Container
+                            - Purpose: [purpose]
+                            - Source: ./diagrams/container.mmd
+                            ```mermaid
+                            architecture-beta
+                              title Container Diagram - System Context
+                              %% Groups
+                              group client(web)[Frontend]
+                              group backend(server)[Backend]
+                              group data(database)[Data Stores]
+                              group external(cloud)[External Dependencies]
+
+                              %% Services
+                              service ui(app)[Web UI] in client
+                              service api(container)[API Service] in backend
+                              service db(devicon:postgresql)[PostgreSQL DB] in data
+                              service cache(devicon:redis)[Redis Cache] in data
+                              service auth(logos:keycloak)[Auth Provider] in external
+                              service payment(logos:stripe)[Payment Gateway] in external
+
+                              %% Connections
+                              ui:R -- L:api
+                              api:R -- L:db
+                              api:R -- L:cache
+                              api:R .. L:auth
+                              api:R .. L:payment
+                            ```
+
+                            ### 3) Main Flow (Sequence)
+                            - Purpose: [purpose]
+                            - Source: ./diagrams/sequence-main-flow.mmd
+                            ```mermaid
+                            sequenceDiagram
+                              actor User
+                              participant UI
+                              participant API
+                              User->>UI: Action
+                              UI->>API: Request
+                              API-->>UI: Response
+                            ```
+
+                            ### 4) Deployment
+                            - Purpose: [purpose]
+                            - Source: ./diagrams/deployment.mmd
+                            ```mermaid
+                            flowchart LR
+                              user([User]) --> cdn[CDN] --> fe[Frontend]
+                              fe --> be[Backend] --> db[(DB)]
+                            ```
+
+                            ## Notes
+                            - Keep IDs and names stable across revisions
+                            - Show boundaries, external dependencies, and sensitive data flows clearly
+                            - Align with tech stack and environments (dev/stage/prod)
+                        </template>
+                    </OutputFormat>
+                </task>
+            </item>
+            <item>
+                <task name="integration_notes" caption="Integration Notes">
+                    <name>Integration Notes</name>
+                    <description>Document how these diagrams link into the rest of the docs.</description>
+                    <hint>
+                        Point to where to place links in README/spec/product docs and any badges or navigation updates.
+                    </hint>
+                    <stepwise-instructions>
+                        <list>
+                            <item>ACTION: Create integration.md with link targets and PR checklist</item>
+                            <item>INCLUDE: references to relevant specs or product docs</item>
+                        </list>
+                    </stepwise-instructions>
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/architecture/YYYY-MM-DD-diagram-name/integration.md" />
+                        <template>
+                            # Integration Notes
+
+                            > Created: [CURRENT_DATE]
+
+                            ## Link Targets
+                            - README.md: Add a section "Architecture" linking to @.docs/architecture/YYYY-MM-DD-diagram-name/diagram-index.md
+                            - Spec(s): Link from related spec(s) to the diagram index
+                            - Product Docs: Cross-link from @.docs/product/tech-stack.md where appropriate
+
+                            ## PR Checklist
+                            - [ ] Add links in README/specs/product docs
+                            - [ ] Ensure Mermaid blocks render properly in your platform
+                            - [ ] Confirm audiences and scope still match the latest roadmap
+                        </template>
+                    </OutputFormat>
+                </task>
+            </item>
+            <item>
+                <task name="user_review" caption="User Diagram Review">
+                    <hint>
+                        Ask the user to review the diagrams and plan before finalizing.
+                    </hint>
+                    <examples>
+                        <example>
+                            <ai-msg>
+                                I've created the diagram set:
+
+                                - Plan: @.docs/architecture/YYYY-MM-DD-diagram-name/diagram-plan.md
+                                - Index: @.docs/architecture/YYYY-MM-DD-diagram-name/diagram-index.md
+                                - Diagrams: @.docs/architecture/YYYY-MM-DD-diagram-name/diagrams/
+                                - Integration Notes: @.docs/architecture/YYYY-MM-DD-diagram-name/integration.md
+
+                                Please review and let me know if any changes are needed.
+                            </ai-msg>
+                        </example>
+                    </examples>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                        </mcp-tooling>
+                        <list>
+                            <item>ACTION: Request user review and approval</item>
+                            <item>WAIT: For approval or revision requests</item>
+                            <item>REVISE: Update diagrams/plan/index as requested</item>
+                            <item>UTILIZE: sequential-thinking to summarize changes</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+        </list>
+    </stepwise-instructions>
+
+    <text>
+    ## Execution Standards
+
+    IMPORTANT: When executing this workflow, ensure you follow:
+    - code-style
+    - dev-best-practices
+    - tech-stack
+
+    IMPORTANT: Maintain:
+    - Audience alignment (who will read/use the diagrams)
+    - Visual consistency (names, IDs, boundaries)
+    - Traceability to source-of-truth (code/spec/doc)
+    - Use color to communicate
+    - Maintain clear contrast for accessibility
+
+    IMPORTANT: Ensure that all diagram sets include:
+    - A browsable index (diagram-index.md)
+    - Mermaid sources in ./diagrams/
+    - Integration notes for docs
+
+    IMPORTANT: Checklist:
+    - [ ] Accurate date determined via file system
+    - [ ] Diagram folder created with correct date prefix
+    - [ ] 2-4 initial diagrams created in Mermaid
+    - [ ] diagram-index.md created with embeds
+    - [ ] User-approved documentation
+
+    **IMPORTANT:** Preferred Diagram Types:
+    - flowchart
+    - sequenceDiagram
+    - classDiagram
+    - stateDiagram
+    - erDiagram (Entity Relationship Diagram)
+    - journey (User Journeys)
+    - requirementDiagram
+    - C4Context (planUML)
+        - System Context
+        - Container Diagram
+        - Component Diagram
+        - Dyanmic Diagram
+        - Deployment Diagram
+    - mindmap
+    - zenuml
+    - block
+    - packet
+    - archtecture-beta
+
+    **IMPORTANT:** Banned Diagrams:
+    </text>
+</poml>

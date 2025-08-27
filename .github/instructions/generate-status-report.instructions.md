@@ -1,917 +1,711 @@
 ---
-description: Generate Status Report for Nous Spec-Driven Development
+description: Generate Status Report for Spec-Driven Development
 globs:
 alwaysApply: false
-version: 1.0
+version: 2.0
 encoding: UTF-8
+format: poml
 ---
 
-# Generate Status Report for Nous Framework
-
-<ai_meta>
-  <parsing_rules>
-    - Process XML blocks first for structured data
-    - Execute instructions in sequential order
-    - Parse all spec documents systematically
-    - Aggregate data before generating report
-  </parsing_rules>
-  <file_conventions>
-    - encoding: UTF-8
-    - line_endings: LF
-    - indent: 2 spaces
-    - markdown_headers: no indentation
-  </file_conventions>
-</ai_meta>
-
-## Overview
-
-<purpose>
-  - Generate comprehensive project status reports
-  - Analyze all specification documents in .docs/specs/
-  - Provide architectural overview of system progress
-  - Track completion status across all features
-</purpose>
-
-<context>
-  - Part of Nous framework
-  - Provides high-level project visibility
-  - Assists architects and project managers
-  - Consolidates distributed spec information
-</context>
-
-<prerequisites>
-  - Product documentation exists in .docs/product/
-  - One or more spec folders exist in .docs/specs/
-  - Access to:
-    - [mission](../../.docs/product/mission.md)
-    - [roadmap](../../.docs/product/roadmap.md)
-    - [tech-stack](../../.docs/product/tech-stack.md)
-    - [decisions](../../.docs/product/decisions.md)
-</prerequisites>
-
-<process_flow>
-
-<step number="1" name="discover_documentation">
-
-### Step 1: Discover Documentation Structure
-
-<step_metadata>
-  <scans>
-    - .docs/product/ directory
-    - .docs/specs/ directory
-  </scans>
-  <catalogs>all available documentation files</catalogs>
-</step_metadata>
-
-<discovery_tasks>
-  <product_documents>
-    - mission.md: product vision and goals
-    - roadmap.md: planned features and phases
-    - tech-stack.md: technology decisions
-    - decisions.md: architectural decisions
-    - code-style.md: development standards
-  </product_documents>
-  <spec_folders>
-    - Pattern: YYYY-MM-DD-spec-name/
-    - Contents: spec.md, tasks.md, sub-specs/
-    - Status indicators in task checkboxes
-  </spec_folders>
-</discovery_tasks>
-
-<folder_structure_analysis>
-  <expected_structure>
-    .docs/
-    ├── product/
-    │   ├── mission.md
-    │   ├── roadmap.md
-    │   ├── tech-stack.md
-    │   ├── decisions.md
-    │   └── code-style.md
-    └── specs/
-        ├── YYYY-MM-DD-spec-name-1/
-        │   ├── spec.md
-        │   ├── tasks.md
-        │   └── sub-specs/
-        │       ├── technical-spec.md
-        │       ├── api-spec.md
-        │       ├── database-schema.md
-        │       └── tests.md
-        └── YYYY-MM-DD-spec-name-2/
-            └── ...
-  </expected_structure>
-</folder_structure_analysis>
-
-<instructions>
-  ACTION: Scan .docs/ directory structure
-  CATALOG: All found documentation files
-  IDENTIFY: Missing expected documents
-  PREPARE: File list for systematic parsing
-</instructions>
-
-</step>
-
-<step number="2" name="parse_product_documentation">
-
-### Step 2: Parse Product Documentation
-
-<step_metadata>
-  <reads>core product documents</reads>
-  <extracts>strategic context</extracts>
-</step_metadata>
-
-<parsing_targets>
-  <mission_analysis>
-    - Product vision statement
-    - Target user personas
-    - Core value propositions
-    - Success metrics
-  </mission_analysis>
-  <roadmap_analysis>
-    - Completed phases
-    - Current phase progress
-    - Upcoming features
-    - Timeline estimates
-  </roadmap_analysis>
-  <tech_stack_analysis>
-    - Current technologies
-    - Architecture decisions
-    - Infrastructure setup
-    - Development tools
-  </tech_stack_analysis>
-  <decisions_log>
-    - Strategic decisions made
-    - Technical debt items
-    - Architectural changes
-    - Process improvements
-  </decisions_log>
-</parsing_targets>
-
-<data_extraction>
-  <mission_data>
-    - vision: string
-    - target_users: array[string]
-    - value_props: array[string]
-  </mission_data>
-  <roadmap_data>
-    - phases: array[{name, status, features}]
-    - current_phase: string
-    - completion_percentage: number
-  </roadmap_data>
-  <tech_data>
-    - frontend: string
-    - backend: string
-    - database: string
-    - infrastructure: array[string]
-  </tech_data>
-  <decisions_data>
-    - decisions: array[{id, date, title, status, category}]
-    - recent_decisions: array[decision]
-  </decisions_data>
-</data_extraction>
-
-<instructions>
-  ACTION: Read and parse all product documentation
-  EXTRACT: Structured data from each document
-  VALIDATE: Data completeness and consistency
-  STORE: Parsed data for report generation
-</instructions>
-
-</step>
-
-<step number="3" name="analyze_spec_folders">
-
-### Step 3: Analyze Specification Folders
-
-<step_metadata>
-  <iterates>through all spec folders</iterates>
-  <extracts>status and progress data</extracts>
-</step_metadata>
-
-<spec_analysis_process>
-  <folder_processing>
-    FOR each folder in .docs/specs/:
-      1. PARSE folder name for date and spec name
-      2. READ spec.md for requirements and scope
-      3. READ tasks.md for completion status
-      4. READ sub-specs/ for technical details
-      5. CALCULATE completion percentage
-      6. IDENTIFY blocked or overdue items
-  </folder_processing>
-</spec_analysis_process>
-
-<spec_data_extraction>
-  <basic_info>
-    - spec_name: string
-    - creation_date: date
-    - status: enum[Planning, InProgress, Completed, Blocked]
-    - priority: enum[Low, Medium, High, Critical]
-  </basic_info>
-  <requirements_data>
-    - overview: string
-    - user_stories: array[string]
-    - scope_items: array[string]
-    - out_of_scope: array[string]
-    - deliverables: array[string]
-  </requirements_data>
-  <progress_data>
-    - total_tasks: number
-    - completed_tasks: number
-    - in_progress_tasks: number
-    - blocked_tasks: number
-    - completion_percentage: number
-  </progress_data>
-  <technical_data>
-    - new_dependencies: array[string]
-    - database_changes: boolean
-    - api_changes: array[string]
-    - testing_requirements: array[string]
-  </technical_data>
-</spec_data_extraction>
-
-<status_determination>
-  <status_rules>
-    - Planning: tasks.md not created or no tasks checked
-    - InProgress: some tasks checked, some unchecked
-    - Completed: all tasks checked
-    - Blocked: explicit blocking indicators or overdue
-  </status_rules>
-  <completion_calculation>
-    completion_percentage = (checked_tasks / total_tasks) * 100
-  </completion_calculation>
-  <priority_inference>
-    - High: affects core user workflows
-    - Medium: enhances existing features
-    - Low: nice-to-have improvements
-    - Critical: security or stability issues
-  </priority_inference>
-</status_determination>
-
-<instructions>
-  ACTION: Process each spec folder systematically
-  EXTRACT: All relevant data points
-  CALCULATE: Progress metrics and status
-  IDENTIFY: Issues and blockers
-</instructions>
-
-</step>
-
-<step number="4" name="identify_system_patterns">
-
-### Step 4: Identify System-Wide Patterns
-
-<step_metadata>
-  <analyzes>cross-spec patterns</analyzes>
-  <identifies>architectural trends</identifies>
-</step_metadata>
-
-<pattern_analysis>
-  <technology_trends>
-    - Most frequently used technologies
-    - New technology adoption patterns
-    - Deprecated or replaced technologies
-    - Infrastructure evolution
-  </technology_trends>
-  <feature_patterns>
-    - Feature types being developed
-    - User story patterns
-    - Common integration points
-    - Recurring technical requirements
-  </feature_patterns>
-  <development_patterns>
-    - Average spec completion time
-    - Common blocking factors
-    - Test coverage trends
-    - Quality metrics
-  </development_patterns>
-  <architectural_evolution>
-    - Database schema evolution
-    - API design patterns
-    - Service architecture changes
-    - Performance optimization trends
-  </architectural_evolution>
-</pattern_analysis>
-
-<risk_assessment>
-  <technical_risks>
-    - Outdated dependencies
-    - Architectural debt
-    - Performance bottlenecks
-    - Security concerns
-  </technical_risks>
-  <project_risks>
-    - Consistently blocked specs
-    - Resource allocation issues
-    - Timeline slippage patterns
-    - Scope creep indicators
-  </project_risks>
-</risk_assessment>
-
-<instructions>
-  ACTION: Analyze patterns across all specs
-  IDENTIFY: System-wide trends and risks
-  EVALUATE: Architectural health
-  HIGHLIGHT: Areas needing attention
-</instructions>
-
-</step>
-
-<step number="5" name="generate_executive_summary">
-
-### Step 5: Generate Executive Summary
-
-<step_metadata>
-  <creates>high-level overview</creates>
-  <targets>architects and managers</targets>
-</step_metadata>
-
-<summary_components>
-  <project_health>
-    - Overall completion percentage
-    - Active specs count
-    - Velocity metrics
-    - Quality indicators
-  </project_health>
-  <key_metrics>
-    - Features completed this month
-    - Features in progress
-    - Blocked items requiring attention
-    - Technical debt indicators
-  </key_metrics>
-  <strategic_alignment>
-    - Mission alignment assessment
-    - Roadmap progress evaluation
-    - Resource allocation effectiveness
-    - Timeline adherence
-  </strategic_alignment>
-</summary_components>
-
-<executive_summary_template>
-  # Project Status Executive Summary
-
-  > Generated: [CURRENT_DATE]
-  > Report Period: [DATE_RANGE]
-  > Project Health: [HEALTH_INDICATOR]
-
-  ## Key Metrics
-
-  - **Total Specifications**: [TOTAL_SPECS]
-  - **Completed**: [COMPLETED_COUNT] ([COMPLETION_PERCENTAGE]%)
-  - **In Progress**: [IN_PROGRESS_COUNT]
-  - **Blocked**: [BLOCKED_COUNT]
-  - **Average Completion Time**: [AVG_DAYS] days
-
-  ## Strategic Alignment
-
-  **Mission Progress**: [ALIGNMENT_ASSESSMENT]
-  **Roadmap Adherence**: [TIMELINE_STATUS]
-  **Resource Utilization**: [EFFICIENCY_METRIC]
-
-  ## Immediate Actions Required
-
-  1. [ACTION_ITEM_1]
-  2. [ACTION_ITEM_2]
-  3. [ACTION_ITEM_3]
-</executive_summary_template>
-
-<health_indicators>
-  <green>
-    - >80% specs on track
-    - <5% blocked items
-    - Strong velocity trend
-  </green>
-  <yellow>
-    - 60-80% specs on track
-    - 5-15% blocked items
-    - Declining velocity
-  </yellow>
-  <red>
-    - <60% specs on track
-    - >15% blocked items
-    - Critical issues present
-  </red>
-</health_indicators>
-
-<instructions>
-  ACTION: Generate executive summary
-  CALCULATE: Key performance metrics
-  ASSESS: Overall project health
-  RECOMMEND: Priority actions
-</instructions>
-
-</step>
-
-<step number="6" name="create_detailed_status_sections">
-
-### Step 6: Create Detailed Status Sections
-
-<step_metadata>
-  <creates>comprehensive status report</creates>
-  <organizes>by functional areas</organizes>
-</step_metadata>
-
-<report_sections>
-  <active_specifications>
-    - Current work in progress
-    - Completion status
-    - Estimated completion dates
-    - Resource requirements
-  </active_specifications>
-  <completed_features>
-    - Recently completed specs
-    - Delivered value
-    - Performance metrics
-    - User impact assessment
-  </completed_features>
-  <blocked_items>
-    - Blocked specifications
-    - Blocking factors
-    - Resolution strategies
-    - Priority recommendations
-  </blocked_items>
-  <upcoming_work>
-    - Next planned specifications
-    - Resource requirements
-    - Dependencies
-    - Timeline estimates
-  </upcoming_work>
-</report_sections>
-
-<section_templates>
-  <active_specs_template>
-    ## Active Specifications
-
-    ### [SPEC_NAME] ([COMPLETION_PERCENTAGE]%)
-    **Created**: [DATE] | **Priority**: [PRIORITY] | **ETA**: [ESTIMATED_DATE]
-
-    **Scope**: [BRIEF_DESCRIPTION]
-
-    **Progress**:
-    - ✅ [COMPLETED_TASK_COUNT] completed
-    - 🔄 [IN_PROGRESS_TASK_COUNT] in progress
-    - ⏳ [PENDING_TASK_COUNT] pending
-
-    **Next Actions**: [NEXT_STEPS]
-
-    ---
-  </active_specs_template>
-
-  <completed_features_template>
-    ## Recently Completed Specifications
-
-    ### [SPEC_NAME] ✅
-    **Completed**: [DATE] | **Duration**: [DAYS] days
-
-    **Delivered**:
-    - [DELIVERABLE_1]
-    - [DELIVERABLE_2]
-
-    **Impact**: [USER_IMPACT_SUMMARY]
-
-    ---
-  </completed_features_template>
-
-  <blocked_items_template>
-    ## Blocked Specifications ⚠️
-
-    ### [SPEC_NAME]
-    **Blocked Since**: [DATE] | **Priority**: [PRIORITY]
-
-    **Blocking Factor**: [BLOCKING_REASON]
-
-    **Impact**: [IMPACT_DESCRIPTION]
-
-    **Proposed Resolution**: [RESOLUTION_STRATEGY]
-
-    **Owner**: [RESPONSIBLE_PARTY]
-
-    ---
-  </blocked_items_template>
-</section_templates>
-
-<instructions>
-  ACTION: Create detailed status sections
-  ORGANIZE: By functional categories
-  PROVIDE: Actionable information
-  HIGHLIGHT: Critical items needing attention
-</instructions>
-
-</step>
-
-<step number="7" name="generate_technical_insights">
-
-### Step 7: Generate Technical Insights
-
-<step_metadata>
-  <analyzes>technical patterns and trends</analyzes>
-  <provides>architectural guidance</provides>
-</step_metadata>
-
-<technical_analysis>
-  <architecture_evolution>
-    - Database schema changes
-    - API design patterns
-    - Service architecture updates
-    - Integration patterns
-  </architecture_evolution>
-  <technology_adoption>
-    - New dependencies introduced
-    - Technology stack evolution
-    - Performance optimization patterns
-    - Security enhancements
-  </technology_adoption>
-  <code_quality_trends>
-    - Test coverage evolution
-    - Code complexity trends
-    - Technical debt accumulation
-    - Refactoring opportunities
-  </code_quality_trends>
-  <performance_metrics>
-    - Feature development velocity
-    - Bug introduction rates
-    - Deployment frequency
-    - Mean time to resolution
-  </performance_metrics>
-</technical_analysis>
-
-<technical_insights_template>
-  ## Technical Insights
-
-  ### Architecture Evolution
-
-  **Database Changes**:
-  - [SCHEMA_CHANGE_SUMMARY]
-  - Impact on existing systems: [IMPACT_ASSESSMENT]
-
-  **API Evolution**:
-  - New endpoints: [ENDPOINT_COUNT]
-  - Breaking changes: [BREAKING_CHANGES]
-  - Version strategy: [VERSIONING_APPROACH]
-
-  ### Technology Stack Updates
-
-  **New Dependencies**:
-  - [DEPENDENCY_1]: [JUSTIFICATION]
-  - [DEPENDENCY_2]: [JUSTIFICATION]
-
-  **Deprecated Technologies**:
-  - [DEPRECATED_1]: [REPLACEMENT_PLAN]
-  - [DEPRECATED_2]: [MIGRATION_STATUS]
-
-  ### Quality Metrics
-
-  **Test Coverage**: [COVERAGE_PERCENTAGE]% ([TREND])
-  **Technical Debt**: [DEBT_ASSESSMENT]
-  **Performance**: [PERFORMANCE_TREND]
-
-  ### Recommendations
-
-  1. **[RECOMMENDATION_1]**: [RATIONALE]
-  2. **[RECOMMENDATION_2]**: [RATIONALE]
-  3. **[RECOMMENDATION_3]**: [RATIONALE]
-</technical_insights_template>
-
-<instructions>
-  ACTION: Analyze technical patterns across specs
-  GENERATE: Architectural insights
-  PROVIDE: Technical recommendations
-  HIGHLIGHT: Quality and performance trends
-</instructions>
-
-</step>
-
-<step number="8" name="create_timeline_visualization">
-
-### Step 8: Create Timeline Visualization
-
-<step_metadata>
-  <creates>project timeline overview</creates>
-  <visualizes>progress and milestones</visualizes>
-</step_metadata>
-
-<timeline_components>
-  <historical_progress>
-    - Completed specifications by month
-    - Major milestones achieved
-    - Decision points and pivots
-    - Performance trend lines
-  </historical_progress>
-  <current_state>
-    - Active work streams
-    - Current sprint progress
-    - Immediate deliverables
-    - Resource allocation
-  </current_state>
-  <future_projections>
-    - Planned specifications
-    - Estimated delivery dates
-    - Resource requirements
-    - Risk factors
-  </future_projections>
-</timeline_components>
-
-<timeline_template>
-  ## Project Timeline
-
-  ### Historical Progress (Last 6 Months)
-
-  ```
-  [MONTH-6] |████████░░| 80% - [SPECS_COMPLETED] specs completed
-  [MONTH-5] |██████████| 100% - [SPECS_COMPLETED] specs completed
-  [MONTH-4] |██████░░░░| 60% - [SPECS_COMPLETED] specs completed
-  [MONTH-3] |████████░░| 80% - [SPECS_COMPLETED] specs completed
-  [MONTH-2] |██████████| 100% - [SPECS_COMPLETED] specs completed
-  [MONTH-1] |███████░░░| 70% - [SPECS_COMPLETED] specs completed
-  ```
-
-  ### Current Month Progress
-
-  ```
-  Week 1: ████████░░ 80% complete
-  Week 2: ██████░░░░ 60% complete
-  Week 3: ████░░░░░░ 40% complete
-  Week 4: ░░░░░░░░░░ 0% planned
-  ```
-
-  ### Upcoming Milestones
-
-  - **[DATE]**: [MILESTONE_1]
-  - **[DATE]**: [MILESTONE_2]
-  - **[DATE]**: [MILESTONE_3]
-
-  ### Velocity Metrics
-
-  - **Average Specs/Month**: [VELOCITY]
-  - **Trend**: [IMPROVING/STABLE/DECLINING]
-  - **Capacity Utilization**: [UTILIZATION_PERCENTAGE]%
-</timeline_template>
-
-<instructions>
-  ACTION: Create timeline visualization
-  CALCULATE: Historical velocity metrics
-  PROJECT: Future completion estimates
-  HIGHLIGHT: Key milestones and risks
-</instructions>
-
-</step>
-
-<step number="9" name="generate_recommendations">
-
-### Step 9: Generate Strategic Recommendations
-
-<step_metadata>
-  <analyzes>patterns and risks</analyzes>
-  <provides>actionable recommendations</provides>
-</step_metadata>
-
-<recommendation_categories>
-  <immediate_actions>
-    - Critical blockers to resolve
-    - Overdue specifications
-    - Resource reallocation needs
-    - Process improvements
-  </immediate_actions>
-  <strategic_initiatives>
-    - Architectural improvements
-    - Technology upgrades
-    - Capacity planning
-    - Quality enhancements
-  </strategic_initiatives>
-  <risk_mitigation>
-    - Technical debt reduction
-    - Knowledge sharing needs
-    - Dependency management
-    - Performance optimization
-  </risk_mitigation>
-</recommendation_categories>
-
-<recommendation_template>
-  ## Strategic Recommendations
-
-  ### Immediate Actions (Next 2 Weeks)
-
-  #### 🔴 Critical
-  1. **[ACTION_1]**
-     - **Issue**: [PROBLEM_DESCRIPTION]
-     - **Impact**: [IMPACT_ASSESSMENT]
-     - **Solution**: [RECOMMENDED_ACTION]
-     - **Owner**: [RESPONSIBLE_PARTY]
-     - **Timeline**: [TIMEFRAME]
-
-  #### 🟡 Important
-  2. **[ACTION_2]**
-     - **Issue**: [PROBLEM_DESCRIPTION]
-     - **Solution**: [RECOMMENDED_ACTION]
-     - **Timeline**: [TIMEFRAME]
-
-  ### Strategic Initiatives (Next Quarter)
-
-  #### Architecture & Technology
-  - **[INITIATIVE_1]**: [DESCRIPTION_AND_RATIONALE]
-  - **[INITIATIVE_2]**: [DESCRIPTION_AND_RATIONALE]
-
-  #### Process Improvements
-  - **[IMPROVEMENT_1]**: [DESCRIPTION_AND_EXPECTED_OUTCOME]
-  - **[IMPROVEMENT_2]**: [DESCRIPTION_AND_EXPECTED_OUTCOME]
-
-  ### Risk Mitigation
-
-  #### Technical Risks
-  - **[RISK_1]**: [MITIGATION_STRATEGY]
-  - **[RISK_2]**: [MITIGATION_STRATEGY]
-
-  #### Project Risks
-  - **[RISK_1]**: [MITIGATION_STRATEGY]
-  - **[RISK_2]**: [MITIGATION_STRATEGY]
-</recommendation_template>
-
-<prioritization_matrix>
-  <high_impact_high_effort>Strategic initiatives</high_impact_high_effort>
-  <high_impact_low_effort>Quick wins - prioritize first</high_impact_low_effort>
-  <low_impact_high_effort>Avoid unless strategic</low_impact_high_effort>
-  <low_impact_low_effort>Consider if resources available</low_impact_low_effort>
-</prioritization_matrix>
-
-<instructions>
-  ACTION: Generate prioritized recommendations
-  CATEGORIZE: By urgency and impact
-  PROVIDE: Clear action plans
-  ASSIGN: Responsible parties and timelines
-</instructions>
-
-</step>
-
-<step number="10" name="compile_final_report">
-
-### Step 10: Compile Final Status Report
-
-<step_metadata>
-  <assembles>all report sections</assembles>
-  <creates>comprehensive document</creates>
-</step_metadata>
-
-<report_structure>
-  <header_section>
-    - Report metadata
-    - Executive summary
-    - Key metrics dashboard
-  </header_section>
-  <status_sections>
-    - Active specifications
-    - Completed features
-    - Blocked items
-    - Upcoming work
-  </status_sections>
-  <analysis_sections>
-    - Technical insights
-    - Timeline visualization
-    - Pattern analysis
-    - Risk assessment
-  </analysis_sections>
-  <action_sections>
-    - Strategic recommendations
-    - Immediate actions
-    - Resource requirements
-    - Success metrics
-  </action_sections>
-</report_structure>
-
-<final_report_template>
-  # Project Status Report
-
-  > **Generated**: [CURRENT_DATE]  
-  > **Period**: [REPORT_PERIOD]  
-  > **Next Review**: [NEXT_REVIEW_DATE]
-
-  ## Executive Summary
-
-  [EXECUTIVE_SUMMARY_CONTENT]
-
-  ## Project Health Dashboard
-
-  | Metric | Current | Target | Trend |
-  |--------|---------|---------|-------|
-  | Completion Rate | [RATE]% | [TARGET]% | [TREND] |
-  | Active Specs | [COUNT] | [CAPACITY] | [TREND] |
-  | Blocked Items | [COUNT] | 0 | [TREND] |
-  | Velocity | [SPECS_PER_MONTH] | [TARGET] | [TREND] |
-
-  ## Current Status
-
-  [ACTIVE_SPECIFICATIONS_CONTENT]
-
-  [COMPLETED_FEATURES_CONTENT]
-
-  [BLOCKED_ITEMS_CONTENT]
-
-  ## Technical Analysis
-
-  [TECHNICAL_INSIGHTS_CONTENT]
-
-  ## Timeline & Progress
-
-  [TIMELINE_VISUALIZATION_CONTENT]
-
-  ## Strategic Recommendations
-
-  [RECOMMENDATIONS_CONTENT]
-
-  ## Appendices
-
-  ### A. Specification Inventory
-  [COMPLETE_SPEC_LIST]
-
-  ### B. Technical Debt Register
-  [TECHNICAL_DEBT_ITEMS]
-
-  ### C. Decision Log Summary
-  [RECENT_DECISIONS]
-
-  ---
-
-  **Report Prepared By**: Nous Framework  
-  **Next Status Review**: [NEXT_REVIEW_DATE]
-</final_report_template>
-
-<report_metadata>
-  <filename>status-report-YYYY-MM-DD.md</filename>
-  <location>.docs/reports/</location>
-  <retention>keep last 12 reports</retention>
-  <format>markdown with tables and charts</format>
-</report_metadata>
-
-<instructions>
-  ACTION: Compile all sections into final report
-  VALIDATE: Report completeness and accuracy
-  FORMAT: Professional document structure
-  SAVE: To .docs/reports/ directory
-</instructions>
-
-</step>
-
-</process_flow>
-
-## Report Quality Standards
-
-<quality_standards>
-  <accuracy>
-    - Data must be current and verified
-    - Calculations must be correct
-    - Status assessments must be objective
-  </accuracy>
-  <completeness>
-    - All specs must be analyzed
-    - No critical information omitted
-    - Recommendations must be actionable
-  </completeness>
-  <clarity>
-    - Executive summary for leadership
-    - Technical details for architects
-    - Action items clearly prioritized
-  </clarity>
-  <timeliness>
-    - Report reflects current state
-    - Trends based on recent data
-    - Projections include latest changes
-  </timeliness>
-</quality_standards>
-
-## Error Handling
-
-<error_scenarios>
-  <missing_files>
-    <condition>Expected documentation files not found</condition>
-    <action>Note missing files and continue with available data</action>
-  </missing_files>
-  <corrupted_data>
-    <condition>Spec files have invalid format</condition>
-    <action>Report parsing issues and skip corrupted files</action>
-  </corrupted_data>
-  <empty_directories>
-    <condition>No spec folders found</condition>
-    <action>Generate minimal report with recommendations to create specs</action>
-  </empty_directories>
-</error_scenarios>
-
-## Execution Summary
-
-<final_checklist>
-  <verify>
-    - [ ] All .docs/specs/ folders analyzed
-    - [ ] Product documentation parsed
-    - [ ] Status calculations accurate
-    - [ ] Recommendations prioritized
-    - [ ] Report format professional
-    - [ ] Action items clearly defined
-    - [ ] Technical insights provided
-    - [ ] Timeline visualization created
-  </verify>
-</final_checklist>
-
-<success_criteria>
-  - Architects have clear project visibility
-  - Blockers and risks clearly identified
-  - Progress trends accurately represented
-  - Actionable recommendations provided
-  - Technical health assessed
-  - Resource needs identified
-</success_criteria>
+<poml>
+    <role>You are a Project Analyst and Technical Lead, responsible for generating comprehensive project status reports for software development projects.</role>
+    <task>You are tasked with analyzing all specification documents, product documentation, and project artifacts to create a detailed status report that provides visibility into project health, progress, and recommendations.</task>
+
+    <text>
+        File conventions:
+        <list>
+            <item>encoding: UTF-8</item>
+            <item>line_endings: LF</item>
+            <item>indent: 2 spaces</item>
+            <item>markdown_headers: no indentation</item>
+        </list>
+
+        Tools:
+        <list>
+            <item>sequential-thinking</item>
+            <item>memory</item>
+            <item>microsoft-docs</item>
+        </list>
+
+        Prerequisites:
+        <list>
+            <item>Product documentation exists in .docs/product/</item>
+            <item>One or more spec folders exist in .docs/specs/</item>
+            <item>
+                Access to:
+                <list>
+                    <item>[mission](../../.docs/product/mission.md)</item>
+                    <item>[roadmap](../../.docs/product/roadmap.md)</item>
+                    <item>[tech-stack](../../.docs/product/tech-stack.md)</item>
+                    <item>[decisions](../../.docs/product/decisions.md)</item>
+                </list>
+            </item>
+        </list>
+
+        High level overview:
+        <list listStyle="dash">
+            <item>Generate comprehensive project status reports</item>
+            <item>Analyze all specification documents in .docs/specs/</item>
+            <item>Provide architectural overview of system progress</item>
+            <item>Track completion status across all features</item>
+            <item>Identify blockers, risks, and recommendations</item>
+        </list>
+    </text>
+
+    <stepwise-instructions>
+        <list>
+            <item>
+                <task name="discover_documentation" caption="Discover Documentation Structure">
+                    <hint>
+                        Scan the project structure to catalog all available documentation files and identify missing components.
+                    </hint>
+                    <text>
+                        Systematically discover and catalog all documentation in the .docs/ directory, including product documents and specification folders.
+
+                        Expected structure:
+                        .docs/
+                        ├── product/
+                        │   ├── mission.md
+                        │   ├── roadmap.md
+                        │   ├── tech-stack.md
+                        │   ├── decisions.md
+                        │   └── code-style.md
+                        └── specs/
+                            ├── YYYY-MM-DD-spec-name-1/
+                            │   ├── spec.md
+                            │   ├── tasks.md
+                            │   └── sub-specs/
+                            │       ├── technical-spec.md
+                            │       ├── api-spec.md
+                            │       ├── database-schema.md
+                            │       └── tests.md
+                            └── YYYY-MM-DD-spec-name-2/
+                                └── ...
+                    </text>
+                    <stepwise-instructions>
+                        <list>
+                            <item>SCAN .docs/ directory structure recursively</item>
+                            <item>CATALOG all product documents in .docs/product/</item>
+                            <item>IDENTIFY all spec folders in .docs/specs/ (pattern: YYYY-MM-DD-spec-name/)</item>
+                            <item>CHECK for expected documents: mission.md, roadmap.md, tech-stack.md, decisions.md</item>
+                            <item>NOTE any missing expected documents</item>
+                            <item>PREPARE file list for systematic parsing</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+
+            <item>
+                <task name="parse_product_documentation" caption="Parse Product Documentation">
+                    <hint>
+                        Extract strategic context from core product documents to understand project vision, goals, and technical decisions.
+                    </hint>
+                    <text>
+                        Read and parse all product documentation to extract strategic context including mission, roadmap progress, technology stack, and key decisions.
+
+                        Data extraction targets:
+                        - Mission: vision statement, target users, value propositions, success metrics
+                        - Roadmap: completed phases, current phase progress, upcoming features, timeline estimates
+                        - Tech Stack: current technologies, architecture decisions, infrastructure setup, development tools
+                        - Decisions: strategic decisions made, technical debt items, architectural changes, process improvements
+                    </text>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                            <item>memory</item>
+                        </mcp-tooling>
+                        <list>
+                            <item>READ mission.md and extract: vision, target_users, value_props</item>
+                            <item>READ roadmap.md and extract: phases, current_phase, completion_percentage</item>
+                            <item>READ tech-stack.md and extract: frontend, backend, database, infrastructure</item>
+                            <item>READ decisions.md and extract: decisions with id, date, title, status, category</item>
+                            <item>VALIDATE data completeness and consistency</item>
+                            <item>STORE parsed data in memory for report generation</item>
+                            <item>UTILIZE sequential-thinking to analyze alignment and consistency</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+
+            <item>
+                <task name="analyze_spec_folders" caption="Analyze Specification Folders">
+                    <hint>
+                        Process each specification folder to extract progress data, completion status, and identify blockers.
+                    </hint>
+                    <text>
+                        Systematically analyze each specification folder to determine completion status, extract requirements, and calculate progress metrics.
+
+                        Status determination rules:
+                        - Planning: tasks.md not created or no tasks checked
+                        - InProgress: some tasks checked, some unchecked
+                        - Completed: all tasks checked
+                        - Blocked: explicit blocking indicators or overdue
+
+                        Completion calculation: (checked_tasks / total_tasks) * 100
+
+                        Priority inference:
+                        - High: affects core user workflows
+                        - Medium: enhances existing features
+                        - Low: nice-to-have improvements
+                        - Critical: security or stability issues
+                    </text>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                            <item>memory</item>
+                        </mcp-tooling>
+                        <list>
+                            <item>FOR each folder in .docs/specs/:</item>
+                            <item>PARSE folder name for date and spec name</item>
+                            <item>READ spec.md for: overview, user_stories, scope_items, out_of_scope, deliverables</item>
+                            <item>READ tasks.md for completion status and calculate: total_tasks, completed_tasks, in_progress_tasks, blocked_tasks</item>
+                            <item>READ sub-specs/ folder for: new_dependencies, database_changes, api_changes, testing_requirements</item>
+                            <item>CALCULATE completion percentage from checked/unchecked tasks</item>
+                            <item>DETERMINE status using status rules</item>
+                            <item>IDENTIFY blocked or overdue items</item>
+                            <item>STORE spec data in memory with relationships</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+
+            <item>
+                <task name="identify_system_patterns" caption="Identify System-Wide Patterns">
+                    <hint>
+                        Analyze cross-spec patterns to identify architectural trends, risks, and development patterns.
+                    </hint>
+                    <text>
+                        Examine patterns across all specifications to identify technology trends, architectural evolution, and potential risks.
+
+                        Pattern analysis areas:
+                        - Technology trends: most used technologies, new adoption patterns, deprecated technologies
+                        - Feature patterns: feature types, user story patterns, integration points
+                        - Development patterns: average completion time, common blocking factors, test coverage trends
+                        - Architectural evolution: database schema evolution, API design patterns, service architecture changes
+
+                        Risk assessment:
+                        - Technical risks: outdated dependencies, architectural debt, performance bottlenecks, security concerns
+                        - Project risks: consistently blocked specs, resource allocation issues, timeline slippage, scope creep
+                    </text>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                            <item>memory</item>
+                        </mcp-tooling>
+                        <list>
+                            <item>ANALYZE technology usage patterns across specs</item>
+                            <item>IDENTIFY most frequently used technologies</item>
+                            <item>TRACK new technology adoption patterns</item>
+                            <item>IDENTIFY common integration points and dependencies</item>
+                            <item>EVALUATE architectural evolution trends</item>
+                            <item>ASSESS development velocity and blocking patterns</item>
+                            <item>CALCULATE average spec completion time</item>
+                            <item>IDENTIFY technical risks and debt accumulation</item>
+                            <item>EVALUATE resource allocation effectiveness</item>
+                            <item>UTILIZE sequential-thinking to synthesize findings</item>
+                        </list>
+                    </stepwise-instructions>
+                </task>
+            </item>
+
+            <item>
+                <task name="generate_executive_summary" caption="Generate Executive Summary">
+                    <hint>
+                        Create a high-level overview with key metrics and health indicators for leadership consumption.
+                    </hint>
+                    <text>
+                        Generate an executive summary that provides project health metrics, completion percentages, and strategic alignment assessment.
+
+                        Health indicators:
+                        - Green: >80% specs on track, <5% blocked items, strong velocity trend
+                        - Yellow: 60-80% specs on track, 5-15% blocked items, declining velocity
+                        - Red: <60% specs on track, >15% blocked items, critical issues present
+
+                        Summary components:
+                        - Project health: overall completion percentage, active specs count, velocity metrics, quality indicators
+                        - Key metrics: features completed this month, features in progress, blocked items, technical debt
+                        - Strategic alignment: mission alignment assessment, roadmap progress, resource allocation effectiveness
+                    </text>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                        </mcp-tooling>
+                        <list>
+                            <item>CALCULATE overall completion percentage</item>
+                            <item>COUNT total specifications, completed, in progress, and blocked</item>
+                            <item>CALCULATE average completion time in days</item>
+                            <item>ASSESS project health using health indicator criteria</item>
+                            <item>EVALUATE mission alignment and roadmap adherence</item>
+                            <item>ASSESS resource utilization efficiency</item>
+                            <item>IDENTIFY immediate actions required (top 3)</item>
+                            <item>GENERATE executive summary with template format</item>
+                        </list>
+                    </stepwise-instructions>
+
+                    <template>
+                        # Project Status Executive Summary
+
+                        > Generated: [CURRENT_DATE]
+                        > Report Period: [DATE_RANGE]
+                        > Project Health: [HEALTH_INDICATOR]
+
+                        ## Key Metrics
+
+                        - **Total Specifications**: [TOTAL_SPECS]
+                        - **Completed**: [COMPLETED_COUNT] ([COMPLETION_PERCENTAGE]%)
+                        - **In Progress**: [IN_PROGRESS_COUNT]
+                        - **Blocked**: [BLOCKED_COUNT]
+                        - **Average Completion Time**: [AVG_DAYS] days
+
+                        ## Strategic Alignment
+
+                        **Mission Progress**: [ALIGNMENT_ASSESSMENT]
+                        **Roadmap Adherence**: [TIMELINE_STATUS]
+                        **Resource Utilization**: [EFFICIENCY_METRIC]
+
+                        ## Immediate Actions Required
+
+                        1. [ACTION_ITEM_1]
+                        2. [ACTION_ITEM_2]
+                        3. [ACTION_ITEM_3]
+                    </template>
+                </task>
+            </item>
+
+            <item>
+                <task name="create_detailed_status_sections" caption="Create Detailed Status Sections">
+                    <hint>
+                        Organize specifications by status categories and provide detailed progress information with comprehensive templates.
+                    </hint>
+                    <text>
+                        Create comprehensive status sections organized by active specifications, completed features, blocked items, and upcoming work.
+                        Use detailed templates for each section to ensure consistency and completeness.
+                    </text>
+                    <stepwise-instructions>
+                        <list>
+                            <item>GROUP specifications by status (Active, Completed, Blocked, Upcoming)</item>
+                            <item>CREATE Active Specifications section using active_specs_template</item>
+                            <item>CREATE Completed Features section using completed_features_template</item>
+                            <item>CREATE Blocked Items section using blocked_items_template</item>
+                            <item>CREATE Upcoming Work section with resource requirements</item>
+                            <item>INCLUDE completion percentages, ETAs, and next actions for each</item>
+                        </list>
+                    </stepwise-instructions>
+
+                    <templates>
+                        <active_specs_template>
+                            ## Active Specifications
+
+                            ### [SPEC_NAME] ([COMPLETION_PERCENTAGE]%)
+                            **Created**: [DATE] | **Priority**: [PRIORITY] | **ETA**: [ESTIMATED_DATE]
+
+                            **Scope**: [BRIEF_DESCRIPTION]
+
+                            **Progress**:
+                            - ✅ [COMPLETED_TASK_COUNT] completed
+                            - 🔄 [IN_PROGRESS_TASK_COUNT] in progress
+                            - ⏳ [PENDING_TASK_COUNT] pending
+
+                            **Next Actions**: [NEXT_STEPS]
+
+                            ---
+                        </active_specs_template>
+
+                        <completed_features_template>
+                            ## Recently Completed Specifications
+
+                            ### [SPEC_NAME] ✅
+                            **Completed**: [DATE] | **Duration**: [DAYS] days
+
+                            **Delivered**:
+                            - [DELIVERABLE_1]
+                            - [DELIVERABLE_2]
+
+                            **Impact**: [USER_IMPACT_SUMMARY]
+
+                            ---
+                        </completed_features_template>
+
+                        <blocked_items_template>
+                            ## Blocked Specifications ⚠️
+
+                            ### [SPEC_NAME]
+                            **Blocked Since**: [DATE] | **Priority**: [PRIORITY]
+
+                            **Blocking Factor**: [BLOCKING_REASON]
+
+                            **Impact**: [IMPACT_DESCRIPTION]
+
+                            **Proposed Resolution**: [RESOLUTION_STRATEGY]
+
+                            **Owner**: [RESPONSIBLE_PARTY]
+
+                            ---
+                        </blocked_items_template>
+                    </templates>
+                </task>
+            </item>
+
+            <item>
+                <task name="generate_technical_insights" caption="Generate Technical Insights">
+                    <hint>
+                        Provide architectural guidance and technical trend analysis for development teams with comprehensive technical analysis.
+                    </hint>
+                    <text>
+                        Analyze technical patterns across specifications to provide insights on architecture evolution, technology adoption, and code quality trends.
+                        Include detailed analysis of database changes, API evolution, technology stack updates, and quality metrics.
+                    </text>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                            <item>microsoft-docs</item>
+                        </mcp-tooling>
+                        <list>
+                            <item>ANALYZE database schema evolution across specs</item>
+                            <item>TRACK API design patterns and breaking changes</item>
+                            <item>EVALUATE new technology adoption with justifications</item>
+                            <item>IDENTIFY deprecated technologies and migration plans</item>
+                            <item>ASSESS technical debt accumulation and trends</item>
+                            <item>CALCULATE development velocity metrics and performance trends</item>
+                            <item>GENERATE technical recommendations with rationale</item>
+                            <item>UTILIZE microsoft-docs for technology best practices</item>
+                        </list>
+                    </stepwise-instructions>
+
+                    <template>
+                        ## Technical Insights
+
+                        ### Architecture Evolution
+
+                        **Database Changes**:
+                        - [SCHEMA_CHANGE_SUMMARY]
+                        - Impact on existing systems: [IMPACT_ASSESSMENT]
+
+                        **API Evolution**:
+                        - New endpoints: [ENDPOINT_COUNT]
+                        - Breaking changes: [BREAKING_CHANGES]
+                        - Version strategy: [VERSIONING_APPROACH]
+
+                        ### Technology Stack Updates
+
+                        **New Dependencies**:
+                        - [DEPENDENCY_1]: [JUSTIFICATION]
+                        - [DEPENDENCY_2]: [JUSTIFICATION]
+
+                        **Deprecated Technologies**:
+                        - [DEPRECATED_1]: [REPLACEMENT_PLAN]
+                        - [DEPRECATED_2]: [MIGRATION_STATUS]
+
+                        ### Quality Metrics
+
+                        **Test Coverage**: [COVERAGE_PERCENTAGE]% ([TREND])
+                        **Technical Debt**: [DEBT_ASSESSMENT]
+                        **Performance**: [PERFORMANCE_TREND]
+
+                        ### Recommendations
+
+                        1. **[RECOMMENDATION_1]**: [RATIONALE]
+                        2. **[RECOMMENDATION_2]**: [RATIONALE]
+                        3. **[RECOMMENDATION_3]**: [RATIONALE]
+                    </template>
+                </task>
+            </item>
+
+            <item>
+                <task name="create_timeline_visualization" caption="Create Timeline Visualization">
+                    <hint>
+                        Generate comprehensive timeline charts showing historical progress, current state, and future projections with detailed visualizations.
+                    </hint>
+                    <text>
+                        Create visual representations of project timeline including historical progress bars, current sprint status, upcoming milestones, and velocity metrics.
+                        Include detailed charts and progress visualizations.
+                    </text>
+                    <stepwise-instructions>
+                        <list>
+                            <item>CALCULATE historical completion rates by month for last 6 months</item>
+                            <item>GENERATE progress charts with ASCII progress bars</item>
+                            <item>CREATE current month/week progress visualization</item>
+                            <item>IDENTIFY upcoming milestones and deadlines</item>
+                            <item>CALCULATE velocity metrics: average specs per month, trend analysis</item>
+                            <item>ASSESS capacity utilization percentage</item>
+                            <item>PROJECT future completion estimates</item>
+                        </list>
+                    </stepwise-instructions>
+
+                    <template>
+                        ## Project Timeline
+
+                        ### Historical Progress (Last 6 Months)
+
+                        ```
+                        [MONTH-6] |████████░░| 80% - [SPECS_COMPLETED] specs completed
+                        [MONTH-5] |██████████| 100% - [SPECS_COMPLETED] specs completed
+                        [MONTH-4] |██████░░░░| 60% - [SPECS_COMPLETED] specs completed
+                        [MONTH-3] |████████░░| 80% - [SPECS_COMPLETED] specs completed
+                        [MONTH-2] |██████████| 100% - [SPECS_COMPLETED] specs completed
+                        [MONTH-1] |███████░░░| 70% - [SPECS_COMPLETED] specs completed
+                        ```
+
+                        ### Current Month Progress
+
+                        ```
+                        Week 1: ████████░░ 80% complete
+                        Week 2: ██████░░░░ 60% complete
+                        Week 3: ████░░░░░░ 40% complete
+                        Week 4: ░░░░░░░░░░ 0% planned
+                        ```
+
+                        ### Upcoming Milestones
+
+                        - **[DATE]**: [MILESTONE_1]
+                        - **[DATE]**: [MILESTONE_2]
+                        - **[DATE]**: [MILESTONE_3]
+
+                        ### Velocity Metrics
+
+                        - **Average Specs/Month**: [VELOCITY]
+                        - **Trend**: [IMPROVING/STABLE/DECLINING]
+                        - **Capacity Utilization**: [UTILIZATION_PERCENTAGE]%
+                    </template>
+                </task>
+            </item>
+
+            <item>
+                <task name="generate_recommendations" caption="Generate Strategic Recommendations">
+                    <hint>
+                        Provide prioritized, actionable recommendations based on analysis findings using impact/effort matrix and comprehensive categorization.
+                    </hint>
+                    <text>
+                        Generate strategic recommendations categorized by urgency and impact, including immediate actions, strategic initiatives, and risk mitigation strategies.
+                        Use prioritization matrix: High Impact/Low Effort (quick wins), High Impact/High Effort (strategic initiatives),
+                        Low Impact/High Effort (avoid unless strategic), Low Impact/Low Effort (consider if resources available).
+                    </text>
+                    <stepwise-instructions>
+                        <mcp-tooling>
+                            <item>sequential-thinking</item>
+                        </mcp-tooling>
+                        <list>
+                            <item>IDENTIFY critical blockers requiring immediate attention (next 2 weeks)</item>
+                            <item>CATEGORIZE recommendations: Immediate Actions (2 weeks), Strategic Initiatives (quarter), Risk Mitigation</item>
+                            <item>PRIORITIZE using impact/effort matrix</item>
+                            <item>SEPARATE into Critical, Important, and Strategic categories</item>
+                            <item>ASSIGN responsible parties and specific timelines</item>
+                            <item>PROVIDE clear action plans with issue description, impact assessment, and solution</item>
+                            <item>INCLUDE both technical and project risk mitigation strategies</item>
+                            <item>UTILIZE sequential-thinking to validate recommendation logic and priorities</item>
+                        </list>
+                    </stepwise-instructions>
+
+                    <template>
+                        ## Strategic Recommendations
+
+                        ### Immediate Actions (Next 2 Weeks)
+
+                        #### 🔴 Critical
+                        1. **[ACTION_1]**
+                           - **Issue**: [PROBLEM_DESCRIPTION]
+                           - **Impact**: [IMPACT_ASSESSMENT]
+                           - **Solution**: [RECOMMENDED_ACTION]
+                           - **Owner**: [RESPONSIBLE_PARTY]
+                           - **Timeline**: [TIMEFRAME]
+
+                        #### 🟡 Important
+                        2. **[ACTION_2]**
+                           - **Issue**: [PROBLEM_DESCRIPTION]
+                           - **Solution**: [RECOMMENDED_ACTION]
+                           - **Timeline**: [TIMEFRAME]
+
+                        ### Strategic Initiatives (Next Quarter)
+
+                        #### Architecture & Technology
+                        - **[INITIATIVE_1]**: [DESCRIPTION_AND_RATIONALE]
+                        - **[INITIATIVE_2]**: [DESCRIPTION_AND_RATIONALE]
+
+                        #### Process Improvements
+                        - **[IMPROVEMENT_1]**: [DESCRIPTION_AND_EXPECTED_OUTCOME]
+                        - **[IMPROVEMENT_2]**: [DESCRIPTION_AND_EXPECTED_OUTCOME]
+
+                        ### Risk Mitigation
+
+                        #### Technical Risks
+                        - **[RISK_1]**: [MITIGATION_STRATEGY]
+                        - **[RISK_2]**: [MITIGATION_STRATEGY]
+
+                        #### Project Risks
+                        - **[RISK_1]**: [MITIGATION_STRATEGY]
+                        - **[RISK_2]**: [MITIGATION_STRATEGY]
+                    </template>
+                </task>
+            </item>
+
+            <item>
+                <task name="compile_final_report" caption="Compile Final Status Report">
+                    <hint>
+                        Assemble all sections into a comprehensive, professional status report document with complete structure and appendices.
+                    </hint>
+                    <text>
+                        Compile all generated sections into a final status report with proper formatting, metadata, comprehensive appendices, and professional structure.
+                        Save to .docs/reports/ directory with timestamped filename.
+                    </text>
+                    <stepwise-instructions>
+                        <list>
+                            <item>CREATE .docs/reports/ directory if it doesn't exist</item>
+                            <item>DETERMINE current date for filename: status-report-YYYY-MM-DD.md</item>
+                            <item>ASSEMBLE complete report using final report template</item>
+                            <item>INCLUDE all generated sections in proper order</item>
+                            <item>POPULATE project health dashboard with calculated metrics</item>
+                            <item>CREATE comprehensive appendices: specification inventory, technical debt register, decision log</item>
+                            <item>VALIDATE report completeness against checklist</item>
+                            <item>SAVE final report to .docs/reports/</item>
+                            <item>VERIFY all sections are properly formatted and complete</item>
+                        </list>
+                    </stepwise-instructions>
+
+                    <OutputFormat>
+                        <Document src="${workspaceFolder}/.docs/reports/status-report-YYYY-MM-DD.md" />
+                        <template>
+                            # Project Status Report
+
+                            > **Generated**: [CURRENT_DATE]
+                            > **Period**: [REPORT_PERIOD]
+                            > **Next Review**: [NEXT_REVIEW_DATE]
+
+                            ## Executive Summary
+
+                            [EXECUTIVE_SUMMARY_CONTENT]
+
+                            ## Project Health Dashboard
+
+                            | Metric | Current | Target | Trend |
+                            |--------|---------|---------|-------|
+                            | Completion Rate | [RATE]% | [TARGET]% | [TREND] |
+                            | Active Specs | [COUNT] | [CAPACITY] | [TREND] |
+                            | Blocked Items | [COUNT] | 0 | [TREND] |
+                            | Velocity | [SPECS_PER_MONTH] | [TARGET] | [TREND] |
+
+                            ## Current Status
+
+                            [ACTIVE_SPECIFICATIONS_CONTENT]
+
+                            [COMPLETED_FEATURES_CONTENT]
+
+                            [BLOCKED_ITEMS_CONTENT]
+
+                            ## Technical Analysis
+
+                            [TECHNICAL_INSIGHTS_CONTENT]
+
+                            ## Timeline & Progress
+
+                            [TIMELINE_VISUALIZATION_CONTENT]
+
+                            ## Strategic Recommendations
+
+                            [RECOMMENDATIONS_CONTENT]
+
+                            ## Appendices
+
+                            ### A. Specification Inventory
+                            [COMPLETE_SPEC_LIST]
+
+                            ### B. Technical Debt Register
+                            [TECHNICAL_DEBT_ITEMS]
+
+                            ### C. Decision Log Summary
+                            [RECENT_DECISIONS]
+
+                            ---
+
+                            **Report Prepared By**: ${AI_MODEL}
+                            **Next Status Review**: [NEXT_REVIEW_DATE]
+                        </template>
+                    </OutputFormat>
+                </task>
+            </item>
+        </list>
+    </stepwise-instructions>
+
+    <text>
+        ## Report Quality Standards
+
+        IMPORTANT: When executing this workflow, ensure you follow these quality standards:
+
+        Accuracy:
+        <list>
+            <item>Data must be current and verified</item>
+            <item>Calculations must be correct</item>
+            <item>Status assessments must be objective</item>
+        </list>
+
+        Completeness:
+        <list>
+            <item>All specs must be analyzed</item>
+            <item>No critical information omitted</item>
+            <item>Recommendations must be actionable</item>
+        </list>
+
+        Clarity:
+        <list>
+            <item>Executive summary for leadership</item>
+            <item>Technical details for architects</item>
+            <item>Action items clearly prioritized</item>
+        </list>
+
+        Timeliness:
+        <list>
+            <item>Report reflects current state</item>
+            <item>Trends based on recent data</item>
+            <item>Projections include latest changes</item>
+        </list>
+
+        ## Error Handling
+
+        IMPORTANT: Handle these scenarios gracefully:
+
+        Missing Files:
+        <list>
+            <item>Condition: Expected documentation files not found</item>
+            <item>Action: Note missing files and continue with available data</item>
+        </list>
+
+        Corrupted Data:
+        <list>
+            <item>Condition: Spec files have invalid format</item>
+            <item>Action: Report parsing issues and skip corrupted files</item>
+        </list>
+
+        Empty Directories:
+        <list>
+            <item>Condition: No spec folders found</item>
+            <item>Action: Generate minimal report with recommendations to create specs</item>
+        </list>
+
+        ## Success Criteria
+
+        IMPORTANT: Ensure the final report provides:
+        <list>
+            <item>Architects have clear project visibility</item>
+            <item>Blockers and risks clearly identified</item>
+            <item>Progress trends accurately represented</item>
+            <item>Actionable recommendations provided</item>
+            <item>Technical health assessed</item>
+            <item>Resource needs identified</item>
+        </list>
+
+        IMPORTANT: Final checklist to verify completion:
+        <list>
+            <item>All .docs/specs/ folders analyzed</item>
+            <item>Product documentation parsed</item>
+            <item>Status calculations accurate</item>
+            <item>Recommendations prioritized</item>
+            <item>Report format professional</item>
+            <item>Action items clearly defined</item>
+            <item>Technical insights provided</item>
+            <item>Timeline visualization created</item>
+            <item>All templates properly populated</item>
+            <item>Comprehensive appendices included</item>
+            <item>Progress bars and charts generated</item>
+            <item>Health indicators properly calculated</item>
+        </list>
+    </text>
+</poml>
