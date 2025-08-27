@@ -1,5 +1,5 @@
 ---
-description: Browser Testing Rules for Nous using Playwright
+description: Browser Testing Rules using Playwright
 globs:
 alwaysApply: false
 version: 1.0

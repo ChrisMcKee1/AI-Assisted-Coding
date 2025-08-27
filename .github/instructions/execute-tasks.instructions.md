@@ -1,5 +1,5 @@
 ---
-description: Task Execution Rules for Nous
+description: Task Execution Rules
 globs:
 alwaysApply: false
 version: 2.0

@@ -103,7 +103,7 @@ format: poml
                             </item>
                             <item>VERIFY write permissions before creating</item>
                             <item>CONFIRM before overwriting existing files</item>
-                            <item>PREPARE for git commit: "Initialize Nous product documentation"</item>
+                            <item>PREPARE for git commit: "Initialize Spec Driven Framework product documentation"</item>
                         </list>
                     </stepwise-instructions>
                 </task>
@@ -481,7 +481,7 @@ format: poml
             <item>
                 <task name="create_or_update_copilot_instructions" caption="Create or Update Copilot Instructions">
                     <hint>
-                        Create or update the .github/copilot-instructions.md file with Nous documentation section.
+                        Create or update the .github/copilot-instructions.md file with Spec Driven Framework documentation section.
                         Use merge strategy to replace existing section or append if file exists.
                     </hint>
                     <text>
@@ -506,7 +506,7 @@ format: poml
                     <OutputFormat>
                         <Document src="${workspaceFolder}/.github/copilot-instructions.md" />
                         <template>
-                            <nous_section>
+                            <product_section>
                                 ## [Product Name] Documentation
 
                                 ### Product Context
@@ -540,7 +540,7 @@ format: poml
                                 - User's specific instructions override (or amend) instructions found in `.docs/specs/...`
                                 - Always adhere to established patterns, code style, and best practices documented above.
                                 - If coding standards do not exist in the `.docs/standards` directory, create the folder and copy the templates from the [templates](../templates/) folder.
-                            </nous_section>
+                            </product_section>
                         </template>
                     </OutputFormat>
                 </task>
@@ -560,7 +560,7 @@ format: poml
                             <item>CONFIRM user inputs incorporated throughout</item>
                             <item>VALIDATE any missing tech stack items were requested</item>
                             <item>CHECK initial decisions documented</item>
-                            <item>ENSURE copilot-instructions.md created or updated with Nous documentation</item>
+                            <item>ENSURE copilot-instructions.md created or updated with product_section documentation</item>
                             <item>PROVIDE comprehensive summary of created documentation</item>
                             <item>CONFIRM readiness for next development phase</item>
                         </list>
@@ -573,7 +573,7 @@ format: poml
                             ✅ `.docs/product/tech-stack.md` - Technical architecture decisions
                             ✅ `.docs/product/roadmap.md` - 5-phase development plan
                             ✅ `.docs/product/decisions.md` - Decision log with override authority
-                            ✅ `.github/copilot-instructions.md` - Updated with Nous workflow integration
+                            ✅ `.github/copilot-instructions.md` - Updated with Spec Driven Framework workflow integration
 
                             Your project is now ready for spec creation and development. You can:
                             - Review the roadmap to see the development phases
@@ -616,7 +616,7 @@ format: poml
         - [ ] tech-stack.md documents all technical choices
         - [ ] roadmap.md provides 5-phase development plan
         - [ ] decisions.md establishes override authority
-        - [ ] copilot-instructions.md integrates Nous workflow
+        - [ ] copilot-instructions.md integrates Spec Driven Framework workflow
         - [ ] All files properly cross-referenced
         - [ ] Project ready for spec creation phase
     </text>
