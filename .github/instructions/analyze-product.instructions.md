@@ -473,9 +473,9 @@ format: poml
                             - [ ] copilot-instructions.md configured
 
                             ## Summary Template
-                            ### ✅ Nous Successfully Installed
+                            ### ✅ Spec Driven Framework Successfully Installed
 
-                            I've analyzed your [PRODUCT_TYPE] codebase and set up Nous with documentation that reflects your actual implementation.
+                            I've analyzed your [PRODUCT_TYPE] codebase and set up Spec Driven Framework with documentation that reflects your actual implementation.
 
                             #### What I Found
                             - Tech Stack: [SUMMARY_OF_DETECTED_STACK]
@@ -491,8 +491,8 @@ format: poml
                             #### Next Steps
                             1. Review the generated documentation in `.docs/product/`
                             2. Make any necessary adjustments to reflect your vision
-                            3. See the Nous README for usage instructions: https://github.com/seiggy/nous
-                            4. Start using Nous for your next feature: /create-spec
+                            3. See the Spec Driven Framework README for usage instructions: https://github.com/ChrisMcKee1/AI-Assisted-Coding
+                            4. Start using Spec Driven Framework for your next feature: /create-spec
                         </template>
                     </OutputFormat>
                     <stepwise-instructions>
