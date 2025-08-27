@@ -23,7 +23,7 @@ format: poml
         <list>
             <item>sequential-thinking</item>
             <item>context7</item>
-            <item>microsoft.docs></item>
+            <item>microsoft.docs</item>
         </list>
 
         Prerequisites:
