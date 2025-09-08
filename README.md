@@ -5,12 +5,21 @@ documentation RAG, and advanced AI agent capabilities for software development p
 
 ## 🚀 Overview
 
-This framework integrates the following MCP server to build a powerful spec driven development framework:
+This framework integrates the following MCP servers to build a powerful spec driven development framework:
 
-- **Context7 MCP**: Provides live documentation and code snippet retrieval for authoritative
-technical references
+- **Microsoft Docs MCP**: Provides authoritative Microsoft/Azure documentation search and retrieval from Microsoft Learn
+- **Context7 MCP**: Provides live documentation and code snippet retrieval for third-party libraries and frameworks
 
 Together, with the provided prompts, and instructions, this system creates a powerful and customizable development framework.
+
+## 🔧 Additional MCP Tools
+
+The framework also supports other powerful MCP tools you can integrate:
+
+- **Memory** (`server-memory`): Knowledge graph-based persistent memory system for maintaining context and relationships across conversations
+- **Sequential Thinking** (`server-sequential-thinking`): Dynamic and reflective problem-solving through structured thought sequences with branching and revision capabilities  
+- **Playwright** (`@playwright/mcp`): Web automation and browser testing capabilities for scraping, testing, and interacting with web pages
+- **Todo-MD** (`@danjdewhurst/todo-md-mcp`): Markdown-based todo list management with full CRUD operations backed by simple `.md` files
 
 ## 📋 Prerequisites
 
