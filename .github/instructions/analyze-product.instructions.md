@@ -229,7 +229,7 @@ format: poml
                         - `decisions.md` file
                         - `tech-stack.md` file
                         ` `mission.md` file
-                        - `docs/architecture` folder
+                        - `.docs/architecture` folder
                         - architecture documentation in markdown and mermaid format for each system
                     </hint>
                     <stepwise-instructions>
@@ -262,7 +262,7 @@ format: poml
                             - Hints for replacement in the template are provided in square brackets [].
                             </item>
                             <item>
-                                Create the `docs/architecture` folder. Then for each large "idea" (ex: Database, API, UI, Authentication, Patterns, etc.) in the
+                                Create the `.docs/architecture` folder. Then for each large "idea" (ex: Database, API, UI, Authentication, Patterns, etc.) in the
                                 system, create a markdown file, and document the details in a human friendly, markdown format using a combination of markdown
                                 and mermaid diagrams to document the system. Use the architecture template when building this documentation.
 
