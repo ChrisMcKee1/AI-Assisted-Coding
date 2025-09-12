@@ -8,6 +8,8 @@
     "chat.instructionsFilesLocations": {
         "instructions": true
     },
+    "chat.checkpoints.enabled": true,
+    "github.copilot.chat.virtualTools.threshold": 90,
     "github.copilot.chat.codeGeneration.useInstructionFiles": true,
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
