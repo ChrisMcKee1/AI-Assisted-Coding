@@ -52,7 +52,7 @@ Included MCP server configurations:
 - `microsoft-docs`
 - `memory`
 - `context7`
-- `desktop-commander` (Opinionated personal pick; remove it if you don't need it.)
+- `desktop-commander` DO not use
 - `sequential-thinking`
 - `playwright`
 
